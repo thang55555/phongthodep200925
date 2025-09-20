@@ -1,0 +1,179 @@
+<%- include("./layouts/head.ejs")%>
+    <title>
+        <%=category.menutintuc%>
+    </title>
+    <%- include("./layouts/header.ejs")%>
+
+        <!-- main -->
+        <div class="container" >
+
+            <ul class="breadcrumb">
+                <li><a href="/"><span>Trang chủ</span></a>
+                    <meta content="1">
+                </li>
+                <li><a><span style="color: #F5D182;">Tin Tức</span></a>
+                    <meta content="2">
+                </li>
+                <li><a><span style="color: #F5D182;">
+                            <%=category.menutintuc%>
+                        </span></a>
+                    <meta content="2">
+                </li>
+            </ul>
+            <!-- Giới thiệu -->
+            <div>
+                <div class="row">
+
+                    <div class="titles-quality__trademarks">
+                        <h3 class="titles-introsduces__alls" style="text-align: center;">
+                            <%=category.menutintuc%>
+                        </h3>
+                    </div>
+                    <div class="col-lg-7">
+                        <div class="big-news__pages">
+                            <div class="img-news__pages">
+                                <div class="news-videos__boxs">
+                                    <div class="videos-big__news">
+                                        <iframe height="315" src="<%=category.linkvideo%>" title="YouTube video player"
+                                            frameborder="0"
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="col-lg-5">
+                        <div class="tops-news__right">
+                            <ul class="list-tops__news">
+                                <div class="hopthoai_category_tintuc">
+                                    <%for(item of product){%>
+                                        <li>
+                                            <div class="items-news__right">
+                                                <div class="img-news__right"> <a
+                                                        href="/product-tin-tuc/<%=item.slug%>/<%=item._id%>"
+                                                        class="d-block img_">
+                                                        <picture> <img loading="lazy"
+                                                                src="./images/update/<%=item.image%>"
+                                                                class="img-fluid lazyloaded" alt="<%=item.image%>">
+                                                        </picture>
+                                                    </a> </div>
+                                                <div class="news-intros__right">
+                                                    <p><a href="/product-tin-tuc/<%=item.slug%>/<%=item._id%>"
+                                                            class="names-news__right texttieude">
+                                                            <%=item.tieudebaiviet%>
+                                                        </a></p>
+                                                    <ul class="admin-times__ups">
+                                                        <li><img src="./images/admin-time-news-1.jpg" alt="Đăng bởi"> <a
+                                                                href="" title="admin">admin</a></li>
+                                                        <li><img src="./images/admin-time-news-2.jpg"
+                                                                alt="Thời gian đăng">
+                                                            <%= new
+                                                                Intl.DateTimeFormat('en-US').format(item.createdAt)%>
+                                                        </li>
+                                                    </ul>
+                                                 
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <%}%>
+                                </div>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- end giới thiệu -->
+
+            <!-- dự án nổi bật -->
+            <div class="container">
+                <div class="tops-prds__pages" style="margin-top: 15px;">
+                    <div class="title-cicle__alls">
+                        <h1 class="title-in-cicles">MỘT SỐ DỰ ÁN NỔI BẬT</h1>
+                    </div>
+                    <div class="titles-tag__prds">
+                        <p class="titles-prds__pages"></p>
+                        <div class="tag-prds__pages">
+                            <p>Bộ lọc</p>
+                            <ul>
+                                <%for(item of menuproduct){%>
+                                    <li><a href="/category-menu/<%=item.slug%>/<%=item._id%>"
+                                            title="<%=item.tendanhmuc%>">
+                                            <%=item.tendanhmuc%>
+                                        </a> </li>
+                                    <%}%>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="list-prds__alls">
+                    <div class="row">
+                        <%for(item of products){%>
+                            <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+                                <div class="items-prds__alls">
+                                    <div class="imgs-prds__alls"> <a href="/product/<%=item.slug%>/<%=item._id%>"
+                                            class="d-block img">
+                                            <picture><img loading="lazy" src="./images/update/<%=item.image[0].images%>"
+                                                    title="" alt="<%=item.image[0].images%>"
+                                                    class="img-fluid ls-is-cached lazyloaded">
+                                            </picture>
+                                        </a> </div>
+                                    <div class="intros-prds__alls">
+                                        <p style="color: #F5D182; margin-bottom: 10px;"><a
+                                                href="/product/<%=item.slug%>/<%=item._id%>" title=""
+                                                class="texttieude">
+                                                <%=item.tieudesp%>
+                                            </a></p>
+                                        <ul class="infos-prds__items">
+                                            <li><img src="./images/prds-icons-1.png" alt="Chủ đầu tư"> Chủ đầu
+                                                tư: <%=item.chudautu%>
+                                            </li>
+                                            <li><img src="./images/prds-icons-2.png" alt="Địa chỉ"> Địa chỉ:
+                                                <%=item.diachi%>
+                                            </li>
+                                            <li><img src="./images/prds-icons-3.png" alt="Diện tích"> Thông số: <%-item.dientich%> </li>
+                                            <li><img src="./images/prds-icons-4.png" alt="Kinh phí dự trù">
+                                                Kinh phí dự trù: <%=item.kinhphi%>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <%}%>
+
+
+                    </div>
+                </div>
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <% if(hasPrev){%>
+                            <li class="page-item"><a class="page-link"
+                                    href="/category-tintuc/<%=slug%>/<%=id%>?page=<%=prev%>">&laquo;</a></li>
+                            <% }%>
+                                <% for(i of pages){%>
+                                    <% if(i==="..." ){%>
+                                        <li class="page-item"><span class="page-link" <%=i%></span>
+                                        </li>
+                                        <% }else{%>
+                                            <li class="page-item"><a class="page-link"
+                                                    href="/category-tintuc/<%=slug%>/<%=id%>?page=<%=i%>">
+                                                    <%=i%>
+                                                </a></li>
+                                            <%}%>
+                                                <% }%>
+                                                    <% if(hasNext){%>
+                                                        <li class="page-item"><a class="page-link"
+                                                                href="/category-tintuc/<%=slug%>/<%=id%>?page=<%=next%>">&raquo;</a>
+                                                        </li>
+                                                        <% }%>
+                    </ul>
+                </nav>
+            </div>
+            <!-- end dự án nổi bật -->
+
+        </div>
+        </div>
+        <%- include("./layouts/footer.ejs")%>

@@ -1,0 +1,186 @@
+<%- include("./layouts/head.ejs")%>
+<title>Giới thiệu</title>
+<%- include("./layouts/header.ejs")%>
+
+
+        <!-- main -->
+        <div class="container" >
+            <ul class="breadcrumb">
+                <li><a href="/"><span>Trang chủ</span></a>
+                    <meta content="1">
+                </li>
+                <li><a href="/gioi-thieu"><span>Giới thiệu</span></a>
+                    <meta content="2">
+                </li>
+            </ul>
+
+            <% for( item of product){%>
+
+            <!-- Giới thiệu -->
+            <div class="row" style="margin-top: 30px;">
+                <div class="col-lg-12">
+                    <div class=" img-introduce__alls_gioithieu">
+                        <picture class="index-gioithieu ">
+                            <iframe height="315" src="<%=item.linkvideo%>"
+                                title="YouTube video player" frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                        </picture>
+                    </div>
+                </div>
+                <div class="col-lg-12 index_gioithieu_pc">
+                    <div class="text-introduce__alls text-quality__trademarks">
+                       <%-item.gioithieuchung%>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 index_gioithieu_mobile">
+                    <div class="text-introduce__alls text-quality__trademarks">
+                        <%-item.gioithieuchung%>
+                </div>
+            </div>
+            <!-- end giới thiệu -->
+
+            <!-- Tầm nhìn, sứ mệnh-->
+
+            <div class="row" style="margin-top: 30px;">
+                <div class="col-lg-6">
+                    <div class="img-introduce__alls">
+                        <picture>
+                            <img loading="lazy"
+                                src="./images/update/<%=item.img_tamnhin%>"
+                                title="" alt="<%=item.img_tamnhin%>" class="img-fluid lazyloaded">
+                        </picture>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="text-introduce__alls">
+                        <div class="group-mission__texts">
+                            <h3 class="titles-introsduces__alls">tầm nhìn</h3>
+                            <%-item.content_tamnhin%>
+                        </div>
+                        <div class="group-mission__texts">
+                            <h3 class="titles-introsduces__alls">sứ mệnh</h3>
+                            <%-item.content_sumenh%>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- end tầm nhìn, sứ mệnh -->
+
+            <!-- Giá trị cốt lõi -->
+            <div class="row" style="margin-top: 30px;">
+
+                <div class="col-lg-6">
+                    <div class="text-introduce__alls">
+                        <h3 class="titles-introsduces__alls">Giá trị cốt lõi</h3>
+                        <%-item.content_cotloi%>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="img-introduce__alls">
+                        <picture>
+                            <img loading="lazy"
+                                src="./images/update/<%=item.img_cotloi%>"
+                                title="" alt="<%=item.img_cotloi%>" class="img-fluid lazyloaded">
+                        </picture>
+                    </div>
+                </div>
+            </div>
+            <!-- end Giá trị cốt lõi -->
+
+            <!-- kiến trúc sư -->
+            <!-- <div class="row" style="margin-top: 30px; margin-bottom: 10px;">
+                <div class="col-lg-6">
+                    <div class="img-introduce__alls">
+                        <picture> 
+                             <img loading="lazy"
+                                src="./images/update/<%=item.img_kientruc%>"
+                                 title="" alt="" class="img-fluid lazyloaded">
+                        </picture>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="text-introduce__alls">
+                        <h3 class="titles-introsduces__alls">Kiến trúc sư</h3>
+                        <%-item.conten_kientruc%>
+                    </div>
+                </div>
+            </div> -->
+            <!-- end kiến trúc sư -->
+
+            <!-- đội ngũ kỹ thuật -->
+            <div class="row" style="margin-top: 30px; margin-bottom: 15px;">
+
+                <div class="col-lg-6">
+                    <div class="img-introduce__alls">
+                        <picture>
+                            <img loading="lazy"
+                                src="./images/update/<%=item.img_kythuat%>"
+                                title="" alt="<%=item.img_kythuat%>" class="img-fluid lazyloaded">
+                        </picture>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6">
+                    <div class="text-introduce__alls">
+                        <h3 class="titles-introsduces__alls">Đội ngũ kỹ thuật</h3>
+                        <%-item.content_kythuat%>
+                    </div>
+                </div>
+            </div>
+            <!-- end đội ngũ kỹ thuật -->
+
+            <%}%>
+        </div>
+
+                         <!-- Khách hàng nói về chúng tôi -->
+      <div class="row" style="margin-top: 30px;">
+        <div class="col-lg-12">
+          <div class="title-cicle__alls">
+            <h3 class="title-in-cicles">CHIA SẺ CỦA KHÁCH HÀNG VỀ NAM THÀNH PHÁT</h3>
+          </div>
+          <div class="tab-content">
+            <div
+              class="customer-feel__sl swiper-container wow fadeIn swiper-container-initialized swiper-container-horizontal"
+              data-wow-duration="1.5s" data-wow-delay="0.1s"
+              style="visibility: visible; animation-duration: 1.5s; animation-delay: 0.1s;">
+              <div class="swiper-wrapper" style="transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;">
+                
+                
+                <% for(item of chiase){%>
+                <div class="swiper-slide swiper-slide-active" style="width: 439.333px; margin-right: 30px;">
+                  <div class="feel-customers__items" style="height:auto;">
+                    <div class="img-customers__feels">
+                      <picture>
+                        <img loading="lazy"
+                          src="./images/update/<%=item.images%>" alt="<%=item.images%>"
+                          class="img-fluid ls-is-cached lazyloaded">
+                      </picture>
+                    </div>
+                    <div class="name-works__customers">
+                      <p><span class="name-feel__customer"><%=item.name%></span></p>
+            
+                    </div>
+                    <div>
+                    <%-item.content%>
+                    </div>
+                  </div>
+                </div>
+                <%}%>
+
+              </div>
+              <div class="swiper-pagination swiper-pagination-clickable swiper-pagination-bullets"><span
+                  class="swiper-pagination-bullet swiper-pagination-bullet-active" tabindex="0" role="button"
+                  aria-label="Go to slide 1"></span><span class="swiper-pagination-bullet" tabindex="0" role="button"
+                  aria-label="Go to slide 2"></span></div> <span class="swiper-notification" aria-live="assertive"
+                aria-atomic="true"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- end Khách hàng nói về chúng tôi -->
+
+    </div>
+    <%- include("./layouts/footer.ejs")%>

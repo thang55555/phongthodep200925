@@ -1,0 +1,213 @@
+<%- include("./layouts/head.ejs")%>
+    <title>
+        <%=product.tieudesp%>
+    </title>
+    <meta name="description" content="<%=product.metadescription%>">
+    <meta name="keywords" content="<%=product.metakeywords%>">
+        <meta name="image" content="https://phongthodep.net/static/site/images/update/<%=product.image[0].images%>">
+    <%- include("./layouts/header.ejs")%>
+
+
+        <!-- main -->
+        <div class="container" >
+
+            <ul class="breadcrumb">
+                <li><a href="/"><span>Trang chủ</span></a>
+                    <meta content="1">
+                </li>
+                <li><a><span style="color: #F5D182;">Sản Phẩm</span></a>
+                    <meta content="2">
+                </li>
+                <li><a href="/category-menu/<%=category_danhmuc.slug%>/<%=category_danhmuc._id%>"><span>
+                            <%=category_danhmuc.tendanhmuc%>
+                        </span></a>
+                    <meta content="2">
+                </li>
+                <li><a href="/category-item/<%=product.nhomsp_id.slug%>/<%=product.nhomsp_id%>"><span>
+                            <%=product.nhomsp_id.tennhomsanpham%>
+                        </span></a>
+                    <meta content="2">
+                </li>
+                <li><a><span style="color: #F5D182;">
+                            <%=product.tieudesp%>
+                        </span></a>
+                    <meta content="2">
+                </li>
+            </ul>
+
+            <div class="content-prds__details mb-55">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-9">
+                            <h1 class="names-prds__details product_mobile">
+                                <%=product.tieudesp%>
+                            </h1>
+                            <div class="row row_product_img">
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+                                    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                                        <ol class="carousel-indicators">
+                                            <li data-target="#carouselExampleIndicators" data-slide-to="0"
+                                                class="active">
+                                            </li>
+                                            <%for(var i=1; i <=product.image.length; i++){%>
+                                                <li data-target="#carouselExampleIndicators" data-slide-to="<%=i%>">
+                                                </li>
+                                                <%}%>
+                                        </ol>
+                                        <div class="carousel-inner">
+                                            <div class="carousel-item active">
+                                                <img class="d-block w-100"
+                                                    src="./images/update/<%=product.image[0].images%>"
+                                                    alt="First slide">
+                                            </div>
+                                            <% for(ỉtem of product.image){%>
+                                                <div class="carousel-item">
+                                                    <img class="d-block w-100" src="./images/update/<%=ỉtem.images%>"
+                                                        alt="Second slide">
+                                                </div>
+                                                <%}%>
+                                        </div>
+                                        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button"
+                                            data-slide="prev">
+                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                            <span class="sr-only">Previous</span>
+                                        </a>
+                                        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button"
+                                            data-slide="next">
+                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                            <span class="sr-only">Next</span>
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+                                    <div class="titles-prds__table"> <img src="./images/prds-icons-tables-1_11zon.png">
+                                        <p>Chủ đầu tư: <%=product.chudautu%>
+                                        </p>
+                                    </div>
+                                    <div class="titles-prds__table"> <img src="./images/prds-icons-tables-2_11zon.png"
+                                            alt="Công năng">
+                                        <p>Công năng: <%=product.congnang%>
+                                        </p>
+                                    </div>
+                                    <div class="titles-prds__table"> <img src="./images/prds-icons-tables-3_11zon.png"
+                                            alt="Địa chỉ">
+                                        <p>Địa chỉ: <%=product.diachi%>
+                                        </p>
+                                    </div>
+                                    <div class="titles-prds__table"> <img src="./images/prds-icons-tables-4_11zon.png"
+                                            alt="Kinh phí">
+                                        <p>Kinh phí: <%=product.kinhphi%>
+                                        </p>
+                                    </div>
+                                    <div class="titles-prds__table"> <img src="./images/prds-icons-tables-5_11zon.png"
+                                            alt="Loại hình">
+                                        <p>Loại hình: <%=product.loaihinh%>
+                                        </p>
+                                    </div>
+                                    <div class="titles-prds__table"> <img src="./images/prds-icons-tables-6_11zon.png"
+                                            alt="Đơn vị thiết kế">
+                                        <p>Đơn vị thiết kế: <%=product.donvi%>
+                                        </p>
+                                    </div>
+                                    <div class="titles-prds__table"> <img src="./images/prds-icons-tables-7_11zon.png"
+                                            alt="Diện tích">
+                                        <p>Thông số: <%=product.dientich%>
+                                        </p>
+                                    </div>
+                                    <div class="titles-prds__table"> <img src="./images/prds-icons-tables-8_11zon.png"
+                                            alt="Năm thi công">
+                                        <p>Năm thi công: <%=product.namthicong%>
+                                        </p>
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+
+                            <!-- Mô tả sản phẩm -->
+                            <div class="text-prds__details s-content" style="margin-top: 20px;">
+                                <%-product.content%>
+                            </div>
+                            <!-- end Mô tả sản phẩm -->
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="sidebar-prds__details">
+                                <div class="box-filter__mains">
+                                    <p class="titles-box__filters">ĐĂNG KÝ TƯ VẤN</p>
+                                    <form action="/gui-lien-he" method="POST" class="frn__contact ajaxform"
+                                        accept-charset="utf-8" data-success="CONTACT._">
+                                        <div class="group-form__alls"> <input type="text"
+                                                class="input-alls control-alls" name="name" placeholder="Họ tên"
+                                                crequired="" text-crequired="Nhập vào họ tên !"> </div>
+                                        <div class="group-form__alls"> <input type="text"
+                                                class="input-alls control-alls" name="lienhe"
+                                                placeholder="Số điện thoại" crequired=""
+                                                text-crequired="Nhập vào số điện thoại !"> </div>
+                                        <div class="group-form__alls"> <input type="text" name="email"
+                                                class="input-alls control-alls" placeholder="email"> </div>
+                                        <input type="hidden" name="type" value="SIDEBAR"> <button type="submit"
+                                            class="button-borders__alls">Gửi thông tin</button>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="list-sidebar__prds">
+                                <h4 class="titles-list__sidebars">DANH MỤC DỰ ÁN</h4>
+
+                                <ul class="lv-1">
+                                    <%for(item of MENU){%>
+                                        <li><a href="/category-menu/<%=item.menu1slug%>/<%=item.menu1id%>"
+                                                style="display:block" title="<%=item.menu1%>">
+                                                <%=item.menu1%>
+                                            </a><i class="fa fa-angle-right" aria-hidden="true"></i>
+                                            <ul class="lv-2">
+                                                <%for(item2 of item.menu2){%>
+                                                    <li><a href="/category-item/<%=item2.slug%>/<%=item2._id%>"
+                                                            style="display:block" title="<%=item2.tennhomsanpham%>">
+                                                            <%=item2.tennhomsanpham%>
+                                                        </a></li>
+                                                    <%}%>
+                                            </ul>
+                                        </li>
+                                        <%}%>
+                                </ul>
+                            </div>
+                            <div class="relate-prds__sidebars">
+                                <h4 class="titles-list__sidebars">DỰ ÁN NỔI BẬT</h4>
+                                <ul class="list-relate__prds">
+                                    <% for(item of product_noibat){%>
+                                        <li>
+                                            <div class="items-relate__prds">
+                                                <div class="img-relate__prds"> <a
+                                                        href="/product/<%=item.slug%>/<%=item._id%>"
+                                                        class="d-block img_">
+                                                        <picture>
+                                                            <img loading="lazy"
+                                                                src="./images/update/<%=item.image[0].images%>" alt=""
+                                                                class="img-fluid ls-is-cached lazyloaded">
+                                                        </picture>
+                                                    </a> </div>
+                                                <p><a href="/product/<%=item.slug%>/<%=item._id%>"
+                                                        class="names-relate__prds d-block">
+                                                        <%=item.tieudesp%>
+                                                    </a></p>
+                                            </div>
+                                        </li>
+                                        <%}%>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end mô tả sản phẩm -->
+
+
+
+        </div>
+        </div>
+        <%- include("./layouts/footer.ejs")%>
+
+        <script src="theme/frontend/js/bootstrap.min.js" defer></script>
+<script src="theme/frontend/js/wow.min.js" defer></script> 

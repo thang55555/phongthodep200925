@@ -1,0 +1,135 @@
+<%- include("./layouts/head.ejs")%>
+<title>Tư vấn</title>
+<%- include("./layouts/header.ejs")%>
+
+
+        <!-- main -->
+        <main >
+            <section>
+                <div class="banner-introdute__pages"> </div>
+                <div class="container">
+                    <ul class="breadcrumb" >
+                        <li><a href="/"><span>Trang
+                                    chủ</span></a>
+                            <meta content="1">
+                        </li>
+                        <li><a href="/tu-van"><span>Đăng ký tư vấn</span></a>
+                            <meta content="2">
+                        </li>
+                    </ul>
+                </div>
+                <div class="">
+                    <div class="">
+                        <div class="container">
+                            <div class="tops-prds__pages">
+                                <div class="title-cicle__alls">
+                                    <h3 class="title-in-cicles"> Gửi yêu cầu tư vấn </h3>
+                                </div>
+                                <%for(item of thongtintrang){%>
+                                <div class="text-prds__tops">
+                                    <p>Sau khi nhận được yêu cầu của qúy khách, <%=item.tencongty%> sẽ liên hệ sớm nhất
+                                        có thể để tư vấn! </p>
+                                </div>
+                                <%}%>
+                            </div>
+                            <div class="box-sp__forms">
+                                <form method="POST" action="/gui-lien-he" 
+                                    accept-charset="utf-8" ><input type="hidden"
+                                        name="csrf_tech5s_name"  enctype="multipart/form-data">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="group-form__alls">
+                                                <p class="labels-alls">Họ tên*</p>
+                                                <div class="group-add__formss"> <input type="text" name="name"
+                                                        class="input-alls control-alls" crequired=""
+                                                        text-crequired="Nhập vào họ và tên !"
+                                                        placeholder="Nguyễn Văn A"> </div>
+                                            </div>
+                                            <div class="group-form__alls">
+                                                <p class="labels-alls">Số điện thoại*</p>
+                                                <div class="group-add__formss"> <input type="text" name="lienhe"
+                                                        class="input-alls control-alls" crequired=""
+                                                        text-crequired="Nhập vào số điện thoại !"
+                                                        placeholder="0989 898 899"> </div>
+                                            </div>
+                                            <div class="group-form__alls">
+                                                <p class="labels-alls">Email*</p>
+                                                <div class="group-add__formss"> <input type="text" name="email"
+                                                        class="input-alls control-alls"
+                                                        placeholder="nguyenvana123@gmail.com"> </div>
+                                            </div>
+                                            <div class="group-form__alls">
+                                                <p class="labels-alls">Địa chỉ*</p>
+                                                <div class="group-add__formss"> <input type="text" name="diachi"
+                                                        class="input-alls control-alls"
+                                                        placeholder="Văn Quán, Hà Đông, Hà Nội"> </div>
+                                            </div>
+                                            <div class="group-form__alls">
+                                                <p class="labels-alls">Loại công trình*</p>
+                                                <div class="group-add__formss">
+                                                    <div class="control-select__alls"> <select style="background: bottom;
+                                                        color: #D6BC52;
+                                                        border: none;" name="loaicongtrinh">
+                                                            <option value="Nhà Gỗ 3 Gian" >Chọn loại công trình</option>
+                                                            <option value="Nhà Gỗ 3 Gian">Nhà Gỗ 3 Gian</option>
+                                                            <option value="Nhà Gỗ 5 Gian">Nhà Gỗ 5 Gian</option>
+                                                            <option value="Biệt Thự">Biệt Thự</option>
+                                                        </select></span> 
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="group-form__alls">
+                                                <p class="labels-alls"> Mức đầu tư *</p>
+                                                <div class="group-add__formss">
+                                                    <div class="control-select__alls"> <select style="background: bottom;
+                                                        color: #D6BC52;
+                                                        border: none;" name="mucdautu">
+                                                            <option>Chọn mức đầu tư </option>
+                                                            <option value="Dưới 2 tỷ VNĐ">Dưới 2 tỷ VNĐ</option>
+                                                            <option value="2 tỷ - 3 tỷ VNĐ">2 tỷ - 3 tỷ VNĐ</option>
+                                                            <option value="3 tỷ - 5 tỷ VNĐ">3 tỷ - 5 tỷ VNĐ</option>
+                                                            <option value="Trên 5 tỷ VN">Trên 5 tỷ VNĐ</option>
+                                                        </select></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="group-form__alls">
+                                                <p class="labels-alls">Tệp đính kèm</p>
+                                                <div class="group-add__formss" style="margin-left: 4%; margin-right: 4%;">
+                                                    <div class="up-file__advisory"> <input type="file" name="file"
+                                                            class="input-files">
+                                                        <div class="input-label">
+                                                            <p>Chọn tệp tin</p> <img src="./images/gim-files_11zon.png"
+                                                                alt="Chọn file"> <span class="btn-Choose__file"> </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="group-form__alls" style="margin-left: 4%; margin-right: 4%;">
+                                                <p class="labels-alls">Yêu cầu cụ thể</p>
+                                                <div class="group-add__formss"> <textarea class="control-alls"
+                                                        type="text" name="yeucau" placeholder="Nội dung"
+                                                        rows="4"></textarea> </div>
+                                            </div>
+                                            <div class="group-form__alls" style="margin-left: 4%; margin-right: 4%;">
+                                                <p class="labels-alls"></p>
+                                                <div class="group-add__formss"> <button type="submit"
+                                                        class="button-borders__alls">Gửi yêu cầu</button> </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <p class="notes-suports__pages">(Ghi chú: Quý khách cung cấp thông tin càng chi tiết, chúng
+                                tôi càng có cơ sở để đưa ra phương án tốt nhất)</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+
+    <%- include("./layouts/footer.ejs")%>

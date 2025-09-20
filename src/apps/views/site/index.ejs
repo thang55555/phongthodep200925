@@ -1,0 +1,304 @@
+<%- include("./layouts/head.ejs")%>
+    <title>TRANG CHỦ | PHÒNG THỜ ĐẸP | NỘI THẤT PHÒNG THỜ</title>
+    <%- include("./layouts/header.ejs")%>
+
+
+
+        <!-- main -->
+
+        <div class="banner-mains swiper-container wow fadeIn mb-55 swiper-container-coverflow swiper-container-3d swiper-container-initialized swiper-container-horizontal"
+            data-wow-duration="1.5s" data-wow-delay="0.1s"
+            style="visibility: visible; animation-duration: 1.5s; animation-delay: 0.1s;">
+            <div class="swiper-wrapper" style="transform: translate3d(0px, 0px, 0px);">
+                <div class="swiper-slide swiper-slide-active"
+                    style="width: 1486px; transform: translate3d(0px, 0px, 0px) rotateX(0deg) rotateY(0deg); z-index: 1;">
+                    <%for(item of thongtintrang){%>
+                        <video src="../site/images/update/<%=item.video%>" autoplay=""
+                            muted="" loop="" playsinline=""></video>
+                        <%}%>
+                            <div class="swiper-slide-shadow-left" style="opacity: 0;"></div>
+                            <div class="swiper-slide-shadow-right" style="opacity: 0;"></div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="container">
+            <!-- Giới thiệu -->
+
+                <div class="row" style="margin-top: 30px;">
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                        <div class="text-introduce__alls text-quality__trademarks">
+                            <div class="titles-quality__trademarks">
+                                <h3 class="titles-introsduces__alls" style="text-align: center;">GIỚI THIỆU CHUNG
+                                </h3>
+                                <h4 class="titles-bottom__quality"></h4>
+                            </div>
+                            <div class="introduce-alls__text s-content antext">
+                                <% for(item of gioithieutrang){%>
+                                    <%-item.gioithieuchung%>
+                                        <%}%>
+
+                            </div> <a style="margin-top: 5px;" href="/gioi-thieu" title="Xem hồ sơ năng lực"
+                                class="button-borders__alls"> VỀ CHÚNG TÔI</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end giới thiệu -->
+
+
+
+
+            <!-- main -->
+
+            <div class="container">
+            <div class="" style="margin-top: 30px; text-align: -webkit-center; ">
+                <div class="row row-collapse row-full-width gallery-row gallery-row-center" >
+                    <%for(item of menudichvu){%>
+                        <div style="padding: 0;" class="col-12 medium-12 small-12 large-6"
+                            data-animate="fadeInLeft" data-animated="true">
+                            <div class="col-inner">
+                                <div
+                                    class="box has-hover box-zoom  has-hover box-overlay index_img dark box-text-bottom">
+                                    <div class="box-image">
+                                        <a href="/category-dich-vu/<%=item.slug%>/<%=item._id%>">
+                                            <div class="image-overlay-remove image-cover img_index_banner"
+                                                style="padding-top:538px; margin-bottom: 15px;">
+                                                <img decoding="async"
+                                                    src="../site/images/update/<%=item.images%>"
+                                                    class="attachment- size- lazy-load-active"
+                                                    sizes="(max-width: 1650px) 100vw, 1650px" title="Trang chủ">
+                                                <div class="overlay" style="background-color:rgba(0, 0, 0, 0.4)"></div>
+                                            </div>
+                                        </a>
+                                    </div>
+
+                                    <div class="box-text text-center">
+                                        <div class="box-text-inner">
+                                            <h3><a href="/category-dich-vu/<%=item.slug%>/<%=item._id%>">
+                                                    <%=item.menudichvu%>
+                                                </a></h3>
+                                            <a href="/category-dich-vu/<%=item.slug%>/<%=item._id%>" target="_self"
+                                                class="button white is-link">
+                                                <span>XEM THÊM</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <%}%>
+                </div>
+            </div></div>
+            <!-- test -->
+
+
+
+            <!-- Video dự án -->
+            <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="title-cicle__alls">
+                        <h3 class="title-in-cicles">VIDEO DỰ ÁN</h3>
+                    </div>
+                    <div class="tab-content">
+                        <div class="tab-pane active">
+                            <div class="list-prds__alls ajax_result">
+                                <div class="tab__ active" >
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+                                            <div class="videos-project__mains">
+                                                <div class="img-project__mains">
+                                                    <div class="videos-peojects__mains">
+                                                        <div class="img-videos__peojects"> </div>
+                                                        <iframe height="" src="<%=videoOne.linkvideo%>"
+                                                            title="<%=videoOne.tieude%>" frameborder="0"
+                                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                                            referrerpolicy="strict-origin-when-cross-origin"
+                                                            allowfullscreen></iframe>
+                                                    </div>
+                                                </div>
+                                                <div class="intros-project__mains">
+                                                    <h3><a href="/product-video/<%=videoOne.slug%>/<%=videoOne._id%>"
+                                                            class="name-project__mains">
+                                                            <%=videoOne.tieude%>
+                                                        </a></h3>
+                                                    <p class="short"></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+                                            <div class="hopthoai_index_video">
+                                                <div class="row" style="margin: 0;">
+                                                    <% for( item of video){%>
+                                                        <div
+                                                            class="col-lg-6 col-md-6 col-sm-6 col-12 product_video_index">
+                                                            <div>
+                                                                <iframe width="" height="" src="<%=item.linkvideo%>"
+                                                                    title="YouTube video player" frameborder="0"
+                                                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                                                    referrerpolicy="strict-origin-when-cross-origin"
+                                                                    allowfullscreen></iframe>
+                                                            </div>
+                                                            <div class="intros-project__mains">
+                                                                <h3><a href="/product-video/<%=item.slug%>/<%=item._id%>"
+                                                                        class="name-project__mains"
+                                                                        style="font-size: 12px;">
+                                                                        <%=item.tieude%>
+                                                                    </a></h3>
+                                                                <p class="short"></p>
+                                                            </div>
+                                                        </div>
+                                                        <%}%>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div></div>
+            <!-- end video dự án -->
+
+            <!-- Tin tức -->
+            <div class="container">
+            <div class="row" style="margin-top: 30px;">
+                <div class="col-lg-12">
+                    <div class="title-cicle__alls">
+                        <h3 class="title-in-cicles">Tin Tức</h3>
+                    </div>
+                    <div class="row">
+
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+                            <div class="list-prj__mains scrollbars-1 mCustomScrollbar _mCS_1">
+                                <div  class="mCustomScrollBox mCS-light mCSB_vertical mCSB_inside"
+                                    tabindex="0">
+                                    <div  class="mCSB_container"
+                                        style="position: relative; top: 0px; left: 0px;">
+                                        <ul>
+                                            <div class="hopthoai_index_tintuc">
+                                                <% for(item of tintuc){%>
+                                                    <li>
+                                                        <a href="/product-tin-tuc/<%=item.slug%>/<%=item._id%>">
+                                                            <%=item.tieudebaiviet%>
+                                                        </a>
+                                                    </li>
+                                                    <%}%>
+
+
+
+                                            </div>
+                                        </ul>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+                            <div class="big-news__pages ahihihihihi">
+                                <div class="img-news__pages"> <a
+                                        href="/product-tin-tuc/<%=tintucOne.slug%>/<%=tintucOne._id%>"
+                                        class="img d-block">
+                                        <picture>
+                                            <img loading="lazy"
+                                                src="../site/images/update/<%=tintucOne.image%>"
+                                                alt="<%=tintucOne.image%>" class="img-fluid ls-is-cached lazyloaded"
+                                                style="max-height: 500px;">
+                                        </picture>
+                                    </a> </div>
+                                <div class="intros-big__news mt-2">
+                                    <p><a href="/product-tin-tuc/<%=tintucOne.slug%>/<%=tintucOne._id%>"
+                                            class="title-big__news">
+                                            <%=tintucOne.tieudebaiviet%>
+                                        </a></p>
+                                    <ul class="admin-times__ups">
+                                        <li><img src="./images/admin-time-news-1.jpg" alt="Đăng bởi"> <a href=""
+                                                title="admin">admin</a></li>
+                                        <li><img src="./images/admin-time-news-2.jpg" alt="Thời gian đăng">
+                                            <%= new Intl.DateTimeFormat('en-US').format(tintucOne.createdAt)%>
+                                        </li>
+                                    </ul>
+                                    <!-- <div class="hopthoai_index_tintuc_content">
+                                        <%-tintucOne.content%>
+                                    </div> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div></div>
+            <!-- end tin tức -->
+
+            <!-- Khách hàng nói về chúng tôi -->
+            <div class="container">
+            <div class="row" style="margin-top: 10%;">
+                <div class="col-lg-12">
+                    <div class="title-cicle__alls">
+                        <h3 class="title-in-cicles">CHIA SẺ CỦA KHÁCH HÀNG VỀ NAM THÀNH PHÁT</h3>
+                    </div>
+                    <div class="tab-content">
+                        <div class="customer-feel__sl swiper-container wow fadeIn swiper-container-initialized swiper-container-horizontal"
+                            data-wow-duration="1.5s" data-wow-delay="0.1s"
+                            style="visibility: visible; animation-duration: 1.5s; animation-delay: 0.1s;">
+                            <div class="swiper-wrapper"
+                                style="transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;">
+
+
+                                <% for(item of chiase){%>
+                                    <div class="swiper-slide swiper-slide-active"
+                                        style="width: 439.333px; margin-right: 30px;">
+                                        <div class="feel-customers__items" style="height:auto;">
+                                            <div class="img-customers__feels">
+                                                <picture>
+                                                    <source media="(min-width:480px;)"
+                                                        data-srcset="../site/images/update/<%=item.images%>"
+                                                        srcset="../site/images/update/<%=item.images%>">
+                                                    <source media="(min-width:0px;)"
+                                                        data-srcset="../site/images/update/<%=item.images%>"
+                                                        srcset="../site/images/update/<%=item.images%>">
+                                                    <img loading="lazy"
+                                                        src="../site/images/update/<%=item.images%>"
+                                                        alt="<%=item.images%>"
+                                                        data-src="../site/images/update/<%=item.images%>"
+                                                        class="img-fluid ls-is-cached lazyloaded">
+                                                </picture>
+                                            </div>
+                                            <div class="name-works__customers">
+                                                <p><span class="name-feel__customer">
+                                                        <%=item.name%>
+                                                    </span></p>
+
+                                            </div>
+                                            <div>
+                                                <%-item.content%>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <%}%>
+
+                            </div>
+                            <div class="swiper-pagination swiper-pagination-clickable swiper-pagination-bullets"><span
+                                    class="swiper-pagination-bullet swiper-pagination-bullet-active" tabindex="0"
+                                    role="button" aria-label="Go to slide 1"></span><span
+                                    class="swiper-pagination-bullet" tabindex="0" role="button"
+                                    aria-label="Go to slide 2"></span></div> <span class="swiper-notification"
+                                aria-live="assertive" aria-atomic="true"></span>
+                        </div>
+                    </div>
+                </div>
+            </div></div>
+            <!-- end Khách hàng nói về chúng tôi -->
+
+        </div>
+        </div>
+
+        <%- include("./layouts/footer.ejs")%>

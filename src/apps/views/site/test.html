@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Thư viện ảnh</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+    .album-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .album {
+      width: 120px;
+      text-align: center;
+      cursor: pointer;
+    }
+    .album img {
+      width: 100%;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+    .album-title {
+      margin-top: 8px;
+      font-weight: bold;
+    }
+    .album-count {
+      color: gray;
+      font-size: 14px;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.8);
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+    }
+    .modal-content {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 80%;
+      max-height: 80%;
+      overflow-y: auto;
+    }
+    .modal-content img {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      font-size: 24px;
+      color: white;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<h2>📷 Thư viện ảnh</h2>
+
+<div class="album-container">
+  <div class="album" onclick="openAlbum('gan-day')">
+    <img src="https://via.placeholder.com/120x100?text=Ảnh" alt="">
+    <div class="album-title">Gần đây</div>
+    <div class="album-count">6</div>
+  </div>
+
+  <div class="album" onclick="openAlbum('bn-tui')">
+    <img src="https://via.placeholder.com/120x100?text=Ảnh" alt="">
+    <div class="album-title">Bn tuiiiiii📸</div>
+    <div class="album-count">0</div>
+  </div>
+
+  <div class="album" onclick="openAlbum('muc-ua-thich')">
+    <img src="https://via.placeholder.com/120x100?text=Ảnh" alt="">
+    <div class="album-title">Mục ưa thích</div>
+    <div class="album-count">4</div>
+  </div>
+</div>
+
+<!-- Modal hiển thị danh sách ảnh -->
+<div id="album-modal" class="modal">
+  <div class="close-btn" onclick="closeModal()">×</div>
+  <div class="modal-content" id="album-content">
+    <!-- ảnh sẽ được thêm bằng JS -->
+  </div>
+</div>
+
+<script>
+  const albums = {
+    'gan-day': [
+      'https://via.placeholder.com/400x300?text=Gần+đây+1',
+      'https://via.placeholder.com/400x300?text=Gần+đây+2',
+      'https://via.placeholder.com/400x300?text=Gần+đây+3',
+      'https://via.placeholder.com/400x300?text=Gần+đây+4',
+      'https://via.placeholder.com/400x300?text=Gần+đây+5',
+      'https://via.placeholder.com/400x300?text=Gần+đây+6'
+    ],
+    'bn-tui': [],
+    'muc-ua-thich': [
+      'https://via.placeholder.com/400x300?text=Yêu+thích+1',
+      'https://via.placeholder.com/400x300?text=Yêu+thích+2',
+      'https://via.placeholder.com/400x300?text=Yêu+thích+3',
+      'https://via.placeholder.com/400x300?text=Yêu+thích+4'
+    ]
+  };
+
+  function openAlbum(key) {
+    const modal = document.getElementById('album-modal');
+    const content = document.getElementById('album-content');
+    content.innerHTML = '';
+
+    if (albums[key].length === 0) {
+      content.innerHTML = '<p>Album này chưa có ảnh nào.</p>';
+    } else {
+      albums[key].forEach(src => {
+        const img = document.createElement('img');
+        img.src = src;
+        content.appendChild(img);
+      });
+    }
+
+    modal.style.display = 'flex';
+  }
+
+  function closeModal() {
+    document.getElementById('album-modal').style.display = 'none';
+  }
+</script>
+
+</body>
+</html>

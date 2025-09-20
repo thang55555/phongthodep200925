@@ -1,0 +1,228 @@
+<base href="/static/site/">
+<!-- Css Styles -->
+<link rel="shortcut icon" type="image/ico" href="images/update/logo.ico"/>
+
+<link rel="stylesheet" href="css/style.css" type="text/css">
+
+</head>
+
+<body >
+
+
+
+
+<div class="body_img">
+    <!-- header -->
+    <div>
+        <header class="header">
+            <h1></h1>
+            <div class="tops-headers">
+                <div class="container">
+                    <ul class="list-address__headers">
+                        <%for(item of thongtintrang){%>
+                            <li><a href="tel:<%=item.sdt%>" title="<%=item.sdt%>"><i class="fa fa-phone"
+                                        aria-hidden="true"></i>
+                                    <%=item.sdt%>
+                                </a></li>
+                            <li><a href="mailto:<%=item.email%>" title="<%=item.email%>"><i class="fa fa-envelope"
+                                        aria-hidden="true"></i>
+                                    <%=item.email%>
+                                </a>
+                            </li>
+                            <%}%>
+                    </ul> <a href="/tu-van" title="Gửi yêu cầu tư vấn" class="btn-address__headers">Gửi yêu cầu tư
+                        vấn</a>
+                </div>
+            </div>
+            <div class="logo-header"> <a href="/">
+                    <% for(item of thongtintrang){%>
+                        <picture>
+                            <img src="../site/images/update/<%=item.images%>" class="img-fluid lazyload" value="logo" alt="<%=item.images%>">
+                        </picture>
+                        <%}%>
+                </a>
+            </div>
+            <div class="content-headers">
+                <div class="container"> <span class="button-phone btn_sp_menu"><i class="fa fa-bars"
+                            aria-hidden="true"></i></span>
+                    <div class="menu">
+                        <div class="menu-desktop">
+                            <ul>
+                                <li class="clazzli clazzli-11 "><a class="clazza clazza-11" rel="/gioi-thieu"
+                                        href="/gioi-thieu">Giới
+                                        thiệu</a>
+                                </li>
+                                <li class="clazzli clazzli-38 bind-ajax"><a class="clazza clazza-38" rel="">Dịch Vụ</a>
+                                    <ul>
+                                        <% for(item of menudv){%>
+                                            <li>
+                                                <a href="/category-dich-vu/<%=item.slug%>/<%=item._id%>"
+                                                    title="<%=item.menudichvu%>" class="parent__ pl-0">
+                                                    <%=item.menudichvu%>
+                                                </a>
+                                                <i></i>
+                                            </li>
+                                            <%}%>
+                                    </ul>
+                                </li>
+
+                                <li class="clazzli clazzli-12 bind-ajax "><a class="clazza clazza-12" rel="">Sản
+                                        Phẩm</a>
+                                    <ul>
+
+                                        <%for(item of MENU){%>
+                                            <li>
+                                                <a href="/category-menu/<%=item.menu1slug%>/<%=item.menu1id%>"
+                                                    title="<%=item.menu1%>" class="parent__ pl-0">
+                                                    <%=item.menu1%>
+                                                </a>
+                                                <i></i>
+                                                <ul>
+                                                    <%for(item2 of item.menu2){%>
+                                                        <li><a href="/category-item/<%=item2.slug%>/<%=item2._id%>"
+                                                                title="<%=item2.tennhomsanpham%>">
+                                                                <%=item2.tennhomsanpham%>
+                                                            </a></li>
+                                                        <%}%>
+                                                </ul>
+                                            </li>
+                                            <%}%>
+                                    </ul>
+                                </li>
+
+
+
+
+                                <li class="clazzli clazzli-12 bind-ajax "><a class="clazza clazza-12" rel=""
+                                        href="/thuoc-lo-ban">Thước Lỗ Ban</a></li>
+                                <li class="clazzli clazzli-15 "><a class="clazza clazza-15" rel=""
+                                        href="/danh-sach-video">Video
+                                    </a>
+                                </li>
+                                <li class="clazzli clazzli-14 "><a class="clazza clazza-14" rel="">tin
+                                        tức</a>
+                                    <ul>
+                                        <% for(item of menutt){%>
+                                            <li>
+                                                <a href="/category-tintuc/<%=item.slug%>/<%=item._id%>"
+                                                    title="<%=item.menutintuc%>" class="parent__ pl-0" style="text-transform: uppercase;">
+                                                    <%=item.menutintuc%>
+                                                </a>
+                                                <i></i>
+                                            </li>
+                                            <%}%>
+
+                                    </ul>
+                                </li>
+                                <li class="clazzli clazzli-17 "><a  class="clazza clazza-17" rel="" href="/lien-he">LIÊN HỆ</a>
+                                </li>
+                                <li class="clazzli clazzli-17 "><a class="clazza clazza-17" rel="" href="/tu-van">Đăng ký tư
+                                        vấn</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="search-headers">
+                        <p class="btn-search__headers"><i class="fa fa-search" aria-hidden="true"></i></p>
+                        <div class="form-search__header">
+                            <form method="GET" class="frm__header" accept-charset="utf-8" action="/search"> <input
+                                    type="text" name="keyword" value="" placeholder="Tìm kiếm ..."> </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- end header -->
+        <!-- menu -->
+        <div id="main-menu-mobile">
+            <div class="header-menu-mobile">
+                <p class="logo-menu__mobile"> <a href="/" title="Nam Thành Phát">
+                        <% for(item of thongtintrang){%>
+                            <picture>
+                                <img src="../site/images/update/<%=item.images%>" class="img-fluid lazyload">
+                            </picture>
+                            <%}%>
+                    </a> </p>
+            </div>
+
+            <div class="menu_clone">
+                <ul>
+                    <li class="clazzli clazzli-11 "><a class="clazza clazza-11" rel="/gioi-thieu"
+                            href="/gioi-thieu">Giới
+                            thiệu</a>
+                    </li>
+                    <li class="clazzli clazzli-38 bind-ajax"><a class="clazza clazza-38" rel="">Dịch Vụ</a>
+                        <ul  style="background-color: #ebebeb;">
+                            <% for(item of menudv){%>
+                                <li style="margin-left: 25px;">
+                                    <a href="/category-dich-vu/<%=item.slug%>/<%=item._id%>"
+                                        title="<%=item.menudichvu%>" class="parent__ pl-0">
+                                        <%=item.menudichvu%>
+                                    </a>
+                                    <i></i>
+                                </li>
+                                <%}%>
+                        </ul>
+                    </li>
+
+                    <li class="clazzli clazzli-12 bind-ajax "><a class="clazza clazza-12" rel="">Sản
+                            Phẩm</a>
+                        <ul style="background-color: #ebebeb;">
+
+                            <%for(item of MENU){%>
+                                <li style="margin-left: 25px;">
+                                    <a href="/category-menu/<%=item.menu1slug%>/<%=item.menu1id%>"
+                                        title="<%=item.menu1%>" class="parent__ pl-0">
+                                        <%=item.menu1%>
+                                    </a>
+                                    <i></i>
+                                    <ul>
+                                        <%for(item2 of item.menu2){%>
+                                            <li><a href="/category-item/<%=item2.slug%>/<%=item2._id%>"
+                                                    title="<%=item2.tennhomsanpham%>">
+                                                    <%=item2.tennhomsanpham%>
+                                                </a></li>
+                                            <%}%>
+                                    </ul>
+                                </li>
+                                <%}%>
+                        </ul>
+                    </li>
+
+
+
+
+                    <li class="clazzli clazzli-12 bind-ajax "><a class="clazza clazza-12" rel=""
+                            href="/thuoc-lo-ban">Thước Lỗ Ban</a></li>
+                    <li class="clazzli clazzli-15 "><a class="clazza clazza-15" rel=""
+                            href="/danh-sach-video">Video
+                        </a>
+                    </li>
+                    <li class="clazzli clazzli-14 "><a class="clazza clazza-14" rel="">tin
+                            tức</a>
+                        <ul style="background-color: #ebebeb;">
+                            <% for(item of menutt){%>
+                                <li style="margin-left: 25px;">
+                                    <a href="/category-tintuc/<%=item.slug%>/<%=item._id%>"
+                                        title="<%=item.menutintuc%>" class="parent__ pl-0">
+                                        <%=item.menutintuc%>
+                                    </a>
+                                    <i></i>
+                                </li>
+                                <%}%>
+
+                        </ul>
+                    </li>
+                    <li class="clazzli clazzli-17 "><a class="clazza clazza-17" rel="" href="/lien-he">Liên
+                            hệ</a>
+                    </li>
+                    <li class="clazzli clazzli-17 "><a class="clazza clazza-17" rel="" href="/tu-van">Đăng ký tư
+                            vấn</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="bg-over-menu"></div>
+        <p class="close-menu-btn smooth"></p>
+    </div>
+    <!-- end header -->

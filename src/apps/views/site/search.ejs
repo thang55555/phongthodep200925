@@ -1,0 +1,112 @@
+<%- include("./layouts/head.ejs")%>
+    <title>TRANG CHỦ | PHÒNG THỜ ĐẸP | NỘI THẤT PHÒNG THỜ</title>
+    <%- include("./layouts/header.ejs")%>
+
+
+
+        <!-- main -->
+
+
+    <!-- Search -->
+        <div class="container" style="	margin-top: 10%;">
+
+            <ul class="breadcrumb">
+                <li><a href="/"><span>Trang chủ</span></a>
+                    <meta content="1">
+                </li>
+                <li><a><span style="color: #F5D182;">Tìm kiếm</span></a>
+                    <meta  content="2">
+                </li>
+            </ul>
+
+
+            <div class="content-prds__pages mb-55">
+                <div class="container ajax_result">
+                    <div class="tops-prds__pages">
+                        <div class="title-cicle__alls">
+                            <h1 class="title-in-cicles">Từ khóa tìm kiếm: <%=keyword%>
+                            </h1>
+                            <p class="key d-none" id="Nhà Gỗ 3 Gian 4 Mái Siêu "></p>
+                        </div>
+                    </div>
+                    <div data-url="">
+                        <p class="title_sm mb-lg-3 mb-2">Có <%=products.length%> kết quả phù hợp</p>
+                        <div class="row">
+                            <%for(item of product){%>
+                                <div class="col-lg-3 col-md-6 col-sm-6 col-12 mb-lg-0 mb-3">
+                                    <div class="items-prds__alls">
+                                        <div class="imgs-prds__alls">
+                                            <a href="/product/<%=item.slug%>/<%=item._id%>" title="<%=item.tieudesp%>"
+                                                class="d-block img">
+                                                <picture>
+                                                    <source media="(min-width:480px;)"
+                                                        data-srcset="./images/update/<%=item.image[0].images%>"
+                                                        srcset="./images/update/<%=item.image[0].images%>">
+                                                    <source media="(min-width:0px;)"
+                                                        data-srcset="./images/update/<%=item.image[0].images%>"
+                                                        srcset="./images/update/<%=item.image[0].images%>">
+                                                    <img loading="lazy" src="./images/update/<%=item.image[0].images%>"
+                                                        data-src="./images/update/<%=item.image[0].images%>"
+                                                        title="<%=item.tieudesp%>" alt="<%=item.tieudesp%>"
+                                                        class="img-fluid ls-is-cached lazyloaded">
+                                                </picture>
+                                            </a>
+                                        </div>
+                                        <div class="intros-prds__alls">
+                                            <p><a href="/product/<%=item.slug%>/<%=item._id%>"
+                                                    title="<%=item.tieudesp%>" class="title-prds__alls">
+                                                    <%=item.tieudesp%>
+                                                </a></p>
+                                            <ul class="infos-prds__items">
+                                                <li><img src="./images/prds-icons-1.png" alt="Chủ đầu tư"> Chủ
+                                                    đầu tư: <%=item.chudautu%>
+                                                </li>
+                                                <li><img src="./images/prds-icons-2.png" alt="Địa chỉ"> Địa
+                                                    chỉ: <%=item.diachi%>
+                                                </li>
+                                                <li><img src="./images/prds-icons-3.png" alt="Diện tích"> Thông số:
+                                                    <%=item.dientich%>
+                                                </li>
+                                                <li><img src="./images/prds-icons-4.png" alt="Kinh phí dự trù">
+                                                    Kinh phí dự trù: <%=item.kinhphi%>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <%}%>
+                        </div>
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination pagination d-flex align-items-center justify-content-center">
+                                <% if(hasPrev){%>
+                                    <li class="page-item"><a class="page-link"
+                                            href="/search?keyword=<%-keyword%>&page=<%-prev%>">&laquo;</a></li>
+                                    <% }%>
+                                        <% for(i of pages){%>
+                                            <% if(i==="..." ){%>
+                                                <li class="page-item"><span class="page-link" <%=i%></span>
+                                                </li>
+                                                <% }else{%>
+                                                    <li class="page-item"><a class="page-link"
+                                                            href="/search?keyword=<%=keyword%>&page=<%=i%>">
+                                                            <%=i%>
+                                                        </a></li>
+                                                    <%}%>
+                                                        <% }%>
+                                                            <% if(hasNext){%>
+                                                                <li class="page-item"><a class="page-link"
+                                                                        href="/search?keyword=<%=keyword%>&page=<%=next%>">&raquo;</a>
+                                                                </li>
+                                                                <% }%>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <!-- end search -->
+
+        </div>
+        </div>
+
+
+        <%- include("./layouts/footer.ejs")%>

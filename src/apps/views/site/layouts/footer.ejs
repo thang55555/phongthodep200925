@@ -1,0 +1,141 @@
+<footer style="margin-top: 30px;">
+    <section class="top-footers">
+        <div class="container">
+            <ul>
+                <% for(item of MENU){%>
+                <li class="clazzli clazzli-5 "><a class="clazza clazza-5" rel="" href="/category-menu/<%=item.slug%>/<%=item._id%>"><%=item.tendanhmuc%></a></li>
+                <%}%>
+            </ul>
+        </div>
+    </section>
+    <section class="content-footers">
+        <%for(item of thongtintrang){%>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="box-contents__footer"> <a href="/" title="Nam Thành Phát" class="logo-footers">
+                            <picture>
+                                <img src="./images/<%=item.images%>" data-src="#" title="" alt="">
+                            </picture>
+                        </a>
+                        <div class="intros-footers__text"> <%-item.gioithieu%> </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12 col-12">
+                    <div class="box-contents__footer">
+                        <p class="title-footers">Fanpage</p>
+                        <div class="face-footers">
+                            <div class="fb-page">
+                                <iframe
+                                    src="<%=item.linkFB%>"
+                                    width="340" height="300" style="border:none;overflow:hidden" scrolling="no"
+                                    frameborder="0" allowfullscreen="true"
+                                    allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share">
+                                </iframe>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12 col-12">
+                    <div class="box-contents__footer">
+                        <p class="title-footers">Bản Đồ</p>
+                                <iframe
+                                    src="<%=item.linkMap%>"
+                                    width="330" height="300" style="border:0;" allowfullscreen="" loading="lazy"
+                                    referrerpolicy="no-referrer-when-downgrade"></iframe>
+                           
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4 col-12 footers-top">
+                    <div class="intros-adress__footers">
+                        <p class="titles-footers"><%=item.tencongty%></p>
+                        <ul class="list-adress__footers">
+                            <li><i class="fa fa-map-marker" aria-hidden="true"></i><%=item.diachicty%></li>
+                            <li><i class="fa fa-envelope" aria-hidden="true"></i><a
+                                    href="mailto:<%=item.email%>"
+                                    title="<%=item.email%>"><%=item.email%></a></li>
+                            <li><i class="fa fa-phone" aria-hidden="true"></i><a href="tel:<%=item.sdt%>"
+                                    title="<%=item.sdt%>"><%=item.sdt%></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4 col-12">
+                    <div class="intros-adress__footers">
+                        <p class="titles-footers"><%=item.tieudeFB%></p>
+                        <ul class="list-adress__footers">
+                            <li><i class="fa fa-map-marker" aria-hidden="true"></i><%=item.diachiFB%></li>
+                            <li><i class="fa fa-envelope" aria-hidden="true"></i><a
+                                    href="mailto:<%=item.email%>"
+                                    title="<%=item.email%>"><%=item.email%></a></li>
+                            <li><i class="fa fa-phone" aria-hidden="true"></i><a href="tel:<%=item.sdt%>"
+                                    title="<%=item.sdt%>"><%=item.sdt%></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4 col-12">
+                    <div class="intros-adress__footers">
+                        <p class="titles-footers"><%=item.tieudeMap%></p>
+                        <ul class="list-adress__footers">
+                            <li><i class="fa fa-map-marker" aria-hidden="true"></i><%=item.diachiMap%></li>
+                            <li><i class="fa fa-envelope" aria-hidden="true"></i><a
+                                    href="mailto:<%=item.email%>"
+                                    title="<%=item.email%>"><%=item.email%></a></li>
+                            <li><i class="fa fa-phone" aria-hidden="true"></i><a href="tel:<%=item.sdt%>"
+                                    title="<%=item.sdt%>"><%=item.sdt%></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <%}%>
+    </section>
+    <section class="bottom-footers">
+        <div class="container">
+            <div class="list-bottom__footers">
+                <ul>
+                    <li class="clazzli clazzli-1 "><a class="clazza clazza-1" rel="" href="/">NAM THÀNH PHÁT</a>
+                    </li>
+                    <li class="clazzli clazzli-2 "><a class="clazza clazza-2" rel="" href="/">CHÍNH SÁCH</a></li>
+                    <li class="clazzli clazzli-3 "><a class="clazza clazza-3" rel="" href="/">TRỢ GIÚP</a></li>
+                    <li class="clazzli clazzli-4 "><a class="clazza clazza-4" rel="" href="/">ĐIỀU KHOẢN</a></li>
+                </ul>
+            </div>
+            <div class="copyright-footers">
+                <p>Copyright © 2021. All right Reserved. </p> <a
+                    href="//www.dmca.com/Protection/Status.aspx?ID=6f8013d2-df12-4767-a978-9a0913f06e71"
+                    title="DMCA.com Protection Status" class="dmca-badge"> <img
+                        src="https://images.dmca.com/Badges/dmca-badge-w150-5x1-01.png?ID=6f8013d2-df12-4767-a978-9a0913f06e71"
+                        alt="DMCA.com Protection Status" /></a>
+      
+            </div>
+        </div>
+    </section>
+</footer>
+<%for(item of thongtintrang){%>
+<a href="tel:<%=item.sdt%>" title="<%=item.sdt%>" class="btn-phones__fixed"><img src="./images/card-footer.png"
+        class="Điện thoại" alt="điện thoại"></a>
+<a href="https://zalo.me/<%=item.sdt%>" title="<%=item.sdt%>" class="btn-phones__fixed" style="top: 72%;"><img src="./images/icon-zalo.png"
+        class="zalo" alt="zalo"></a>
+        <%}%>
+<p class="btn-up-topss"><img src="./images/up-to-tops.png" alt="Back to top"></p>
+
+
+
+
+<link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
+<link rel="stylesheet" href="css/style2.css" type="text/css">
+<link rel="stylesheet" href="css/stylethietbi.css" type="text/css">
+
+
+<script src="theme/frontend/js/jquery-3.4.1.min.js" defer></script>
+<script src="theme/frontend/js/bootstrap.min.js" defer></script>
+<script src="theme/frontend/js/wow.min.js" defer></script> 
+ <script src="theme/frontend/js/swiper.min.js" defer></script>
+<script src="theme/frontend/js/script.js" defer></script>
+
+
+
+</body>
+
+</html>
