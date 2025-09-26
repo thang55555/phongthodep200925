@@ -540,13 +540,51 @@ const lienhe = async (req, res) => {
     const thongtin = await Thong_tin_trangModel.find();
     res.render("./site/lienhe", { thongtin });
 }
+// const productsp = async (req, res) => {
+//     const id = req.params.id;
+//     const product = await Product_sanphamModel.findById(id).populate({ path: "nhomsp_id" });
+//     const category_danhmuc = await Menu_danhmuc_sanphamModel.findById(product.nhomsp_id.danhmuc_id);
+//     const product_noibat = await Product_sanphamModel.find({nhap: true}).limit(5).sort({ _id: -1 });
+//     res.render("./site/product", { product, category_danhmuc, product_noibat, });
+// }
 const productsp = async (req, res) => {
+  try {
     const id = req.params.id;
-    const product = await Product_sanphamModel.findById(id).populate({ path: "nhomsp_id" });
-    const category_danhmuc = await Menu_danhmuc_sanphamModel.findById(product.nhomsp_id.danhmuc_id);
-    const product_noibat = await Product_sanphamModel.find({nhap: true}).limit(5).sort({ _id: -1 });
-    res.render("./site/product", { product, category_danhmuc, product_noibat, });
-}
+
+    // Tìm sản phẩm + populate nhóm sản phẩm
+    const product = await Product_sanphamModel.findById(id).populate("nhomsp_id");
+
+    if (!product) {
+      return res.status(404).send("Không tìm thấy sản phẩm");
+    }
+
+    // Kiểm tra nhomsp_id tồn tại
+    if (!product.nhomsp_id) {
+      return res.status(400).send("Sản phẩm chưa gán nhóm sản phẩm");
+    }
+
+    // Kiểm tra danhmuc_id tồn tại
+    let category_danhmuc = null;
+    if (product.nhomsp_id.danhmuc_id) {
+      category_danhmuc = await Menu_danhmuc_sanphamModel.findById(product.nhomsp_id.danhmuc_id);
+    }
+
+    // Lấy sản phẩm nổi bật
+    const product_noibat = await Product_sanphamModel.find({ nhap: true })
+      .limit(5)
+      .sort({ _id: -1 });
+
+    res.render("./site/product", {
+      product,
+      category_danhmuc,
+      product_noibat,
+    });
+  } catch (err) {
+    console.error("❌ Lỗi tại productsp:", err);
+    res.status(500).send("Có lỗi xảy ra khi load sản phẩm");
+  }
+};
+
 const thuocloban = async (req, res) => {
     const product = await LobanModel.find();
     res.render("./site/thuoc-lo-ban", {product});
