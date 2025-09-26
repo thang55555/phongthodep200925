@@ -314,27 +314,27 @@ const categorydichvu = async (req, res) => {
     });
 }
 
-const productdichvu = async (req, res) => {
-    const id = req.params.id;
-    const product = await BaivietdichvuModel.findById(id);
-    const imgOne = product.image[0].images || [];
-    const total = product.image.length;
-    const category = await Menu_dichvuModel.findById(product.menudichvu_id)
-    const category_noibat = await BaivietdichvuModel.find({nhap: true}).populate({ path: "menudichvu_id" }).sort({ _id: -1 });
+// const productdichvu = async (req, res) => {
+//     const id = req.params.id;
+//     const product = await BaivietdichvuModel.findById(id);
+//     const imgOne = product.image[0].images || [];
+//     const total = product.image.length;
+//     const category = await Menu_dichvuModel.findById(product.menudichvu_id)
+//     const category_noibat = await BaivietdichvuModel.find({nhap: true}).populate({ path: "menudichvu_id" }).sort({ _id: -1 });
 
-    const image = [];
-    if (total > 1) {
-        for (i = 1; i < total; i++) {
-            item = {
-                images: product.image[i].images,
-                stt: product.image[i].stt
-            }
-            image.push(item)
-        }
-    }
-    for (item of image) { console.log(item.images); }
-    res.render("./site/product_dichvu", { product, category, category_noibat, imgOne, image })
-}
+//     const image = [];
+//     if (total > 1) {
+//         for (i = 1; i < total; i++) {
+//             item = {
+//                 images: product.image[i].images,
+//                 stt: product.image[i].stt
+//             }
+//             image.push(item)
+//         }
+//     }
+//     for (item of image) { console.log(item.images); }
+//     res.render("./site/product_dichvu", { product, category, category_noibat, imgOne, image })
+// }
 
 // const categoryitintuc = async (req, res) => {
 //     const id = req.params.id;
@@ -367,6 +367,45 @@ const productdichvu = async (req, res) => {
 //         pages: pagination(page, totalPages),
 //     });
 // }
+
+const productdichvu = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const product = await BaivietdichvuModel.findById(id);
+
+        if (!product) {
+            return res.status(404).send("Không tìm thấy bài viết dịch vụ");
+        }
+
+        // Nếu product.image rỗng hoặc không tồn tại thì gán mặc định []
+        const total = Array.isArray(product.image) ? product.image.length : 0;
+        const imgOne = total > 0 ? (product.image[0]?.images || []) : [];
+
+        const category = await Menu_dichvuModel.findById(product.menudichvu_id);
+
+        const category_noibat = await BaivietdichvuModel.find({ nhap: true })
+            .populate({ path: "menudichvu_id" })
+            .sort({ _id: -1 });
+
+        // Chuẩn hóa danh sách ảnh
+        const image = [];
+        if (total > 1) {
+            for (let i = 1; i < total; i++) {
+                image.push({
+                    images: product.image[i]?.images || [],
+                    stt: product.image[i]?.stt || i
+                });
+            }
+        }
+
+        res.render("./site/product_dichvu", { product, category, category_noibat, imgOne, image });
+
+    } catch (err) {
+        console.error("❌ Lỗi tại productdichvu:", err);
+        res.status(500).send("Có lỗi xảy ra khi load dịch vụ");
+    }
+};
+
 const categoryitintuc = async (req, res) => {
   try {
     const id = req.params.id;   // cái này có thể là ObjectId hoặc slug
