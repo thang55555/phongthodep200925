@@ -1,4 +1,5 @@
 const mongoose= require("mongoose");
+mongoose.set("strictQuery", true); // ẩn warning
 module.exports = ()=>{
     mongoose
     .connect(process.env.MONGO_URI)
