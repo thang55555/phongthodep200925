@@ -16,18 +16,45 @@ const Menu_tintucModel = require("../models/menu_tintuc");
 const TuvanModel = require("../models/tuvan");
 const Thong_tin_trangModel = require("../models/thong_tin_trang");
 const LobanModel = require("../models/loban");
+// const home = async (req, res) => {
+//     const gioithieutrang = await Gioi_thieu_trangModel.find();
+//     const video = await VideoModel.find().sort({ _id: -1 }) || [];
+//     const idVideo = video[0]._id || [];
+//     const videoOne = await VideoModel.findById(idVideo);
+//     const tintuc = await BaiviettintucModel.find({nhap: true}).sort({ _id: -1 }) || [];
+//     const idtintuc = tintuc[0]._id || []
+//     const tintucOne = await BaiviettintucModel.findById(idtintuc)
+//     const menudichvu = await Menu_dichvuModel.find({nhap: true}).limit(2);
+//     const chiase = await ChiaseModel.find();
+//     res.render("site/index", { gioithieutrang, video, videoOne, tintuc, tintucOne, menudichvu, chiase, });
+// }
 const home = async (req, res) => {
+  try {
     const gioithieutrang = await Gioi_thieu_trangModel.find();
     const video = await VideoModel.find().sort({ _id: -1 }) || [];
-    const idVideo = video[0]._id || [];
-    const videoOne = await VideoModel.findById(idVideo);
-    const tintuc = await BaiviettintucModel.find({nhap: true}).sort({ _id: -1 }) || [];
-    const idtintuc = tintuc[0]._id || []
-    const tintucOne = await BaiviettintucModel.findById(idtintuc)
-    const menudichvu = await Menu_dichvuModel.find({nhap: true}).limit(2);
+
+    let videoOne = null;
+    if (video.length > 0) {
+      videoOne = await VideoModel.findById(video[0]._id);
+    }
+
+    const tintuc = await BaiviettintucModel.find({ nhap: true }).sort({ _id: -1 }) || [];
+
+    let tintucOne = null;
+    if (tintuc.length > 0) {
+      tintucOne = await BaiviettintucModel.findById(tintuc[0]._id);
+    }
+
+    const menudichvu = await Menu_dichvuModel.find({ nhap: true }).limit(2);
     const chiase = await ChiaseModel.find();
-    res.render("site/index", { gioithieutrang, video, videoOne, tintuc, tintucOne, menudichvu, chiase, });
-}
+
+    res.render("site/index", { gioithieutrang, video, videoOne, tintuc, tintucOne, menudichvu, chiase });
+  } catch (err) {
+    console.error("❌ Lỗi tại home:", err);
+    res.status(500).send("Có lỗi xảy ra");
+  }
+};
+
 
 
 const categoryDanhmuc = async (req, res) => {
@@ -309,45 +336,127 @@ const productdichvu = async (req, res) => {
     res.render("./site/product_dichvu", { product, category, category_noibat, imgOne, image })
 }
 
+// const categoryitintuc = async (req, res) => {
+//     const id = req.params.id;
+//     const slug = req.params.slug;
+//     const category = await Menu_tintucModel.findById(id)
+//     const product = await BaiviettintucModel.find({ menutintuc_id: id, nhap: true }).sort({ _id: -1 });
+//     const page = parseInt(req.query.page) || 1;
+//     const limit = 8;
+//     const skip = page * limit - limit;
+//     const totalRows = await Product_sanphamModel.find({ spdv: true, nhap: true }).countDocuments();
+//     const totalPages = Math.ceil(totalRows / limit)
+//     const products = await Product_sanphamModel
+//         .find({ spdv: true, nhap: true })
+//         .sort({ _id: -1 })
+//         .skip(skip)
+//         .limit(limit);
+//     const next = page + 1;
+//     const hasNext = page < totalPages ? true : false;
+//     const prev = page - 1;
+//     const hasPrev = page > 1 ? true : false;
+//     const menuproduct = await Menu_danhmuc_sanphamModel.find();
+//     res.render("./site/category_tintuc", {
+//         product, category, products, menuproduct, slug, id,
+//         page,
+//         totalPages,
+//         next,
+//         hasNext,
+//         prev,
+//         hasPrev,
+//         pages: pagination(page, totalPages),
+//     });
+// }
 const categoryitintuc = async (req, res) => {
-    const id = req.params.id;
+  try {
+    const id = req.params.id;   // cái này có thể là ObjectId hoặc slug
     const slug = req.params.slug;
-    const category = await Menu_tintucModel.findById(id)
-    const product = await BaiviettintucModel.find({ menutintuc_id: id, nhap: true }).sort({ _id: -1 });
+
+    // nếu id không phải ObjectId thì dùng findOne theo slug
+    const category = mongoose.isValidObjectId(id) 
+      ? await Menu_tintucModel.findById(id)
+      : await Menu_tintucModel.findOne({ slug: id });
+
+    if (!category) {
+      return res.status(404).send("Không tìm thấy danh mục");
+    }
+
+    const product = await BaiviettintucModel.find({ menutintuc_id: category._id, nhap: true }).sort({ _id: -1 });
+
+    // phân trang sản phẩm
     const page = parseInt(req.query.page) || 1;
     const limit = 8;
     const skip = page * limit - limit;
-    const totalRows = await Product_sanphamModel.find({ spdv: true, nhap: true }).countDocuments();
-    const totalPages = Math.ceil(totalRows / limit)
+    const totalRows = await Product_sanphamModel.countDocuments({ spdv: true, nhap: true });
+    const totalPages = Math.ceil(totalRows / limit);
+
     const products = await Product_sanphamModel
-        .find({ spdv: true, nhap: true })
-        .sort({ _id: -1 })
-        .skip(skip)
-        .limit(limit);
-    const next = page + 1;
-    const hasNext = page < totalPages ? true : false;
-    const prev = page - 1;
-    const hasPrev = page > 1 ? true : false;
+      .find({ spdv: true, nhap: true })
+      .sort({ _id: -1 })
+      .skip(skip)
+      .limit(limit);
+
     const menuproduct = await Menu_danhmuc_sanphamModel.find();
+
     res.render("./site/category_tintuc", {
-        product, category, products, menuproduct, slug, id,
-        page,
-        totalPages,
-        next,
-        hasNext,
-        prev,
-        hasPrev,
-        pages: pagination(page, totalPages),
+      product,
+      category,
+      products,
+      menuproduct,
+      slug,
+      id,
+      page,
+      totalPages,
+      next: page + 1,
+      hasNext: page < totalPages,
+      prev: page - 1,
+      hasPrev: page > 1,
+      pages: pagination(page, totalPages),
     });
-}
+  } catch (err) {
+    console.error("❌ Lỗi tại categoryitintuc:", err);
+    res.status(500).send("Có lỗi xảy ra");
+  }
+};
+
+
+
+// const productTinTuc = async (req, res) => {
+//     const id = req.params.id;
+//     const product = await BaiviettintucModel.findById(id);
+//     const idcate = product.menutintuc_id
+//     const category = await Menu_tintucModel.findById(idcate)
+//     const baiviet = await BaiviettintucModel.find({ menutintuc_id: product.menutintuc_id, nhap: true}).sort({ _id: -1 });;
+//     res.render("./site/product_tintuc", { product, baiviet, category });
+// }
+
 const productTinTuc = async (req, res) => {
+  try {
     const id = req.params.id;
-    const product = await BaiviettintucModel.findById(id);
-    const idcate = product.menutintuc_id
-    const category = await Menu_tintucModel.findById(idcate)
-    const baiviet = await BaiviettintucModel.find({ menutintuc_id: product.menutintuc_id, nhap: true}).sort({ _id: -1 });;
+
+    // kiểm tra id
+    const product = mongoose.isValidObjectId(id)
+      ? await BaiviettintucModel.findById(id)
+      : await BaiviettintucModel.findOne({ slug: id });
+
+    if (!product) {
+      return res.status(404).send("Không tìm thấy bài viết");
+    }
+
+    const category = await Menu_tintucModel.findById(product.menutintuc_id);
+
+    const baiviet = await BaiviettintucModel.find({
+      menutintuc_id: product.menutintuc_id,
+      nhap: true,
+    }).sort({ _id: -1 });
+
     res.render("./site/product_tintuc", { product, baiviet, category });
-}
+  } catch (err) {
+    console.error("❌ Lỗi tại productTinTuc:", err);
+    res.status(500).send("Có lỗi xảy ra");
+  }
+};
+
 const danhsachvideo = async (req, res) => {
     const baiviet = await BaivietdichvuModel.find({nhap: true});
     const page = parseInt(req.query.page) || 1;
