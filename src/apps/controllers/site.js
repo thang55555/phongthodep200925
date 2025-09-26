@@ -16,6 +16,7 @@ const Menu_tintucModel = require("../models/menu_tintuc");
 const TuvanModel = require("../models/tuvan");
 const Thong_tin_trangModel = require("../models/thong_tin_trang");
 const LobanModel = require("../models/loban");
+const mongoose = require('mongoose');
 // const home = async (req, res) => {
 //     const gioithieutrang = await Gioi_thieu_trangModel.find();
 //     const video = await VideoModel.find().sort({ _id: -1 }) || [];
