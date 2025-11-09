@@ -132,37 +132,54 @@ const editthongtintrang = async (req, res) => {
     res.render("./admin/thong-tin-trang/edit-thong-tin-trang", { thongtin })
 }
 const updatethongtintrang = async (req, res) => {
-    const id = req.params.id;
-    const { files, body } = req;
-    console.log(files, body );
-    const update = {
-        sdt: body.sdt, 
-        email: body.email,
-        tencongty: body.tencongty,
-        tieudeFB: body.tieudeFB,
-        diachiFB: body.diachiFB,
-        linkFB: body.linkFB,
-        diachiMap: body.diachiMap,
-        linkMap: body.linkMap,
-        gioithieu: body.gioithieu,
-    }
-    if(files.length==2){
-        update["images"] = files[0].originalname;
-        update["video"] = files[1].originalname;
-            const add = {
-                        images: files[0].originalname,
-                        note: "02"
-                    };
-        new ImagesModel(add).save();
-    for (item of files) {
-        fs.renameSync(item.path, path.resolve("src/public/site/images/update", item.originalname));
-    }
-    }
+    try {
+        const id = req.params.id;
+        const { files, body } = req;
 
+        const update = {
+            sdt: body.sdt,
+            email: body.email,
+            tencongty: body.tencongty,
+            diachicty: body.diachicty,
+            tieudeFB: body.tieudeFB,
+            diachiFB: body.diachiFB,
+            linkFB: body.linkFB,
+            tieudeMap: body.tieudeMap,
+            diachiMap: body.diachiMap,
+            linkMap: body.linkMap,
+            gioithieu: body.gioithieu,
+        };
 
-    await Thong_tin_trangModel.updateOne({ _id: id }, { $set: update });
-    res.redirect("/admin/thong-tin-trang")
-}
+        if (files && files.length > 0) {
+            for (const file of files) {
+                // Kiểm tra loại file dựa theo mimetype
+                if (file.mimetype.startsWith("image/")) {
+                    update["images"] = file.originalname;
+
+                    // Lưu vào bảng ImagesModel nếu muốn
+                    await new ImagesModel({
+                        images: file.originalname,
+                        note: "upload",
+                    }).save();
+                } else if (file.mimetype.startsWith("video/")) {
+                    update["video"] = file.originalname;
+                }
+
+                // Di chuyển file vào thư mục đích
+                const destPath = path.resolve("src/public/site/images/update", file.originalname);
+                fs.renameSync(file.path, destPath);
+            }
+        }
+
+        // Cập nhật dữ liệu trong MongoDB
+        await Thong_tin_trangModel.updateOne({ _id: id }, { $set: update });
+
+        res.redirect("/admin/thong-tin-trang");
+    } catch (err) {
+        console.error("Lỗi khi cập nhật thông tin trang:", err);
+        res.status(500).send("Có lỗi xảy ra khi cập nhật thông tin trang.");
+    }
+};
 
 
 
