@@ -79,46 +79,81 @@ const editgioithieutrang = async (req, res) => {
     res.render("./admin/thong-tin-trang/edit-gioi-thieu-trang", { gioithieu })
 }
 const updategioithieu = async (req, res) => {
-    const id = req.params.id;
-    const { files, body } = req;
-    const update = {
-        linkvideo: body.linkvideo,
-        gioithieuchung: body.gioithieuchung,
-        content_tamnhin: body.content_tamnhin,
-        content_sumenh: body.content_sumenh,
-        content_cotloi: body.content_cotloi,
-        content_kythuat: body.content_kythuat,
-    }
-    if(files){
-            update["img_tamnhin"] = files[0].originalname,
-            update["img_cotloi"] = files[1].originalname,
-            update["img_kythuat"] = files[2].originalname
-        for (item of files) {
-            fs.renameSync(item.path, path.resolve("src/public/site/images/update", item.originalname));
+    try {
+        const id = req.params.id;
+        const { files, body } = req;
+        
+
+        const update = {
+            linkvideo: body.linkvideo,
+            gioithieuchung: body.gioithieuchung,
+            content_tamnhin: body.content_tamnhin,
+            content_sumenh: body.content_sumenh,
+            content_cotloi: body.content_cotloi,
+            content_kythuat: body.content_kythuat,
+        };
+
+        // ========= XỬ LÝ ẢNH TẦM NHÌN =========
+        if (files.img_tamnhin && files.img_tamnhin[0]) {
+            const file = files.img_tamnhin[0];
+
+            update.img_tamnhin = file.originalname;
+
+            fs.renameSync(
+                file.path,
+                path.resolve("src/public/site/images/update", file.originalname)
+            );
+
+            new ImagesModel({
+                images: file.originalname,
+                note: "02",
+            }).save();
         }
+
+        // ========= XỬ LÝ ẢNH CỐT LÕI =========
+        if (files.img_cotloi && files.img_cotloi[0]) {
+            const file = files.img_cotloi[0];
+
+            update.img_cotloi = file.originalname;
+
+            fs.renameSync(
+                file.path,
+                path.resolve("src/public/site/images/update", file.originalname)
+            );
+
+            new ImagesModel({
+                images: file.originalname,
+                note: "02",
+            }).save();
+        }
+
+        // ========= XỬ LÝ ẢNH KỸ THUẬT =========
+        if (files.img_kythuat && files.img_kythuat[0]) {
+            const file = files.img_kythuat[0];
+
+            update.img_kythuat = file.originalname;
+
+            fs.renameSync(
+                file.path,
+                path.resolve("src/public/site/images/update", file.originalname)
+            );
+
+            new ImagesModel({
+                images: file.originalname,
+                note: "02",
+            }).save();
+        }
+
+        // Cập nhật database
+        await Gioi_thieu_trangModel.updateOne({ _id: id }, { $set: update });
+
+        res.redirect("/admin/gioi-thieu-trang");
+    } catch (err) {
+        console.log(err);
+        res.send("Có lỗi xảy ra");
     }
+};
 
-       const add = {
-                        images: files[0].originalname,
-                        note: "02"
-                    };
-        new ImagesModel(add).save();
-       const add1 = {
-                        images: files[1].originalname,
-                        note: "02"
-                    };
-        new ImagesModel(add1).save();
-       const add2 = {
-                        images: files[2].originalname,
-                        note: "02"
-                    };
-        new ImagesModel(add2).save();
-       
-
-    await Gioi_thieu_trangModel.updateOne({ _id: id }, { $set: update });
-    res.redirect("/admin/gioi-thieu-trang")
-
-}
 
 
 

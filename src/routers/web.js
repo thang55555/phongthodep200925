@@ -31,7 +31,11 @@ router.get("/admin/dashboard", AuthMiddleware.checkAdmin, AdminController.index)
 router.get("/admin/gioi-thieu-trang", AuthMiddleware.checkAdmin, ProductController.gioithieutrang);
 router.get("/admin/edit-gioi-thieu-trang/:id", AuthMiddleware.checkAdmin, ProductController.editgioithieutrang);
 router.post("/update-gioi-thieu-trang/:id", AuthMiddleware.checkAdmin,
-    UploadMiddleware.array("images", 20), 
+    UploadMiddleware.fields([
+        { name: "img_tamnhin", maxCount: 1 },
+        { name: "img_cotloi", maxCount: 1 },
+        { name: "img_kythuat", maxCount: 1 }
+    ]), 
     ProductController.updategioithieu);
 
 
