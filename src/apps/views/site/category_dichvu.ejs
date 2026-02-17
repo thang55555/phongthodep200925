@@ -1,5 +1,7 @@
 <%- include("./layouts/head.ejs")%>
-<title><%=category.menudichvu%></title>
+<title><%= category.title || category.menudichvu %></title>
+<meta name="description" content="<%=category.metadescription%>">
+<meta name="keywords" content="<%=category.metakeywords%>">
 <%- include("./layouts/header.ejs")%>
 
         <!-- main -->

@@ -1,10 +1,9 @@
 <%- include("./layouts/head.ejs")%>
-    <title>
-        <%=product.tieudesp%>
-    </title>
+
+    <title><%= product.title || product.tieudesp %></title>
     <meta name="description" content="<%=product.metadescription%>">
     <meta name="keywords" content="<%=product.metakeywords%>">
-        <meta name="image" content="https://phongthodep.net/static/site/images/update/<%=product.image[0].images%>">
+    <meta name="image" content="https://phongthodep.net/static/site/images/update/<%=product.image[0].images%>">
     <%- include("./layouts/header.ejs")%>
 
 

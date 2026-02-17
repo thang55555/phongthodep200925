@@ -24,9 +24,9 @@
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <div class="col-md-8">
-                            <form role="form" method="post" action="/admin/update-menu-tin-tuc/<%=update._id%>">
+                            <form name="frm"  role="form" method="post" action="/admin/update-menu-tin-tuc/<%=update._id%>">
                                 <div class="form-group">
-                                    <label>Tên menu tin tức (Thẻ title):</label>
+                                    <label>Tên menu tin tức:</label>
                                     <input required type="text" name="menutintuc" class="form-control" value="<%=update.menutintuc%>"
                                         placeholder="Tên danh mục...">
                                 </div>
@@ -36,7 +36,39 @@
                                     <input required type="text" name="linkvideo" class="form-control" value="<%=update.linkvideo%>"
                                         placeholder="Link video...">
                                 </div>
-
+                                                                        <div class="form-group">
+                                            <label>Thẻ title<span id="title"></span></label>
+                                            <input required onkeyup="tieudesp2(this.value)"  name="title" type="text" class="form-control"
+                                                placeholder="Title" value="<%=update.title%>">
+                                                <script>
+                                                    function tieudesp2(val1) {
+                                                        document.frm.title.value = val1;
+                                                        document.getElementById("title").innerHTML =": " + val1.length + " từ";
+                                                    }
+                                                </script>
+                                        </div>
+                                <div class="form-group">
+                                    <label>Thẻ meta description<span id="metadescription"></span></label>
+                                    <input required onkeyup="eventHandler(this.value)" name="metadescription" type="text" value="<%=update.metadescription%>" class="form-control"
+                                        placeholder="Meta description...">
+                                        <script>
+                                            function eventHandler(val) {
+                                                document.frm.metadescription.value = val;
+                                                document.getElementById("metadescription").innerHTML =": " + val.length + " từ";
+                                            }
+                                        </script>
+                                </div>
+                                <div class="form-group">
+                                    <label>Thẻ meta keywords<span id="metakeywords"></span></label>
+                                    <input required onkeyup="metakeywords2(this.value)" name="metakeywords" type="text" value="<%=update.metakeywords%>" class="form-control"
+                                        placeholder="Meta keywords...">
+                                        <script>
+                                            function metakeywords2(val3) {
+                                                document.frm.metakeywords.value = val3;
+                                                document.getElementById("metakeywords").innerHTML =": " + val3.length + " từ";
+                                            }
+                                        </script>
+                                </div>
                                 <button type="submit" name="sbm" class="btn btn-success">Updade</button>
                                 <button type="reset" class="btn btn-default">Làm mới</button>
                         </div>

@@ -4,10 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%=product[0].title%></title>
-    <META NAME="description" CONTENT="<%=product[0].metadescription%>">
-        <META NAME="keywords" CONTENT="<%=product[0].metakeywords%>">
-
+    <title><%=product[0].title || "Thước lỗ ban"%></title>
+    <meta NAME="description" CONTENT="<%=product[0].metadescription%>">
+    <meta NAME="keywords" CONTENT="<%=product[0].metakeywords%>">
     <base href="/static/site/">
     <link rel="apple-touch-icon" sizes="180x180" href="./thuocloban/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="./thuocloban/favicon-32x32.png">

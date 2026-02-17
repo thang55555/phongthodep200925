@@ -12,6 +12,18 @@ const menu_tintucSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+           title: {
+        type: String,
+        required: true,
+    },
+    metadescription: {
+        type: String,
+        required: true,
+    },
+    metakeywords: {
+        type: String,
+        required: true,
+    }, 
   
     
 }, {timestamps:true});

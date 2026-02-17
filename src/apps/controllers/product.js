@@ -233,7 +233,10 @@ const adddanhmuc = async (req, res) => {
         const add = {
             tendanhmuc: tendanhmuc.tendanhmuc,
             slug: slug(tendanhmuc.tendanhmuc),
-            content: tendanhmuc.content
+            content: tendanhmuc.content,
+            title: tendanhmuc.title,
+            metadescription: tendanhmuc.metadescription,
+            metakeywords: tendanhmuc.metakeywords
         }
         new Menu_danhmuc_sanphamModel(add).save();
         res.redirect("/admin/danh-muc-san-pham")
@@ -254,7 +257,10 @@ const updatedanhmuc = async (req, res) => {
     const danhmuc = {
         tendanhmuc: body.tendanhmuc,
         slug: slug(body.tendanhmuc),
-        content: body.content
+        content: body.content,
+        title: body.title,
+        metadescription: body.metadescription,
+        metakeywords: body.metakeywords
     }
     await Menu_danhmuc_sanphamModel.updateOne({ _id: id }, { $set: danhmuc });
     res.redirect("/admin/danh-muc-san-pham");
@@ -300,7 +306,10 @@ const addnhomsp = async (req, res) => {
             danhmuc_id: body.danhmuc_id,
             tennhomsanpham: body.tennhomsanpham,
             slug: slug(body.tennhomsanpham),
-            quytrinh: body.quytrinh
+            quytrinh: body.quytrinh,
+            title: body.title,
+            metadescription: body.metadescription,
+            metakeywords: body.metakeywords
         }
         new Menu_nhom_sanphamModel(add).save();
         res.redirect("/admin/nhom-san-pham");
@@ -323,7 +332,10 @@ const updatenhomsanpham = async (req, res) => {
         danhmuc_id: body.danhmuc_id,
         tennhomsanpham: body.tennhomsanpham,
         slug: slug(body.tennhomsanpham),
-        quytrinh: body.quytrinh
+        quytrinh: body.quytrinh,
+         title: body.title,
+            metadescription: body.metadescription,
+            metakeywords: body.metakeywords
     }
     await Menu_nhom_sanphamModel.updateOne({ _id: id }, { $set: update });
     res.redirect("/admin/nhom-san-pham")
@@ -451,6 +463,7 @@ const addproduct = async (req, res) =>{
         tieudesp: body.tieudesp,
         spdv: body.spdv == "on",
         menudichvu_id: body.dichvu_id,
+        title: body.title,
         metadescription: body.metadescription,
         metakeywords: body.metakeywords,
         slug: slug(body.tieudesp),
@@ -513,6 +526,7 @@ const uploadsanpham= async (req, res) =>{
         tieudesp: body.tieudesp,
         spdv: body.spdv == "on",
         menudichvu_id: body.dichvu_id,
+        title: body.title,
         metadescription: body.metadescription,
         metakeywords: body.metakeywords,
         slug: slug(body.tieudesp),
@@ -599,6 +613,9 @@ const addcategorytintuc = async (req, res) => {
             menutintuc: body.menutintuc,
             slug: slug(body.menutintuc),
             linkvideo: body.linkvideo,
+            title: body.title,
+            metadescription: body.metadescription,
+            metakeywords: body.metakeywords,
         }
         new Menu_tintucModel(addcategory).save();
         res.redirect("/admin/danh-sach-menu-tin-tuc")
@@ -618,6 +635,9 @@ const updatemenutintuc = async (req, res) => {
         menutintuc: req.body.menutintuc,
         slug: slug(req.body.menutintuc),
         linkvideo: req.body.linkvideo,
+                    title: req.body.title,
+            metadescription: req.body.metadescription,
+            metakeywords: req.body.metakeywords,
     }
     await Menu_tintucModel.updateOne({ _id: id }, { $set: update });
     res.redirect("/admin/danh-sach-menu-tin-tuc")
@@ -670,8 +690,10 @@ const uploadbaiviettintuc = async (req, res) => {
         tieudebaiviet: body.tieudebaiviet,
         slug: slug(body.tieudebaiviet),
         content: body.content,
+        title: body.title,
         metadescription: body.metadescription,
         metakeywords: body.metakeywords,
+        nhap: body.nhap ==="on"
     }
     if (files) {
         for (item of files) {
@@ -703,8 +725,10 @@ const updatebaiviettintuc = async (req, res) => {
         tieudebaiviet: body.tieudebaiviet,
         slug: slug(body.tieudebaiviet),
         content: body.content,
+          title: body.title,
         metadescription: body.metadescription,
         metakeywords: body.metakeywords,
+            nhap: body.nhap ==="on"
     }
     if (files) {
         for (item of files) {
@@ -763,7 +787,10 @@ const uploadmenudichvu = async (req, res) => {
         const addcategory = {
             menudichvu: body.menudichvu,
             slug: slug(body.menudichvu),
-            content: body.content
+            content: body.content,
+                        title: body.title,
+            metadescription: body.metadescription,
+            metakeywords: body.metakeywords,
         }
         if (file) {
             const images = file.originalname;
@@ -793,7 +820,10 @@ const updatemenudichvu = async (req, res) => {
     const category = {
         menudichvu: body.menudichvu,
         slug: slug(body.menudichvu),
-        content: body.content
+        content: body.content,
+                    title: body.title,
+            metadescription: body.metadescription,
+            metakeywords: body.metakeywords,
     }
     if (file) {
         const images = file.originalname;
@@ -866,8 +896,10 @@ const uploadbaivietdichvu = async (req, res) => {
         dientich: body.dientich,
         namthicong: body.namthicong,
         content: body.content,
+        title: body.title,
         metadescription: body.metadescription,
         metakeywords: body.metakeywords,
+        nhap: body.nhap ==="on"
     }
     if (files) {
         const uploadimg = [];
@@ -919,8 +951,10 @@ const updatebaivietdichvu = async (req, res) => {
         dientich: body.dientich,
         namthicong: body.namthicong,
         content: body.content,
+        title: body.title,
         metadescription: body.metadescription,
         metakeywords: body.metakeywords,
+                nhap: body.nhap ==="on"
     }
     if (files.length > 0) {
         const uploadimg = [];

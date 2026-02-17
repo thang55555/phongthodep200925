@@ -46,7 +46,15 @@
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <div class="group-form__alls"> <input type="text" name="name" class="input-alls control-alls" placeholder="Họ tên" crequired="" text-crequired="Nhập vào họ tên !"> </div>
-                                            <div class="group-form__alls"> <input type="text" name="lienhe" class="input-alls control-alls" placeholder="Số điện thoại" crequired="" text-crequired="Nhập vào số điện thoại !"> </div>
+                                            <div class="group-form__alls"> <input 
+    type="tel" 
+    name="lienhe" 
+    class="input-alls control-alls"
+    placeholder="Số điện thoại"
+    required
+    pattern="[0-9]{10}"
+    title="Số điện thoại phải đủ 10 chữ số">
+ </div>
                                             <div class="group-form__alls"> <input type="text" name="email" class="input-alls control-alls" placeholder="Email"> </div> <input type="hidden" name="type" value="SIDEBAR">
                                         </div>
                                         <div class="col-lg-6">

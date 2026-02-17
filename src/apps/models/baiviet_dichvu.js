@@ -13,6 +13,10 @@ const baivietdichvuSchema = new mongoose.Schema({
     nhap: {
         type: Boolean,
     },
+               title: {
+        type: String,
+        required: true,
+    },
     metadescription: {
         type: String,
         required: true,

@@ -23,7 +23,7 @@
                     <div class="panel-body">
                         <div class="col-md-8">
                   
-                        <form role="form" method="post" action="/admin/update-danh-muc-san-pham/<%=danhmuc._id%>">
+                        <form name="frm" role="form" method="post" action="/admin/update-danh-muc-san-pham/<%=danhmuc._id%>">
                             <div class="form-group">
                                 <label>Tên danh mục (Thẻ title):</label>
                                 <input type="text" name="tendanhmuc" value="<%=danhmuc.tendanhmuc%>" required value="Danh mục 1" class="form-control" placeholder="Tên danh mục...">
@@ -40,6 +40,39 @@
                                         });
                                 </script>
                             </div>
+                             <div class="form-group">
+                                            <label>Thẻ title<span id="title"></span></label>
+                                            <input required onkeyup="tieudesp2(this.value)"  name="title" type="text" class="form-control"
+                                                placeholder="Title" value="<%=danhmuc.title%>">
+                                                <script>
+                                                    function tieudesp2(val1) {
+                                                        document.frm.title.value = val1;
+                                                        document.getElementById("title").innerHTML =": " + val1.length + " từ";
+                                                    }
+                                                </script>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Thẻ meta description<span id="metadescription"></span></label>
+                                            <input required onkeyup="eventHandler(this.value)" name="metadescription" type="text" class="form-control"
+                                                placeholder="Meta description..." value="<%=danhmuc.metadescription%>">
+                                                <script>
+                                                    function eventHandler(val) {
+                                                        document.frm.metadescription.value = val;
+                                                        document.getElementById("metadescription").innerHTML =": " + val.length + " từ";
+                                                    }
+                                                </script>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Thẻ meta keywords<span id="metakeywords"></span></label>
+                                            <input required onkeyup="metakeywords2(this.value)" name="metakeywords" type="text" class="form-control"
+                                                placeholder="Meta keywords..." value="<%=danhmuc.metakeywords%>">
+                                                <script>
+                                                    function metakeywords2(val3) {
+                                                        document.frm.metakeywords.value = val3;
+                                                        document.getElementById("metakeywords").innerHTML =": " + val3.length + " từ";
+                                                    }
+                                                </script>
+                                        </div>
                             <button type="submit" name="sbm" class="btn btn-primary">Cập nhật</button>
                             <button type="reset" class="btn btn-default">Làm mới</button>
                         </div>

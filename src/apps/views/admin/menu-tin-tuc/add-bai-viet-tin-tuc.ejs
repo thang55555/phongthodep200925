@@ -25,19 +25,44 @@
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <div class="col-md-6">
-                            <form role="form" method="post" enctype="multipart/form-data" action="/admin/upload-bai-viet-tin-tuc">
+                            <form name="frm" role="form" method="post" enctype="multipart/form-data" action="/admin/upload-bai-viet-tin-tuc">
                                 <div class="form-group">
-                                    <label>Tiêu đề bài viết (Thẻ title):</label>
+                                    <label>Tiêu đề bài viết:</label>
                                     <input required name="tieudebaiviet" type="text" class="form-control" placeholder="Tiêu đề bài viết">
                                 </div>
-                                <div class="form-group"> 
-                                    <label>Thẻ meta description</label>
-                                    <input required name="metadescription" type="text" class="form-control" placeholder="Meta description">
-                                </div>
-                                <div class="form-group">
-                                    <label>Thẻ meta keywords</label>
-                                    <input required name="metakeywords" type="text" class="form-control" placeholder="Meta keywords">
-                                </div>
+                                        <div class="form-group">
+                                            <label>Thẻ title<span id="title"></span></label>
+                                            <input required onkeyup="tieudesp2(this.value)"  name="title" type="text" class="form-control"
+                                                placeholder="Title">
+                                                <script>
+                                                    function tieudesp2(val1) {
+                                                        document.frm.title.value = val1;
+                                                        document.getElementById("title").innerHTML =": " + val1.length + " từ";
+                                                    }
+                                                </script>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Thẻ meta description<span id="metadescription"></span></label>
+                                            <input required onkeyup="eventHandler(this.value)" name="metadescription" type="text" class="form-control"
+                                                placeholder="Meta description...">
+                                                <script>
+                                                    function eventHandler(val) {
+                                                        document.frm.metadescription.value = val;
+                                                        document.getElementById("metadescription").innerHTML =": " + val.length + " từ";
+                                                    }
+                                                </script>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Thẻ meta keywords<span id="metakeywords"></span></label>
+                                            <input required onkeyup="metakeywords2(this.value)" name="metakeywords" type="text" class="form-control"
+                                                placeholder="Meta keywords...">
+                                                <script>
+                                                    function metakeywords2(val3) {
+                                                        document.frm.metakeywords.value = val3;
+                                                        document.getElementById("metakeywords").innerHTML =": " + val3.length + " từ";
+                                                    }
+                                                </script>
+                                        </div>
                                 <div class="form-group">
                                     <label>Menu tin tức</label>
                                     <select name="menutintuc_id" class="form-control">

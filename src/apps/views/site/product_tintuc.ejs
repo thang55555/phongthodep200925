@@ -1,8 +1,8 @@
 <%- include("./layouts/head.ejs")%>
-<title><%=product.tieudebaiviet%></title>
+<title><%= product.title || product.tieudebaiviet %></title>
 <meta name="description" content="<%=product.metadescription%>">
 <meta name="keywords" content="<%=product.metakeywords%>">
-	<meta name="image" content="https://phongthodep.net/static/site/images/update/<%=product.image%>">
+<meta name="image" content="https://phongthodep.net/static/site/images/update/<%=product.image%>">
 <%- include("./layouts/header.ejs")%>
 
 		  <!-- main -->

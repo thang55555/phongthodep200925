@@ -5,7 +5,7 @@ const tuvanSchema = new mongoose.Schema({
         required: true,
     },
     lienhe:{
-        type: String,
+        type: Number,
         required: true,
     },
     email:{

@@ -10,6 +10,10 @@ const product_sanphamSchema = new mongoose.Schema({
         required: true,
         text: true,
     },
+        title: {
+        type: String,
+        required: true,
+    },
     metadescription: {
         type: String,
         required: true,

@@ -1,7 +1,8 @@
 <%- include("./layouts/head.ejs")%>
-    <title>
-        <%=category.menutintuc%>
-    </title>
+
+<title><%= category.title || category.menutintuc %></title>
+<meta name="description" content="<%=category.metadescription%>">
+<meta name="keywords" content="<%=category.metakeywords%>">
     <%- include("./layouts/header.ejs")%>
 
         <!-- main -->

@@ -1,5 +1,9 @@
 <%- include("./layouts/head.ejs")%>
-<title><%=menudanhmuc.tendanhmuc%></title>
+
+<title><%= menudanhmuc.title || menudanhmuc.tendanhmuc %></title>
+<meta name="description" content="<%=menudanhmuc.metadescription%>">
+<meta name="keywords" content="<%=menudanhmuc.metakeywords%>">
+
 <%- include("./layouts/header.ejs")%>
 
         <!-- main -->

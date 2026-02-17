@@ -14,7 +14,23 @@ const menu_dichvuSchema = new mongoose.Schema({
         
         required: true,
     },
-    content: []
+    content: [],
+               title: {
+        type: String,
+        required: true,
+    },
+           title: {
+        type: String,
+        required: true,
+    },
+    metadescription: {
+        type: String,
+        required: true,
+    },
+    metakeywords: {
+        type: String,
+        required: true,
+    }, 
  
     
 }, {timestamps:true});

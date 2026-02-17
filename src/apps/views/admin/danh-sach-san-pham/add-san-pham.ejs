@@ -28,13 +28,19 @@
                                     <form name="frm" role="form" method="post" enctype="multipart/form-data"
                                         action="/admin/add-product">
                                         <div class="form-group">
-                                            <label>Tiêu đề sản phẩm (Thẻ title)<span id="tieudesp"></span></label>
-                                            <input required onkeyup="tieudesp2(this.value)"  name="tieudesp" type="text" class="form-control"
+                                            <label>Tiêu đề sản phẩm</label>
+                                            <input required name="tieudesp" type="text" class="form-control"
                                                 placeholder="Tiêu đề sản phẩm...">
+                                        </div>
+                                        <!-- 3 thẻ sale -->
+                                        <div class="form-group">
+                                            <label>Thẻ title<span id="title"></span></label>
+                                            <input required onkeyup="tieudesp2(this.value)"  name="title" type="text" class="form-control"
+                                                placeholder="Title">
                                                 <script>
                                                     function tieudesp2(val1) {
-                                                        document.frm.tieudesp.value = val1;
-                                                        document.getElementById("tieudesp").innerHTML =": " + val1.length + " từ";
+                                                        document.frm.title.value = val1;
+                                                        document.getElementById("title").innerHTML =": " + val1.length + " từ";
                                                     }
                                                 </script>
                                         </div>
@@ -60,6 +66,7 @@
                                                     }
                                                 </script>
                                         </div>
+
                                         <div class="form-group">
                                             <label>Chủ đầu tư</label>
                                             <input required name="chudautu" type="text" class="form-control"
