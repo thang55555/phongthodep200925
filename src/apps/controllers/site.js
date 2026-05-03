@@ -532,26 +532,15 @@ if (!link || !link.includes('shopee.vn')) {
     `);
 }
 
-    // 👉 loại bỏ rác sau dấu cách (user hay paste lỗi)
-    link = link.split(' ')[0];
+   const link1 = "https://s.shopee.vn/an_redir?origin_link=";
+   const affiliate_id = "&affiliate_id=17399990070";
+   const sub_id = "&sub_id=shoppe-usre1-aff1-aff2-aff3"; 
 
-     let finalLink = link;
+    
 
-    // 👉 nếu là link đầy đủ thì extract ID
-    // 👉 lấy ID sản phẩm (quan trọng nhất)
-    const match = link.match(/i\.(\d+)\.(\d+)/);
-
- if (match) {
-        const shopid = match[1];
-        const itemid = match[2];
-
-        // build lại link sạch
-        finalLink = `https://shopee.vn/product/${shopid}/${itemid}`;
-    }
-    // 👉 nếu KHÔNG match => coi như link rút gọn → giữ nguyên
-
+ 
     // 👉 tạo link affiliate
-    const finalUrl = `https://s.shopee.vn/an_redir?origin_link=${encodeURIComponent(finalLink)}&affiliate_id=17399990070&sub_id=shoppe-usre1-aff1-aff2-aff3`;
+    const finalUrl =  `${link1}${link}${affiliate_id}${sub_id}`;;
 
       // 👉 rút gọn link
     let shortUrl = finalUrl;
