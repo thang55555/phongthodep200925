@@ -499,6 +499,7 @@ const shoppe = async (req, res) => {
       
     });
 };
+const axios = require('axios');
 const addshoppe = async (req, res) => {
     let link = req.body.link?.trim();
 
@@ -549,58 +550,81 @@ if (!link || !link.includes('shopee.vn')) {
 
     const finalUrl = `https://s.shopee.vn/an_redir?origin_link=${encodeURIComponent(cleanLink)}&affiliate_id=17399990070&sub_id=shoppe-usre1-aff1-aff2-aff3`;
 
-    // 👉 trả về trang confirm xịn hơn
+      // 👉 rút gọn link
+    let shortUrl = finalUrl;
+    try {
+        const r = await axios.get(`https://tinyurl.com/api-create.php?url=${finalUrl}`);
+        shortUrl = r.data;
+    } catch (e) {
+        console.log('Không rút gọn được link');
+    }
+    console.log(finalUrl);
+    
+ // 👉 HTML
     res.send(`
         <html>
         <head>
-            <title>Xác nhận chuyển hướng</title>
+            <title>Chuyển tới Shopee</title>
             <meta name="viewport" content="width=device-width, initial-scale=1">
             <style>
                 body {
                     font-family: Arial;
+                    background: #f5f6fa;
                     text-align: center;
-                    padding: 50px 20px;
-                    background: #f5f5f5;
+                    padding: 40px 20px;
                 }
                 .box {
                     background: white;
-                    padding: 30px;
+                    padding: 25px;
                     border-radius: 10px;
                     max-width: 400px;
                     margin: auto;
-                    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+                    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
                 }
                 .btn {
-                    padding: 12px 20px;
-                    margin: 10px;
+                    padding: 12px;
+                    margin: 8px 0;
+                    width: 100%;
                     border: none;
-                    cursor: pointer;
                     border-radius: 6px;
-                    font-size: 16px;
+                    font-size: 15px;
+                    cursor: pointer;
                 }
                 .ok { background: #28a745; color: white; }
+                .copy { background: #007bff; color: white; }
                 .cancel { background: #dc3545; color: white; }
                 .link {
                     font-size: 13px;
                     color: #666;
                     word-break: break-all;
-                    margin-top: 10px;
+                    margin: 10px 0;
                 }
             </style>
         </head>
         <body>
             <div class="box">
-                <h2>Chuyển tới Shopee 🛒</h2>
-                <p>Bạn có muốn tiếp tục không?</p>
+                <h2>🛒 Đi tới Shopee</h2>
+                <p>Bạn có thể chia sẻ link này cho bạn bè:</p>
 
-                <div class="link">${cleanLink}</div>
+                <div class="link" id="link">${shortUrl}</div>
 
-                <a href="${finalUrl}">
-                    <button class="btn ok">Có, đi tới Shopee</button>
+                <!-- ✅ COPY ở giữa -->
+                <button class="btn copy" onclick="copyLink()">📋 Copy link</button>
+
+                <a href="${shortUrl}">
+                    <button class="btn ok">👉 Đi tới Shopee</button>
                 </a>
 
-                <button class="btn cancel" onclick="window.history.back()">Ở lại</button>
+                <button class="btn cancel" onclick="window.history.back()">Quay lại</button>
             </div>
+
+            <script>
+                function copyLink() {
+                    const text = document.getElementById('link').innerText;
+                    navigator.clipboard.writeText(text);
+                    alert('Đã copy link!');
+                }
+            </script>
         </body>
         </html>
     `);
