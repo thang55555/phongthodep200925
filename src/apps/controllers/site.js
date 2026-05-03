@@ -550,7 +550,6 @@ if (!link || !link.includes('shopee.vn')) {
     } catch (e) {
         console.log('Không rút gọn được link');
     }
-    console.log(finalUrl);
     
  // 👉 HTML
     res.send(`
@@ -603,7 +602,7 @@ if (!link || !link.includes('shopee.vn')) {
                 <!-- ✅ COPY ở giữa -->
                 <button class="btn copy" onclick="copyLink()">📋 Copy link</button>
 
-                <a href="${shortUrl}">
+                <a href="${finalUrl}">
                     <button class="btn ok">👉 Đi tới Shopee</button>
                 </a>
 
