@@ -99,7 +99,14 @@
             * Bạn sẽ được chuyển đến Shopee để mua hàng
         </div>
     </div>
-
+<script>
+window.addEventListener("pageshow", function () {
+    const input = document.querySelector('input[name="link"]');
+    if (input) {
+        input.value = ""; // xóa trắng khi quay lại
+    }
+});
+</script>
 </body>
 
 </html>
