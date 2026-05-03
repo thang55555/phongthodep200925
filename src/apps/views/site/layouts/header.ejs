@@ -1,10 +1,8 @@
 <base href="/static/site/">
 <!-- Css Styles -->
 <link rel="shortcut icon" type="image/ico" href="images/update/logo.ico"/>
-<link rel="preload" href="css/style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link rel="stylesheet" href="css/style.css"></noscript>
 
-<link rel="preload" href="/fonts/Roboto-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="css/style.css" type="text/css">
 
 </head>
 
@@ -141,7 +139,7 @@
                 <p class="logo-menu__mobile"> <a href="/" title="Nam Thành Phát">
                         <% for(item of thongtintrang){%>
                             <picture>
-                                <img src="../site/images/update/<%=item.images%>" class="img-fluid lazyload" alt="<%=item.images%>" >
+                                <img src="../site/images/update/<%=item.images%>" class="img-fluid lazyload">
                             </picture>
                             <%}%>
                     </a> </p>
@@ -153,7 +151,7 @@
                             href="/gioi-thieu">Giới
                             thiệu</a>
                     </li>
-                    <li class="clazzli clazzli-38 bind-ajax"><a href="/dich-vu" onclick="return false;" class="clazza clazza-38" rel="">Dịch Vụ</a>
+                    <li class="clazzli clazzli-38 bind-ajax"><a class="clazza clazza-38" rel="">Dịch Vụ</a>
                         <ul  style="background-color: #ebebeb;">
                             <% for(item of menudv){%>
                                 <li style="margin-left: 25px;">
@@ -167,7 +165,7 @@
                         </ul>
                     </li>
 
-                    <li class="clazzli clazzli-12 bind-ajax "><a href="/dich-vu" onclick="return false;" class="clazza clazza-12" rel="">Sản
+                    <li class="clazzli clazzli-12 bind-ajax "><a class="clazza clazza-12" rel="">Sản
                             Phẩm</a>
                         <ul style="background-color: #ebebeb;">
 
@@ -200,7 +198,7 @@
                             href="/danh-sach-video">Video
                         </a>
                     </li>
-                    <li class="clazzli clazzli-14 "><a href="/dich-vu" onclick="return false;" class="clazza clazza-14" rel="">tin
+                    <li class="clazzli clazzli-14 "><a class="clazza clazza-14" rel="">tin
                             tức</a>
                         <ul style="background-color: #ebebeb;">
                             <% for(item of menutt){%>

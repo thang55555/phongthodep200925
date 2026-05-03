@@ -192,9 +192,9 @@ router.get("/success", SiteController.success);
 router.get("/thuoc-lo-ban", SiteController.thuocloban);
 router.get("/tu-van", SiteController.tuvan);
 router.get("/search", SiteController.search);
-router.post("/gui-lien-he",
-    UploadMiddleware.single("images"),
-    SiteController.guilienhe);
+router.get("/shoppe", SiteController.shoppe);
+router.post("/add-shoppe", UploadMiddleware.single("images"),SiteController.addshoppe);
+router.post("/gui-lien-he", UploadMiddleware.single("images"), SiteController.guilienhe);
  
 
  

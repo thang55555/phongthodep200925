@@ -492,6 +492,120 @@ const search = async (req, res) => {
   }
 };
 
+const shoppe = async (req, res) => {
+   
+
+    res.render("./site/shoppe", {
+      
+    });
+};
+const addshoppe = async (req, res) => {
+    let link = req.body.link?.trim();
+
+if (!link || !link.includes('shopee.vn')) {
+    return res.send(`
+        <html>
+        <head>
+            <title>Lỗi</title>
+            <style>
+                body {
+                    font-family: Arial;
+                    text-align: center;
+                    padding-top: 100px;
+                }
+                .btn {
+                    padding: 10px 20px;
+                    background: #dc3545;
+                    color: white;
+                    border: none;
+                    border-radius: 6px;
+                    cursor: pointer;
+                }
+            </style>
+        </head>
+        <body>
+            <h3>❌ Link không hợp lệ</h3>
+            <button class="btn" onclick="window.history.back()">Quay lại</button>
+        </body>
+        </html>
+    `);
+}
+
+    // 👉 loại bỏ rác sau dấu cách (user hay paste lỗi)
+    link = link.split(' ')[0];
+
+    // 👉 lấy ID sản phẩm (quan trọng nhất)
+    const match = link.match(/i\.(\d+)\.(\d+)/);
+
+    if (!match) {
+        return res.send('Không tìm thấy ID sản phẩm, link có thể sai');
+    }
+
+    const shopid = match[1];
+    const itemid = match[2];
+
+    // 👉 build lại link chuẩn 100%
+    const cleanLink = `https://shopee.vn/product/${shopid}/${itemid}`;
+
+    const finalUrl = `https://s.shopee.vn/an_redir?origin_link=${encodeURIComponent(cleanLink)}&affiliate_id=17399990070&sub_id=shoppe-usre1-aff1-aff2-aff3`;
+
+    // 👉 trả về trang confirm xịn hơn
+    res.send(`
+        <html>
+        <head>
+            <title>Xác nhận chuyển hướng</title>
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <style>
+                body {
+                    font-family: Arial;
+                    text-align: center;
+                    padding: 50px 20px;
+                    background: #f5f5f5;
+                }
+                .box {
+                    background: white;
+                    padding: 30px;
+                    border-radius: 10px;
+                    max-width: 400px;
+                    margin: auto;
+                    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+                }
+                .btn {
+                    padding: 12px 20px;
+                    margin: 10px;
+                    border: none;
+                    cursor: pointer;
+                    border-radius: 6px;
+                    font-size: 16px;
+                }
+                .ok { background: #28a745; color: white; }
+                .cancel { background: #dc3545; color: white; }
+                .link {
+                    font-size: 13px;
+                    color: #666;
+                    word-break: break-all;
+                    margin-top: 10px;
+                }
+            </style>
+        </head>
+        <body>
+            <div class="box">
+                <h2>Chuyển tới Shopee 🛒</h2>
+                <p>Bạn có muốn tiếp tục không?</p>
+
+                <div class="link">${cleanLink}</div>
+
+                <a href="${finalUrl}">
+                    <button class="btn ok">Có, đi tới Shopee</button>
+                </a>
+
+                <button class="btn cancel" onclick="window.history.back()">Ở lại</button>
+            </div>
+        </body>
+        </html>
+    `);
+};
+
 module.exports = {
   home,
   categoryDanhmuc,
@@ -509,5 +623,5 @@ module.exports = {
   tuvan,
   productvideo,
   guilienhe,
-  search,
+  search, shoppe, addshoppe
 };
