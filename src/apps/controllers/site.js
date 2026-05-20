@@ -700,9 +700,7 @@ const addshoppe = async (req, res) => {
 
             <div class="box">
 
-                <div class="success">
-                    ✅ Tạo link affiliate thành công
-                </div>
+
 
                 <h2>🛒 Đi tới Shopee</h2>
 
