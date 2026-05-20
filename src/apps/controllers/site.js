@@ -493,132 +493,273 @@ const search = async (req, res) => {
 };
 
 const shoppe = async (req, res) => {
-   
 
-    res.render("./site/shoppe", {
-      
-    });
+
+  res.render("./site/shoppe", {
+
+  });
 };
-const axios = require('axios');
+const axios = require("axios");
+
 const addshoppe = async (req, res) => {
-    let link = req.body.link?.trim();
-
-if (!link || !link.includes('shopee.vn')) {
-    return res.send(`
-        <html>
-        <head>
-            <title>Lỗi</title>
-            <style>
-                body {
-                    font-family: Arial;
-                    text-align: center;
-                    padding-top: 100px;
-                }
-                .btn {
-                    padding: 10px 20px;
-                    background: #dc3545;
-                    color: white;
-                    border: none;
-                    border-radius: 6px;
-                    cursor: pointer;
-                }
-            </style>
-        </head>
-        <body>
-            <h3>❌ Link không hợp lệ</h3>
-            <button class="btn" onclick="window.history.back()">Quay lại</button>
-        </body>
-        </html>
-    `);
-}
-
-   const link1 = "https://s.shopee.vn/an_redir?origin_link=";
-   const affiliate_id = "&affiliate_id=17399990070";
-   const sub_id = "&sub_id=shoppe-usre1-aff1-aff2-aff3"; 
-
-    
-
- 
-    // 👉 tạo link affiliate
-    const finalUrl =  `${link1}${link}${affiliate_id}${sub_id}`;;
-
-      // 👉 rút gọn link
-    let shortUrl = finalUrl;
     try {
-        const r = await axios.get(`https://tinyurl.com/api-create.php?url=${finalUrl}`);
-        shortUrl = r.data;
-    } catch (e) {
-        console.log('Không rút gọn được link');
-    }
-    
- // 👉 HTML
-    res.send(`
+
+        let link = req.body.link?.trim();
+
+        if (!link) {
+            return res.send("Thiếu link");
+        }
+
+        // ✅ kiểm tra domain Shopee
+        const allowDomains = [
+            "shopee.vn",
+            "s.shopee.vn",
+            "vn.shp.ee"
+        ];
+
+        let hostname = "";
+
+        try {
+            hostname = new URL(link).hostname;
+        } catch (e) {
+            return res.send("Link không hợp lệ");
+        }
+
+        if (!allowDomains.includes(hostname)) {
+            return res.send("Chỉ hỗ trợ link Shopee");
+        }
+
+        // =====================================================
+        // ✅ RESOLVE LINK vn.shp.ee -> link thật
+        // =====================================================
+
+        if (hostname === "vn.shp.ee") {
+
+            try {
+
+                const response = await axios.get(link, {
+                    maxRedirects: 0,
+                    validateStatus: (status) => {
+                        return status >= 300 && status < 400;
+                    }
+                });
+
+                const realLink = response.headers.location;
+
+                if (realLink) {
+                    link = realLink;
+                }
+
+            } catch (e) {
+
+                if (e.response?.headers?.location) {
+                    link = e.response.headers.location;
+                }
+
+            }
+
+        }
+
+        // =====================================================
+        // ✅ encode link
+        // =====================================================
+
+        const encodedLink = encodeURIComponent(link);
+
+        // =====================================================
+        // ✅ tạo affiliate link
+        // =====================================================
+
+        const finalUrl =
+            `https://s.shopee.vn/an_redir?origin_link=${encodedLink}` +
+            `&affiliate_id=17399990070` +
+            `&sub_id=shoppe-usre1-aff1-aff2-aff3`;
+
+        // =====================================================
+        // ✅ rút gọn link
+        // =====================================================
+
+        let shortUrl = finalUrl;
+
+        try {
+
+            const r = await axios.get(
+                `https://tinyurl.com/api-create.php?url=${encodeURIComponent(finalUrl)}`
+            );
+
+            shortUrl = r.data;
+
+        } catch (e) {
+
+            console.log("Không rút gọn được link");
+
+        }
+
+        // =====================================================
+        // ✅ VIEW
+        // =====================================================
+
+        res.send(`
         <html>
         <head>
             <title>Chuyển tới Shopee</title>
+
             <meta name="viewport" content="width=device-width, initial-scale=1">
+
             <style>
-                body {
-                    font-family: Arial;
-                    background: #f5f6fa;
-                    text-align: center;
-                    padding: 40px 20px;
+
+                *{
+                    margin:0;
+                    padding:0;
+                    box-sizing:border-box;
                 }
-                .box {
-                    background: white;
-                    padding: 25px;
-                    border-radius: 10px;
-                    max-width: 400px;
-                    margin: auto;
-                    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+
+                body{
+                    font-family:Arial;
+                    background:#f5f6fa;
+                    padding:40px 20px;
                 }
-                .btn {
-                    padding: 12px;
-                    margin: 8px 0;
-                    width: 100%;
-                    border: none;
-                    border-radius: 6px;
-                    font-size: 15px;
-                    cursor: pointer;
+
+                .box{
+                    background:white;
+                    max-width:420px;
+                    margin:auto;
+                    padding:25px;
+                    border-radius:12px;
+                    box-shadow:0 5px 20px rgba(0,0,0,0.1);
                 }
-                .ok { background: #28a745; color: white; }
-                .copy { background: #007bff; color: white; }
-                .cancel { background: #dc3545; color: white; }
-                .link {
-                    font-size: 13px;
-                    color: #666;
-                    word-break: break-all;
-                    margin: 10px 0;
+
+                h2{
+                    margin-bottom:15px;
+                    color:#222;
                 }
+
+                p{
+                    margin-bottom:15px;
+                    color:#555;
+                }
+
+                .link{
+                    background:#f7f7f7;
+                    padding:12px;
+                    border-radius:8px;
+                    word-break:break-all;
+                    font-size:13px;
+                    color:#333;
+                    margin-bottom:15px;
+                    border:1px solid #eee;
+                }
+
+                .btn{
+                    width:100%;
+                    border:none;
+                    padding:13px;
+                    border-radius:8px;
+                    cursor:pointer;
+                    font-size:15px;
+                    margin-top:10px;
+                    transition:0.2s;
+                }
+
+                .btn:hover{
+                    opacity:0.9;
+                }
+
+                .copy{
+                    background:#007bff;
+                    color:white;
+                }
+
+                .ok{
+                    background:#28a745;
+                    color:white;
+                }
+
+                .cancel{
+                    background:#dc3545;
+                    color:white;
+                }
+
+                a{
+                    text-decoration:none;
+                }
+
+                .success{
+                    background:#e9f9ee;
+                    color:#28a745;
+                    padding:10px;
+                    border-radius:8px;
+                    margin-bottom:15px;
+                    font-size:14px;
+                }
+
             </style>
         </head>
+
         <body>
+
             <div class="box">
+
+                <div class="success">
+                    ✅ Tạo link affiliate thành công
+                </div>
+
                 <h2>🛒 Đi tới Shopee</h2>
+
                 <p>Bạn có thể chia sẻ link này cho bạn bè:</p>
 
                 <div class="link" id="link">${shortUrl}</div>
 
-                <!-- ✅ COPY ở giữa -->
-                <button class="btn copy" onclick="copyLink()">📋 Copy link</button>
+                <button class="btn copy" onclick="copyLink()">
+                    📋 Copy link
+                </button>
 
-                <a href="${finalUrl}">
-                    <button class="btn ok">👉 Đi tới Shopee</button>
+                <a href="${finalUrl}" target="_blank">
+                    <button class="btn ok">
+                        👉 Đi tới Shopee
+                    </button>
                 </a>
 
-                <button class="btn cancel" onclick="window.history.back()">Quay lại</button>
+                <button class="btn cancel" onclick="window.history.back()">
+                    Quay lại
+                </button>
+
             </div>
 
             <script>
-                function copyLink() {
-                    const text = document.getElementById('link').innerText;
-                    navigator.clipboard.writeText(text);
-                    alert('Đã copy link!');
+
+                async function copyLink() {
+
+                    const text =
+                        document.getElementById('link').innerText;
+
+                    try {
+
+                        await navigator.clipboard.writeText(text);
+
+                        alert('Đã copy link!');
+
+                    } catch (e) {
+
+                        alert('Copy thất bại');
+
+                    }
+
                 }
+
             </script>
+
         </body>
         </html>
-    `);
+        `);
+
+    } catch (err) {
+
+        console.log(err);
+
+        res.send("Có lỗi xảy ra");
+
+    }
 };
 
 module.exports = {
