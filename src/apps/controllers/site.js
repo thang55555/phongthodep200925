@@ -565,7 +565,6 @@ const addshoppe = async (req, res) => {
         // =====================================================
 
         const encodedLink = encodeURIComponent(link);
-
         // =====================================================
         // ✅ tạo affiliate link
         // =====================================================
@@ -573,7 +572,8 @@ const addshoppe = async (req, res) => {
         const finalUrl =
             `https://s.shopee.vn/an_redir?origin_link=${encodedLink}` +
             `&affiliate_id=17399990070` +
-            `&sub_id=shoppe-usre1-aff1-aff2-aff3`;
+            `&sub_id=thang5555`;
+console.log(finalUrl);
 
         // =====================================================
         // ✅ rút gọn link
