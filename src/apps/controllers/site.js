@@ -569,11 +569,11 @@ const addshoppe = async (req, res) => {
         // ✅ tạo affiliate link
         // =====================================================
 
+
         const finalUrl =
             `https://s.shopee.vn/an_redir?origin_link=${encodedLink}` +
             `&affiliate_id=17399990070` +
             `&sub_id=thang5555`;
-console.log(finalUrl);
 
         // =====================================================
         // ✅ rút gọn link
@@ -706,7 +706,7 @@ console.log(finalUrl);
 
                 <p>Bạn có thể chia sẻ link này cho bạn bè:</p>
 
-                <div class="link" id="link">${shortUrl}</div>
+                <div class="link" id="link">${finalUrl}</div>
 
                 <button class="btn copy" onclick="copyLink()">
                     📋 Copy link
