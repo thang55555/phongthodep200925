@@ -572,7 +572,7 @@ const addshoppe = async (req, res) => {
 
         const finalUrl =
             `https://s.shopee.vn/an_redir?origin_link=${encodedLink}` +
-            `&affiliate_id=17399990070` +
+            `&affiliate_id=17364850570` +
             `&sub_id=thang5555`;
 
         // =====================================================
