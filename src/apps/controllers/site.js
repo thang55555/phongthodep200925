@@ -571,33 +571,8 @@ const addshoppe = async (req, res) => {
 
 
         const finalUrl =
-            `https://s.shopee.vn/an_redir?origin_link=${encodedLink}` +
-            `&affiliate_id=17364850570` +
-            `&sub_id=thang5555`;
+         `https://s.shopee.vn/an_redir?origin_link=${encodedLink}&affiliate_id=17399990070&sub_id=thang5555`;
 
-        // =====================================================
-        // ✅ rút gọn link
-        // =====================================================
-
-        let shortUrl = finalUrl;
-
-        try {
-
-            const r = await axios.get(
-                `https://tinyurl.com/api-create.php?url=${encodeURIComponent(finalUrl)}`
-            );
-
-            shortUrl = r.data;
-
-        } catch (e) {
-
-            console.log("Không rút gọn được link");
-
-        }
-
-        // =====================================================
-        // ✅ VIEW
-        // =====================================================
 
         res.send(`
         <html>
