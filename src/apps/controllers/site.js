@@ -504,6 +504,21 @@ const axios = require("axios");
 const addshoppe = async (req, res) => {
 
   let link = req.body.link?.trim();
+// Kiểm tra URL hợp lệ
+try {
+    new URL(link);
+} catch (e) {
+    return res.send(`
+        <script>
+            alert("Link không hợp lệ.");
+            history.back();
+        </script>
+    `);
+}
+
+
+
+
   try {
     const response = await axios.get(link, {
       maxRedirects: 0,
