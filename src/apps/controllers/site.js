@@ -502,79 +502,49 @@ const shoppe = async (req, res) => {
 const axios = require("axios");
 
 const addshoppe = async (req, res) => {
-    try {
 
-        let link = req.body.link?.trim();
+  let link = req.body.link?.trim();
+  try {
+    const response = await axios.get(link, {
+      maxRedirects: 0,
+      validateStatus: status => status >= 200 && status < 400
+    });
 
-        if (!link) {
-            return res.send("Thiếu link");
-        }
+    if (response.headers.location) {
+      link = response.headers.location;
+    }
+  } catch (e) {
+    console.error(e.message);
+  }
+  // bỏ phần query về dạng chuẩn ?
+// Chuẩn hóa URL
+try {
+    const url = new URL(link);
 
-        // ✅ kiểm tra domain Shopee
-        const allowDomains = [
-            "shopee.vn",
-            "s.shopee.vn",
-            "vn.shp.ee"
-        ];
+    // Bỏ query
+    link = `${url.origin}${decodeURIComponent(url.pathname)}`;
 
-        let hostname = "";
+    // Nếu là opaanlp -> product
+    const match = link.match(/\/opaanlp\/(\d+)\/(\d+)/);
 
-        try {
-            hostname = new URL(link).hostname;
-        } catch (e) {
-            return res.send("Link không hợp lệ");
-        }
+    if (match) {
+        const [, shopId, itemId] = match;
+        link = `${url.origin}/product/${shopId}/${itemId}`;
+    }
 
-        if (!allowDomains.includes(hostname)) {
-            return res.send("Chỉ hỗ trợ link Shopee");
-        }
+} catch (e) {
+    console.error(e.message);
+}
+console.log(link);
 
-        // =====================================================
-        // ✅ RESOLVE LINK vn.shp.ee -> link thật
-        // =====================================================
+  // ✅ encode link
+  const encodedLink = encodeURIComponent(link);
 
-        if (hostname === "vn.shp.ee") {
+  // ✅ tạo affiliate link
+  const finalUrl =
+    `https://s.shopee.vn/an_redir?origin_link=${encodedLink}&affiliate_id=17399990070&sub_id=4986`;
 
-            try {
-
-                const response = await axios.get(link, {
-                    maxRedirects: 0,
-                    validateStatus: (status) => {
-                        return status >= 300 && status < 400;
-                    }
-                });
-
-                const realLink = response.headers.location;
-
-                if (realLink) {
-                    link = realLink;
-                }
-
-            } catch (e) {
-
-                if (e.response?.headers?.location) {
-                    link = e.response.headers.location;
-                }
-
-            }
-
-        }
-
-        // =====================================================
-        // ✅ encode link
-        // =====================================================
-
-        const encodedLink = encodeURIComponent(link);
-        // =====================================================
-        // ✅ tạo affiliate link
-        // =====================================================
-
-
-        const finalUrl =
-         `https://s.shopee.vn/an_redir?origin_link=${encodedLink}&affiliate_id=17399990070&sub_id=thang5555`;
-
-
-        res.send(`
+  res.send(`
         <html>
         <head>
             <title>Chuyển tới Shopee</title>
@@ -726,13 +696,7 @@ const addshoppe = async (req, res) => {
         </html>
         `);
 
-    } catch (err) {
 
-        console.log(err);
-
-        res.send("Có lỗi xảy ra");
-
-    }
 };
 
 module.exports = {
