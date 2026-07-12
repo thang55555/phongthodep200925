@@ -26,6 +26,10 @@ const menu_nhom_sanphamSchema = new mongoose.Schema({
     metakeywords: {
         type: String,
         required: true,
+    },
+        web: {
+        type: [String],
+        defadef: [],
     }, 
 }, {
     timestamps: true,

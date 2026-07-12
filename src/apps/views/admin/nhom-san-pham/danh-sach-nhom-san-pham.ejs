@@ -37,6 +37,7 @@
 								<tr>
 									<th data-field="id" data-sortable="true">ID</th>
 									<th>Tên menu sản phẩm</th>
+									<th>Website hiển thị</th>
 									<th>Danh mục</th>
 									<th>Ngày đăng</th>
 									<th>Hành động</th>
@@ -47,6 +48,7 @@
 								<tr>
 									<td><%=stt++%></td>
 									<td><%=item.tennhomsanpham%></td>
+									<td> <%- item.web.join("<br>") %></td>
 									<td><%=item.danhmuc_id.tendanhmuc%></td>
 									<td><%= new Intl.DateTimeFormat('en-US').format(item.createdAt)%></td>
 									<td class="form-group">

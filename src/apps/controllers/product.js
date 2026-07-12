@@ -311,7 +311,8 @@ const addnhomsp = async (req, res) => {
             quytrinh: body.quytrinh,
             title: body.title,
             metadescription: body.metadescription,
-            metakeywords: body.metakeywords
+            metakeywords: body.metakeywords,
+            web: body.web
         }
         new Menu_nhom_sanphamModel(add).save();
         res.redirect("/admin/nhom-san-pham");
@@ -337,7 +338,8 @@ const updatenhomsanpham = async (req, res) => {
         quytrinh: body.quytrinh,
         title: body.title,
         metadescription: body.metadescription,
-        metakeywords: body.metakeywords
+        metakeywords: body.metakeywords,
+        web: body.web
     }
     await Menu_nhom_sanphamModel.updateOne({ _id: id }, { $set: update });
     res.redirect("/admin/nhom-san-pham")
