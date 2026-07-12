@@ -34,6 +34,7 @@
 								<tr>
 									<th data-field="id" data-sortable="true">ID</th>
 									<th>Tên menu dịch vụ</th>
+										<th>Website hiển thị</th>
 									<th>Content</th>
 									<th>Ảnh tiêu đề</th>
 									<th>Hành động</th>
@@ -44,6 +45,7 @@
 								<tr>
 									<td><%=stt++%></td>
 									<td><%=item.menudichvu%></td>
+										<td> <%- item.web.join("<br>") %></td>
 									<td><div class="antext"><%-item.content%></div></td>
 									<td><img height="150px" width="150px" src="../site/images/update/<%=item.images%>" />
 									<td class="form-group">

@@ -1,10 +1,10 @@
 const mongoose = require("../../common/database")();
 
 const baivietdichvuSchema = new mongoose.Schema({
-    menudichvu_id: {
+    menudichvu_id: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Menu_dichvu",
-    },
+    }],
     tieudesp: {
         type: String,
         required: true,

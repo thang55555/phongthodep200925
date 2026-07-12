@@ -1,91 +1,124 @@
-<%- include("../layout/head", {title: "Admin update danh mục sản phẩm"})%>
-<%- include("../layout/header")%>
-<%- include("../layout/siderbar")%>
+<%- include("../layout/head", {title: "Admin update danh mục sản phẩm" })%>
+    <%- include("../layout/header")%>
+        <%- include("../layout/siderbar")%>
 
 
-	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">			
-		<div class="row">
-			<ol class="breadcrumb">
-				<li><a href="/admin/dashboard"><svg class="glyph stroked home"><use xlink:href="#stroked-home"></use></svg></a></li>
-				<li><a href="/admin/danh-muc-san-pham">Quản lý menu danh mục sản phẩm</a></li>
-				<li>Danh mục <%=danhmuc.tendanhmuc%></li>
-			</ol>
-		</div><!--/.row-->
-		
-		<div class="row">
-			<div class="col-lg-12"> 
-				<h1 class="page-header">Danh mục: <%=danhmuc.tendanhmuc%></h1>
-			</div>
-		</div><!--/.row-->
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <div class="col-md-8">
-                  
-                        <form name="frm" role="form" method="post" action="/admin/update-danh-muc-san-pham/<%=danhmuc._id%>">
-                            <div class="form-group">
-                                <label>Tên danh mục (Thẻ title):</label>
-                                <input type="text" name="tendanhmuc" value="<%=danhmuc.tendanhmuc%>" required value="Danh mục 1" class="form-control" placeholder="Tên danh mục...">
-                            </div>
-							<div class="form-group">
-                                <label>Mô tả menu danh mục</label>
-                                <textarea id="description" required name="content" class="form-control" value="" rows="3"><%=danhmuc.content%></textarea>
-                                <script>
-                                    CKEDITOR.replace('description',{
-                                            extraPlugins:'filebrowser',
-                                            filebrowserBrowseUrl:'/list',//upload location
-                                            filebrowserUploadMethod:'form',
-                                            filebrowserUploadUrl:'/upload'//route
-                                        });
-                                </script>
-                            </div>
-                             <div class="form-group">
+            <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
+                <div class="row">
+                    <ol class="breadcrumb">
+                        <li><a href="/admin/dashboard"><svg class="glyph stroked home">
+                                    <use xlink:href="#stroked-home"></use>
+                                </svg></a></li>
+                        <li><a href="/admin/danh-muc-san-pham">Quản lý menu danh mục sản phẩm</a></li>
+                        <li>Danh mục <%=danhmuc.tendanhmuc%>
+                        </li>
+                    </ol>
+                </div><!--/.row-->
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">Danh mục: <%=danhmuc.tendanhmuc%>
+                        </h1>
+                    </div>
+                </div><!--/.row-->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <div class="col-md-8">
+
+                                    <form name="frm" role="form" method="post"
+                                        action="/admin/update-danh-muc-san-pham/<%=danhmuc._id%>">
+                                        <div class="form-group">
+                                            <label>Tên danh mục:</label>
+                                            <input type="text" name="tendanhmuc" value="<%=danhmuc.tendanhmuc%>"
+                                                required value="Danh mục 1" class="form-control"
+                                                placeholder="Tên danh mục...">
+                                        </div>
+
+
+
+                                           <div class="form-group">
+    <label>Chọn nơi hiển thị (giữ phím Ctrl để chọn nhiều):</label>
+    <select name="web" class="form-control" multiple>
+        <% 
+        // Lấy mảng web từ database, nếu không có thì mặc định là mảng rỗng
+        const currentWebs = danhmuc.web || []; 
+        %>
+        
+        <option value="Phongthodep.net" <%= currentWebs.includes('Phongthodep.net') ? 'selected' : '' %>>
+            Phongthodep.net
+        </option>
+        
+        <option value="Nhagonamthanhphat.com" <%= currentWebs.includes('Nhagonamthanhphat.com') ? 'selected' : '' %>>
+            Nhagonamthanhphat.com
+        </option>
+    </select>
+</div>
+
+
+
+                                        <div class="form-group">
+                                            <label>Mô tả menu danh mục</label>
+                                            <textarea id="description" required name="content" class="form-control"
+                                                value="" rows="3"><%=danhmuc.content%></textarea>
+                                            <script>
+                                                CKEDITOR.replace('description', {
+                                                    extraPlugins: 'filebrowser',
+                                                    filebrowserBrowseUrl: '/list',//upload location
+                                                    filebrowserUploadMethod: 'form',
+                                                    filebrowserUploadUrl: '/upload'//route
+                                                });
+                                            </script>
+                                        </div>
+                                        <div class="form-group">
                                             <label>Thẻ title<span id="title"></span></label>
-                                            <input required onkeyup="tieudesp2(this.value)"  name="title" type="text" class="form-control"
-                                                placeholder="Title" value="<%=danhmuc.title%>">
-                                                <script>
-                                                    function tieudesp2(val1) {
-                                                        document.frm.title.value = val1;
-                                                        document.getElementById("title").innerHTML =": " + val1.length + " từ";
-                                                    }
-                                                </script>
+                                            <input required onkeyup="tieudesp2(this.value)" name="title" type="text"
+                                                class="form-control" placeholder="Title" value="<%=danhmuc.title%>">
+                                            <script>
+                                                function tieudesp2(val1) {
+                                                    document.frm.title.value = val1;
+                                                    document.getElementById("title").innerHTML = ": " + val1.length + " từ";
+                                                }
+                                            </script>
                                         </div>
                                         <div class="form-group">
                                             <label>Thẻ meta description<span id="metadescription"></span></label>
-                                            <input required onkeyup="eventHandler(this.value)" name="metadescription" type="text" class="form-control"
-                                                placeholder="Meta description..." value="<%=danhmuc.metadescription%>">
-                                                <script>
-                                                    function eventHandler(val) {
-                                                        document.frm.metadescription.value = val;
-                                                        document.getElementById("metadescription").innerHTML =": " + val.length + " từ";
-                                                    }
-                                                </script>
+                                            <input required onkeyup="eventHandler(this.value)" name="metadescription"
+                                                type="text" class="form-control" placeholder="Meta description..."
+                                                value="<%=danhmuc.metadescription%>">
+                                            <script>
+                                                function eventHandler(val) {
+                                                    document.frm.metadescription.value = val;
+                                                    document.getElementById("metadescription").innerHTML = ": " + val.length + " từ";
+                                                }
+                                            </script>
                                         </div>
                                         <div class="form-group">
                                             <label>Thẻ meta keywords<span id="metakeywords"></span></label>
-                                            <input required onkeyup="metakeywords2(this.value)" name="metakeywords" type="text" class="form-control"
-                                                placeholder="Meta keywords..." value="<%=danhmuc.metakeywords%>">
-                                                <script>
-                                                    function metakeywords2(val3) {
-                                                        document.frm.metakeywords.value = val3;
-                                                        document.getElementById("metakeywords").innerHTML =": " + val3.length + " từ";
-                                                    }
-                                                </script>
+                                            <input required onkeyup="metakeywords2(this.value)" name="metakeywords"
+                                                type="text" class="form-control" placeholder="Meta keywords..."
+                                                value="<%=danhmuc.metakeywords%>">
+                                            <script>
+                                                function metakeywords2(val3) {
+                                                    document.frm.metakeywords.value = val3;
+                                                    document.getElementById("metakeywords").innerHTML = ": " + val3.length + " từ";
+                                                }
+                                            </script>
                                         </div>
-                            <button type="submit" name="sbm" class="btn btn-primary">Cập nhật</button>
-                            <button type="reset" class="btn btn-default">Làm mới</button>
+                                        <button type="submit" name="sbm" class="btn btn-primary">Cập nhật</button>
+                                        <button type="reset" class="btn btn-default">Làm mới</button>
+                                </div>
+                                </form>
+                            </div>
                         </div>
-                    </form>
-                    </div>
+                    </div><!-- /.col-->
                 </div>
-            </div><!-- /.col-->
-		</div>
-	</div>	<!--/.main-->
+            </div> <!--/.main-->
 
-	<script src="js/jquery-1.11.1.min.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-	<script src="js/bootstrap-table.js"></script>
- 
+            <script src="js/jquery-1.11.1.min.js"></script>
+            <script src="js/bootstrap.min.js"></script>
+            <script src="js/bootstrap-table.js"></script>
 
-	<%- include("../layout/footer")%>
+
+            <%- include("../layout/footer")%>

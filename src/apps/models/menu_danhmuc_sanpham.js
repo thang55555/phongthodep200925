@@ -22,6 +22,10 @@ const menu_danhmuc_sanphamSchema = new mongoose.Schema({
         type: String,
         required: true,
     }, 
+    web: {
+        type: [String],
+        defadef: [],
+    }, 
 
  
     

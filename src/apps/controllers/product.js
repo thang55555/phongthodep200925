@@ -53,8 +53,8 @@ const upload = (req, res) => {
                         images: fileName,
                         note: "01"
                     }
-                     new ImagesModel(add).save();
-           
+                    new ImagesModel(add).save();
+
 
                     res.status(201).send("<script>window.parent.CKEDITOR.tools.callFunction('" + funcNum + "','" + url + "','" + msg + "');</script>");
                 }
@@ -82,7 +82,7 @@ const updategioithieu = async (req, res) => {
     try {
         const id = req.params.id;
         const { files, body } = req;
-        
+
 
         const update = {
             linkvideo: body.linkvideo,
@@ -236,7 +236,8 @@ const adddanhmuc = async (req, res) => {
             content: tendanhmuc.content,
             title: tendanhmuc.title,
             metadescription: tendanhmuc.metadescription,
-            metakeywords: tendanhmuc.metakeywords
+            metakeywords: tendanhmuc.metakeywords,
+            web: tendanhmuc.web,
         }
         new Menu_danhmuc_sanphamModel(add).save();
         res.redirect("/admin/danh-muc-san-pham")
@@ -260,7 +261,8 @@ const updatedanhmuc = async (req, res) => {
         content: body.content,
         title: body.title,
         metadescription: body.metadescription,
-        metakeywords: body.metakeywords
+        metakeywords: body.metakeywords,
+        web: body.web,
     }
     await Menu_danhmuc_sanphamModel.updateOne({ _id: id }, { $set: danhmuc });
     res.redirect("/admin/danh-muc-san-pham");
@@ -290,7 +292,7 @@ const nhomsanpham = async (req, res) => {
         .find()
         .populate({ path: "danhmuc_id" })
         .sort({ _id: -1 });
-        const stt = 1;
+    const stt = 1;
     res.render("./admin/nhom-san-pham/danh-sach-nhom-san-pham", { nhomsanpham, stt })
 }
 const addnhomsanpham = async (req, res) => {
@@ -333,9 +335,9 @@ const updatenhomsanpham = async (req, res) => {
         tennhomsanpham: body.tennhomsanpham,
         slug: slug(body.tennhomsanpham),
         quytrinh: body.quytrinh,
-         title: body.title,
-            metadescription: body.metadescription,
-            metakeywords: body.metakeywords
+        title: body.title,
+        metadescription: body.metadescription,
+        metakeywords: body.metakeywords
     }
     await Menu_nhom_sanphamModel.updateOne({ _id: id }, { $set: update });
     res.redirect("/admin/nhom-san-pham")
@@ -359,7 +361,7 @@ const deletenhomsanpham = async (req, res) => {
 const pushanhnhomsanpham = async (req, res) => {
     const id = req.params.id;
     const push = await Menu_nhom_sanphamModel.findById(id);
-    res.render("./admin/nhom-san-pham/push-img-danh-muc-sp", { push})
+    res.render("./admin/nhom-san-pham/push-img-danh-muc-sp", { push })
 }
 const pushanh = async (req, res) => {
     const id = req.params.id;
@@ -372,13 +374,13 @@ const pushanh = async (req, res) => {
             content: body.content,
         }
         new Anh_nhom_san_phamModel(image).save();
-         const add = {
-                        images: file.originalname,
-                        note: "02"
-                    };
+        const add = {
+            images: file.originalname,
+            note: "02"
+        };
         new ImagesModel(add).save();
     }
-      res.redirect("/admin/nhom-san-pham")
+    res.redirect("/admin/nhom-san-pham")
 }
 
 
@@ -407,14 +409,14 @@ const uploadanhnhomsanpham = async (req, res) => {
         const images = file.originalname;
         fs.renameSync(file.path, path.resolve("src/public/site/images/update", file.originalname));
         update["images"] = images;
-         const add = {
-                        images: file.originalname,
-                        note: "02"
-                    };
+        const add = {
+            images: file.originalname,
+            note: "02"
+        };
         new ImagesModel(add).save();
     }
     await Anh_nhom_san_phamModel.updateOne({ _id: id }, { $set: update });
-      res.redirect(`/admin/anh-nhom-san-pham/${body.tennhomsanpham_id}`);
+    res.redirect(`/admin/anh-nhom-san-pham/${body.tennhomsanpham_id}`);
 }
 const deleteanhnhomsanpham = async (req, res) => {
     const id = req.params.id;
@@ -436,27 +438,29 @@ const danhsachsanpham = async (req, res) => {
         .populate({ path: "menudichvu_id" })
         .skip(skip)
         .limit(limit);
-        const next = page + 1;
-        const hasNext = page < totalPages ? true : false;
-        const prev = page - 1;
-        const hasPrev = page > 1 ? true : false;
-        const stt = 1;
-     
-    res.render("./admin/danh-sach-san-pham/danh-sach-san-pham", { product, stt,
+    const next = page + 1;
+    const hasNext = page < totalPages ? true : false;
+    const prev = page - 1;
+    const hasPrev = page > 1 ? true : false;
+    const stt = 1;
+
+    res.render("./admin/danh-sach-san-pham/danh-sach-san-pham", {
+        product, stt,
         page,
         totalPages,
         next,
         hasNext,
         prev,
         hasPrev,
-        pages: pagination(page, totalPages), })
+        pages: pagination(page, totalPages),
+    })
 }
 const addsanpham = async (req, res) => {
     const danhmuc = await Menu_nhom_sanphamModel.find();
     const dichvu = await Menu_dichvuModel.find();
     res.render("./admin/danh-sach-san-pham/add-san-pham", { danhmuc, dichvu })
 }
-const addproduct = async (req, res) =>{
+const addproduct = async (req, res) => {
     const { files, body } = req;
     const products = {
         nhomsp_id: body.danhmuc_id,
@@ -479,17 +483,17 @@ const addproduct = async (req, res) =>{
         content: body.content,
         nhap: body.nhap == "on",
     };
- 
+
     if (files) {
         const uploadimg = [];
         for (item of files) {
             uploadimg.push(item.originalname);
             fs.renameSync(item.path, path.resolve("src/public/site/images/update", item.originalname));
-                const add = {
-                        images: item.originalname,
-                        note: "02"
-                    };
-        new ImagesModel(add).save();
+            const add = {
+                images: item.originalname,
+                note: "02"
+            };
+            new ImagesModel(add).save();
         }
 
         const image = [];
@@ -501,7 +505,7 @@ const addproduct = async (req, res) =>{
             image.push(img)
         }
         products["image"] = image;
-   
+
     }
     new Product_sanphamModel(products).save();
     res.redirect("/admin/danh-sach-san-pham");
@@ -515,10 +519,10 @@ const editsanpham = async (req, res) => {
     const danhmuc = await Menu_nhom_sanphamModel.find();
     const product = await Product_sanphamModel.findById(id);
     const dichvu = await Menu_dichvuModel.find();
-    res.render("./admin/danh-sach-san-pham/edit-san-pham", { danhmuc, product,dichvu, page })
+    res.render("./admin/danh-sach-san-pham/edit-san-pham", { danhmuc, product, dichvu, page })
 }
 
-const uploadsanpham= async (req, res) =>{
+const uploadsanpham = async (req, res) => {
     const id = req.params.id;
     const { files, body } = req;
     const products = {
@@ -547,23 +551,23 @@ const uploadsanpham= async (req, res) =>{
         for (item of files) {
             uploadimg.push(item.originalname);
             fs.renameSync(item.path, path.resolve("src/public/site/images/update", item.originalname));
-             const add = {
-                        images: item.originalname,
-                        note: "02"
-                    };
-        new ImagesModel(add).save();
+            const add = {
+                images: item.originalname,
+                note: "02"
+            };
+            new ImagesModel(add).save();
         }
-        if(files.length > 0){
-          const image = [];
+        if (files.length > 0) {
+            const image = [];
             for (var i = 0; i < files.length; i++) {
-            img = {
-                stt: i,
-                images: uploadimg[i]
+                img = {
+                    stt: i,
+                    images: uploadimg[i]
+                }
+                image.push(img)
             }
-            image.push(img)
+            products["image"] = image;
         }
-        products["image"] = image;
-    }
     }
     await Product_sanphamModel.updateOne({ _id: id }, { $set: products });
     res.redirect('/admin/danh-sach-san-pham?page=' + req.query.page);
@@ -574,19 +578,19 @@ const uploadsanpham= async (req, res) =>{
 const uploadsanpham2 = async (req, res) => {
     const id = req.params.id;
     const product = await Product_sanphamModel.findById(id);
-    if(product.nhap == true){
+    if (product.nhap == true) {
         const products = {
             nhap: false
         }
         await Product_sanphamModel.updateOne({ _id: id }, { $set: products });
     }
-    else{
+    else {
         const products = {
             nhap: true
         }
         await Product_sanphamModel.updateOne({ _id: id }, { $set: products });
     }
-  res.redirect('/admin/danh-sach-san-pham?page=' + req.query.page);
+    res.redirect('/admin/danh-sach-san-pham?page=' + req.query.page);
 }
 
 const deletesanpham = async (req, res) => {
@@ -635,9 +639,9 @@ const updatemenutintuc = async (req, res) => {
         menutintuc: req.body.menutintuc,
         slug: slug(req.body.menutintuc),
         linkvideo: req.body.linkvideo,
-                    title: req.body.title,
-            metadescription: req.body.metadescription,
-            metakeywords: req.body.metakeywords,
+        title: req.body.title,
+        metadescription: req.body.metadescription,
+        metakeywords: req.body.metakeywords,
     }
     await Menu_tintucModel.updateOne({ _id: id }, { $set: update });
     res.redirect("/admin/danh-sach-menu-tin-tuc")
@@ -665,19 +669,21 @@ const danhsachbaiviettintuc = async (req, res) => {
         .sort({ _id: -1 })
         .skip(skip)
         .limit(limit);
-        const next = page + 1;
-        const hasNext = page < totalPages ? true : false;
-        const prev = page - 1;
-        const hasPrev = page > 1 ? true : false;
-        const stt = 1;
-    res.render("./admin/menu-tin-tuc/danh-sach-bai-viet-tin-tuc", { product_baiviettintuc, stt,
+    const next = page + 1;
+    const hasNext = page < totalPages ? true : false;
+    const prev = page - 1;
+    const hasPrev = page > 1 ? true : false;
+    const stt = 1;
+    res.render("./admin/menu-tin-tuc/danh-sach-bai-viet-tin-tuc", {
+        product_baiviettintuc, stt,
         page,
         totalPages,
         next,
         hasNext,
         prev,
         hasPrev,
-        pages: pagination(page, totalPages), })
+        pages: pagination(page, totalPages),
+    })
 }
 const addbaiviettintuc = async (req, res) => {
     const category = await Menu_tintucModel.find();
@@ -693,18 +699,18 @@ const uploadbaiviettintuc = async (req, res) => {
         title: body.title,
         metadescription: body.metadescription,
         metakeywords: body.metakeywords,
-        nhap: body.nhap ==="on"
+        nhap: body.nhap === "on"
     }
     if (files) {
         for (item of files) {
             const image = item.originalname;
             fs.renameSync(item.path, path.resolve("src/public/site/images/update", item.originalname));
             product["image"] = image;
-                            const add = {
-                        images: item.originalname,
-                        note: "02"
-                    };
-        new ImagesModel(add).save();
+            const add = {
+                images: item.originalname,
+                note: "02"
+            };
+            new ImagesModel(add).save();
         }
     }
     new BaiviettintucModel(product).save();
@@ -725,48 +731,48 @@ const updatebaiviettintuc = async (req, res) => {
         tieudebaiviet: body.tieudebaiviet,
         slug: slug(body.tieudebaiviet),
         content: body.content,
-          title: body.title,
+        title: body.title,
         metadescription: body.metadescription,
         metakeywords: body.metakeywords,
-            nhap: body.nhap ==="on"
+        nhap: body.nhap === "on"
     }
     if (files) {
         for (item of files) {
             const image = item.originalname;
             fs.renameSync(item.path, path.resolve("src/public/site/images/update", item.originalname));
             product["image"] = image;
-                            const add = {
-                        images: item.originalname,
-                        note: "02"
-                    };
-        new ImagesModel(add).save();
+            const add = {
+                images: item.originalname,
+                note: "02"
+            };
+            new ImagesModel(add).save();
         }
     }
     await BaiviettintucModel.updateOne({ _id: id }, { $set: product });
-     res.redirect('/admin/danh-sach-bai-viet-tin-tuc?page=' + req.query.page)
+    res.redirect('/admin/danh-sach-bai-viet-tin-tuc?page=' + req.query.page)
 
 }
 const updatebaiviettintuc2 = async (req, res) => {
     const id = req.params.id;
     const product = await BaiviettintucModel.findById(id);
-    if(product.nhap == true){
+    if (product.nhap == true) {
         const products = {
             nhap: false
         }
         await BaiviettintucModel.updateOne({ _id: id }, { $set: products });
     }
-    else{
+    else {
         const products = {
             nhap: true
         }
         await BaiviettintucModel.updateOne({ _id: id }, { $set: products });
     }
-       res.redirect('/admin/danh-sach-bai-viet-tin-tuc?page=' + req.query.page)
+    res.redirect('/admin/danh-sach-bai-viet-tin-tuc?page=' + req.query.page)
 }
 const deletebaiviettintuc = async (req, res) => {
     const id = req.params.id;
     await BaiviettintucModel.deleteOne({ _id: id });
-       res.redirect('/admin/danh-sach-bai-viet-tin-tuc?page=' + req.query.page)
+    res.redirect('/admin/danh-sach-bai-viet-tin-tuc?page=' + req.query.page)
 }
 
 
@@ -788,19 +794,20 @@ const uploadmenudichvu = async (req, res) => {
             menudichvu: body.menudichvu,
             slug: slug(body.menudichvu),
             content: body.content,
-                        title: body.title,
+            title: body.title,
             metadescription: body.metadescription,
             metakeywords: body.metakeywords,
+            web: body.web,
         }
         if (file) {
             const images = file.originalname;
             fs.renameSync(file.path, path.resolve("src/public/site/images/update", file.originalname));
             addcategory["images"] = images;
-                 const add = {
-                        images: file.originalname,
-                        note: "02"
-                    };
-        new ImagesModel(add).save();
+            const add = {
+                images: file.originalname,
+                note: "02"
+            };
+            new ImagesModel(add).save();
         }
         new Menu_dichvuModel(addcategory).save();
         res.redirect("/admin/menu-dich-vu")
@@ -821,18 +828,19 @@ const updatemenudichvu = async (req, res) => {
         menudichvu: body.menudichvu,
         slug: slug(body.menudichvu),
         content: body.content,
-                    title: body.title,
-            metadescription: body.metadescription,
-            metakeywords: body.metakeywords,
+        title: body.title,
+        metadescription: body.metadescription,
+        metakeywords: body.metakeywords,
+        web: body.web,
     }
     if (file) {
         const images = file.originalname;
         fs.renameSync(file.path, path.resolve("src/public/site/images/update", file.originalname));
         category["images"] = images;
-             const add = {
-                        images: file.originalname,
-                        note: "02"
-                    };
+        const add = {
+            images: file.originalname,
+            note: "02"
+        };
         new ImagesModel(add).save();
     }
     await Menu_dichvuModel.updateOne({ _id: id }, { $set: category });
@@ -858,24 +866,26 @@ const baivietdichvu = async (req, res) => {
     const totalRows = await BaivietdichvuModel.find().countDocuments();
     const totalPages = Math.ceil(totalRows / limit);
     const product = await BaivietdichvuModel
-    .find()
-    .populate({ path: "menudichvu_id" })
-    .sort({ _id: -1 })
-    .skip(skip)
-    .limit(limit);
+        .find()
+        .populate({ path: "menudichvu_id" })
+        .sort({ _id: -1 })
+        .skip(skip)
+        .limit(limit);
     const next = page + 1;
     const hasNext = page < totalPages ? true : false;
     const prev = page - 1;
     const hasPrev = page > 1 ? true : false;
     const stt = 1;
-    res.render("./admin/menu-dich-vu/danh-sach-bai-viet-dich-vu", { product, stt,
+    res.render("./admin/menu-dich-vu/danh-sach-bai-viet-dich-vu", {
+        product, stt,
         page,
         totalPages,
         next,
         hasNext,
         prev,
         hasPrev,
-        pages: pagination(page, totalPages), })
+        pages: pagination(page, totalPages),
+    })
 }
 const addbaivietdichvu = async (req, res) => {
     const category = await Menu_dichvuModel.find();
@@ -899,18 +909,18 @@ const uploadbaivietdichvu = async (req, res) => {
         title: body.title,
         metadescription: body.metadescription,
         metakeywords: body.metakeywords,
-        nhap: body.nhap ==="on"
+        nhap: body.nhap === "on"
     }
     if (files) {
         const uploadimg = [];
         for (item of files) {
             uploadimg.push(item.originalname);
             fs.renameSync(item.path, path.resolve("src/public/site/images/update", item.originalname));
-                 const add = {
-                        images: item.originalname,
-                        note: "02"
-                    };
-        new ImagesModel(add).save();
+            const add = {
+                images: item.originalname,
+                note: "02"
+            };
+            new ImagesModel(add).save();
         }
 
         const image = [];
@@ -954,18 +964,18 @@ const updatebaivietdichvu = async (req, res) => {
         title: body.title,
         metadescription: body.metadescription,
         metakeywords: body.metakeywords,
-                nhap: body.nhap ==="on"
+        nhap: body.nhap === "on"
     }
     if (files.length > 0) {
         const uploadimg = [];
         for (item of files) {
             uploadimg.push(item.originalname);
             fs.renameSync(item.path, path.resolve("src/public/site/images/update", item.originalname));
-                 const add = {
-                        images: item.originalname,
-                        note: "02"
-                    };
-        new ImagesModel(add).save();
+            const add = {
+                images: item.originalname,
+                note: "02"
+            };
+            new ImagesModel(add).save();
         }
 
         const image = [];
@@ -985,13 +995,13 @@ const updatebaivietdichvu = async (req, res) => {
 const updatebaivietdichvu2 = async (req, res) => {
     const id = req.params.id;
     const product = await BaivietdichvuModel.findById(id);
-    if(product.nhap == true){
+    if (product.nhap == true) {
         const products = {
             nhap: false
         }
         await BaivietdichvuModel.updateOne({ _id: id }, { $set: products });
     }
-    else{
+    else {
         const products = {
             nhap: true
         }
@@ -1041,10 +1051,10 @@ const uploadchiasekhachhang = async (req, res) => {
     if (file) {
         fs.renameSync(file.path, path.resolve("src/public/site/images/update", file.originalname));
         product["images"] = file.originalname;
-             const add = {
-                        images: file.originalname,
-                        note: "02"
-                    };
+        const add = {
+            images: file.originalname,
+            note: "02"
+        };
         new ImagesModel(add).save();
     }
     new ChiaseModel(product).save();
@@ -1053,7 +1063,7 @@ const uploadchiasekhachhang = async (req, res) => {
 const editchiasekhachhang = async (req, res) => {
     const id = req.params.id;
     const product = await ChiaseModel.findById(id);
-    res.render("./admin/chia-se-khach-hang/edit-chia-se-KH", { product }) 
+    res.render("./admin/chia-se-khach-hang/edit-chia-se-KH", { product })
 }
 const updatechiasekhachhang = async (req, res) => {
     const id = req.params.id;
@@ -1065,10 +1075,10 @@ const updatechiasekhachhang = async (req, res) => {
     if (file) {
         fs.renameSync(file.path, path.resolve("src/public/site/images/update", file.originalname));
         product["images"] = file.originalname;
-             const add = {
-                        images: file.originalname,
-                        note: "02"
-                    };
+        const add = {
+            images: file.originalname,
+            note: "02"
+        };
         new ImagesModel(add).save();
     }
     await ChiaseModel.updateOne({ _id: id }, { $set: product });
@@ -1088,23 +1098,25 @@ const video = async (req, res) => {
     const totalRows = await VideoModel.find().countDocuments();
     const totalPages = Math.ceil(totalRows / limit);
     const product = await VideoModel
-    .find()
-    .sort({ _id: -1 })
-    .skip(skip)
-    .limit(limit);
+        .find()
+        .sort({ _id: -1 })
+        .skip(skip)
+        .limit(limit);
     const next = page + 1;
     const hasNext = page < totalPages ? true : false;
     const prev = page - 1;
     const hasPrev = page > 1 ? true : false;
     const stt = 1;
-    res.render("./admin/video/danh-sach-video", { product, stt,
+    res.render("./admin/video/danh-sach-video", {
+        product, stt,
         page,
         totalPages,
         next,
         hasNext,
         prev,
         hasPrev,
-        pages: pagination(page, totalPages) })
+        pages: pagination(page, totalPages)
+    })
 }
 const addvideo = async (req, res) => {
 
@@ -1157,27 +1169,27 @@ const search = async (req, res) => {
                 $search: keyword,
             }
         })
-        .sort({ _id: -1 })    
+        .sort({ _id: -1 })
     const product2 = await BaiviettintucModel
         .find({
             $text: {
                 $search: keyword,
             }
         })
-        .sort({ _id: -1 })    
+        .sort({ _id: -1 })
     const total = products.length + product.length + product2.length
-    res.render("./admin/search", {products, keyword, total, product, product2})
+    res.render("./admin/search", { products, keyword, total, product, product2 })
 }
 
 
 const thuocloban = async (req, res) => {
     const product = await LobanModel.find();
-    res.render("./admin/lo-ban/lo-ban", {product})
+    res.render("./admin/lo-ban/lo-ban", { product })
 }
 const editthuocloban = async (req, res) => {
     const id = req.params.id;
     const product = await LobanModel.findById(id);
-    res.render("./admin/lo-ban/edit-lo-ban", {product})
+    res.render("./admin/lo-ban/edit-lo-ban", { product })
 }
 const updatethuocloban = async (req, res) => {
     const id = req.params.id;
@@ -1195,18 +1207,18 @@ const updatethuocloban = async (req, res) => {
 
 
 const dsanh = async (req, res) => {
-    const tieude = await ImagesModel.find({note: '02'});
-    const content = await ImagesModel.find({note: '01'});
-    res.render("./admin/danh-sach-anh/menu-danh-sach",{tieude, content})
+    const tieude = await ImagesModel.find({ note: '02' });
+    const content = await ImagesModel.find({ note: '01' });
+    res.render("./admin/danh-sach-anh/menu-danh-sach", { tieude, content })
 }
 
 const dsanhtieude = async (req, res) => {
-        const image = await ImagesModel.find({note: '02'}).sort({ _id: -1 });
-    res.render("./admin/danh-sach-anh/danh-sach-anh-tieu-de", {image})
+    const image = await ImagesModel.find({ note: '02' }).sort({ _id: -1 });
+    res.render("./admin/danh-sach-anh/danh-sach-anh-tieu-de", { image })
 }
 const dsanhconent = async (req, res) => {
-        const image = await ImagesModel.find({note: '01'}).sort({ _id: -1 });
-    res.render("./admin/danh-sach-anh/danh-sach-anh-content",{image})
+    const image = await ImagesModel.find({ note: '01' }).sort({ _id: -1 });
+    res.render("./admin/danh-sach-anh/danh-sach-anh-content", { image })
 }
 
 
@@ -1215,14 +1227,14 @@ module.exports = {
     upload, gioithieutrang, editgioithieutrang, updategioithieu, thongtintrang, editthongtintrang, updatethongtintrang,
     danhmucsanpham, adddanhmucsanpham, adddanhmuc, updatedanhmuc, editdanhmucsanpham, deletedanhmucsanpham,
     nhomsanpham, addnhomsanpham, addnhomsp, editnhomsanpham, updatenhomsanpham, deletenhomsanpham,
-    anhnhomsanpham, editanhnhomsanpham,  uploadanhnhomsanpham, pushanhnhomsanpham, pushanh, deleteanhnhomsanpham,
+    anhnhomsanpham, editanhnhomsanpham, uploadanhnhomsanpham, pushanhnhomsanpham, pushanh, deleteanhnhomsanpham,
     danhsachsanpham, addsanpham, addproduct, editsanpham, uploadsanpham, deletesanpham,
     menutintuc, addmenutintuc, addcategorytintuc, deletemenutintuc, editmenutintuc, updatemenutintuc,
-    danhsachbaiviettintuc,  addbaiviettintuc, uploadbaiviettintuc,  editbaiviettintuc,  updatebaiviettintuc,
+    danhsachbaiviettintuc, addbaiviettintuc, uploadbaiviettintuc, editbaiviettintuc, updatebaiviettintuc,
     deletebaiviettintuc, menudichvu, addmenudichvu, uploadmenudichvu, editmenudichvu, updatemenudichvu,
     deletemenudichvu, baivietdichvu, addbaivietdichvu, uploadbaivietdichvu, editbaivietdichvu, updatebaivietdichvu,
     deletebaivietdichvu, yeucautuvan, edityeucautuvan, chiasekhachhang, addchiasekhachhang, uploadchiasekhachhang,
-    editchiasekhachhang, updatechiasekhachhang, deletechiasekhachhang, video,  addvideo, uploadvideo,  editvideo,
-    updatevideo,  deletevideo, search, uploadsanpham2, updatebaiviettintuc2,updatebaivietdichvu2,
-    thuocloban, editthuocloban, updatethuocloban, dsanh, dsanhtieude, dsanhconent, 
+    editchiasekhachhang, updatechiasekhachhang, deletechiasekhachhang, video, addvideo, uploadvideo, editvideo,
+    updatevideo, deletevideo, search, uploadsanpham2, updatebaiviettintuc2, updatebaivietdichvu2,
+    thuocloban, editthuocloban, updatethuocloban, dsanh, dsanhtieude, dsanhconent,
 }

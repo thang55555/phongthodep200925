@@ -31,6 +31,10 @@ const menu_dichvuSchema = new mongoose.Schema({
         type: String,
         required: true,
     }, 
+        web: {
+        type: [String],
+        defadef: [],
+    }, 
  
     
 }, {timestamps:true});

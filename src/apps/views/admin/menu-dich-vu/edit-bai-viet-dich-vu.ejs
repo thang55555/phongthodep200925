@@ -100,12 +100,24 @@
                                 <input required name="namthicong" type="text" value="<%=product.namthicong%>" class="form-control" placeholder="Năm thi công...">
                             </div>
                             <div class="form-group">
-                                <label>Nhóm sản phẩm</label>
-                                <select name="menudichvu_id" class="form-control">
-                                    <% for(item of category){%>
-                                    <option <%= product.menudichvu_id==item.id && "selected" %> value="<%=item._id%>"> <%=item.menudichvu%></option>
-                                    <%}%>
-                                </select>
+<label>Nhóm dịch vụ: (giữ phím Ctrl để chọn nhiều)</label>
+<select name="menudichvu_id" class="form-control" multiple>
+    <% 
+    // Lấy mảng từ database, đảm bảo không bị lỗi nếu product.menudichvu_id là undefined
+    const selectedIds = product.menudichvu_id || []; 
+    
+    for(let item of category) { 
+        // Kiểm tra xem ID của item hiện tại có nằm trong mảng đã chọn không
+        // Chuyển sang chuỗi (.toString()) để so sánh chính xác giữa ObjectId và String
+        const isSelected = selectedIds.some(id => id.toString() === item._id.toString());
+    %>
+        <option value="<%=item._id%>" <%= isSelected ? 'selected' : '' %>>
+            <%=item.menudichvu%>
+        </option>
+    <% } %>
+</select>
+
+                                
                             </div>
 
                             <div class="form-group">

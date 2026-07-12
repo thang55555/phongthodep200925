@@ -1,10 +1,10 @@
 const mongoose = require("../../common/database")();
 
 const product_sanphamSchema = new mongoose.Schema({
-    nhomsp_id: {
+    nhomsp_id: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Menu_nhom_sanpham",
-    },
+    }],
     tieudesp: {
         type: String,
         required: true,
@@ -29,10 +29,10 @@ const product_sanphamSchema = new mongoose.Schema({
     nhap: {
         type: Boolean,
     },
-    menudichvu_id:{
+    menudichvu_id:[{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Menu_dichvu",
-    },
+    }],
     slug:{
         type: String,
         required: true,

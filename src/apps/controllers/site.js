@@ -502,64 +502,105 @@ const shoppe = async (req, res) => {
 const axios = require("axios");
 
 const addshoppe = async (req, res) => {
+    try {
 
-  let link = req.body.link?.trim();
-// Kiểm tra URL hợp lệ
-try {
-    new URL(link);
-} catch (e) {
-    return res.send(`
-        <script>
-            alert("Link không hợp lệ.");
-            history.back();
-        </script>
-    `);
-}
+        let link = req.body.link?.trim();
 
+        if (!link) {
+            return res.send("Thiếu link");
+        }
 
+        // ✅ kiểm tra domain Shopee
+        const allowDomains = [
+            "shopee.vn",
+            "s.shopee.vn",
+            "vn.shp.ee"
+        ];
 
+        let hostname = "";
 
-  try {
-    const response = await axios.get(link, {
-      maxRedirects: 0,
-      validateStatus: status => status >= 200 && status < 400
-    });
+        try {
+            hostname = new URL(link).hostname;
+        } catch (e) {
+            return res.send("Link không hợp lệ");
+        }
 
-    if (response.headers.location) {
-      link = response.headers.location;
-    }
-  } catch (e) {
-    console.error(e.message);
-  }
-  // bỏ phần query về dạng chuẩn ?
-// Chuẩn hóa URL
-try {
-    const url = new URL(link);
+        if (!allowDomains.includes(hostname)) {
+            return res.send("Chỉ hỗ trợ link Shopee");
+        }
 
-    // Bỏ query
-    link = `${url.origin}${decodeURIComponent(url.pathname)}`;
+        // =====================================================
+        // ✅ RESOLVE LINK vn.shp.ee -> link thật
+        // =====================================================
 
-    // Nếu là opaanlp -> product
-    const match = link.match(/\/opaanlp\/(\d+)\/(\d+)/);
+        if (hostname === "vn.shp.ee") {
 
-    if (match) {
-        const [, shopId, itemId] = match;
-        link = `${url.origin}/product/${shopId}/${itemId}`;
-    }
+            try {
 
-} catch (e) {
-    console.error(e.message);
-}
-console.log(link);
+                const response = await axios.get(link, {
+                    maxRedirects: 0,
+                    validateStatus: (status) => {
+                        return status >= 300 && status < 400;
+                    }
+                });
 
-  // ✅ encode link
-  const encodedLink = encodeURIComponent(link);
+                const realLink = response.headers.location;
 
-  // ✅ tạo affiliate link
-  const finalUrl =
-    `https://s.shopee.vn/an_redir?origin_link=${encodedLink}&affiliate_id=17399990070&sub_id=4986`;
+                if (realLink) {
+                    link = realLink;
+                }
 
-  res.send(`
+            } catch (e) {
+
+                if (e.response?.headers?.location) {
+                    link = e.response.headers.location;
+                }
+
+            }
+
+        }
+
+        // =====================================================
+        // ✅ encode link
+        // =====================================================
+
+        const encodedLink = encodeURIComponent(link);
+
+        // =====================================================
+        // ✅ tạo affiliate link
+        // =====================================================
+
+        const finalUrl =
+            `https://s.shopee.vn/an_redir?origin_link=${encodedLink}` +
+            `&affiliate_id=17399990070` +
+            `&sub_id=shoppe-usre1-aff1-aff2-aff3`;
+
+        // =====================================================
+        // ✅ rút gọn link
+        // =====================================================
+
+        let shortUrl = finalUrl;
+
+        try {
+
+            const r = await axios.get(
+                `https://tinyurl.com/api-create.php?url=${encodeURIComponent(finalUrl)}`
+            );
+
+            shortUrl = r.data;
+
+        } catch (e) {
+
+            console.log("Không rút gọn được link");
+
+        }
+
+        // =====================================================
+        // ✅ VIEW
+        // =====================================================
+console.log(finalUrl);
+
+        res.send(`
         <html>
         <head>
             <title>Chuyển tới Shopee</title>
@@ -660,13 +701,15 @@ console.log(link);
 
             <div class="box">
 
-
+                <div class="success">
+                    ✅ Tạo link affiliate thành công
+                </div>
 
                 <h2>🛒 Đi tới Shopee</h2>
 
                 <p>Bạn có thể chia sẻ link này cho bạn bè:</p>
 
-                <div class="link" id="link">${finalUrl}</div>
+                <div class="link" id="link">${shortUrl}</div>
 
                 <button class="btn copy" onclick="copyLink()">
                     📋 Copy link
@@ -711,7 +754,13 @@ console.log(link);
         </html>
         `);
 
+    } catch (err) {
 
+        console.log(err);
+
+        res.send("Có lỗi xảy ra");
+
+    }
 };
 
 module.exports = {
