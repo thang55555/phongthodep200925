@@ -413,9 +413,15 @@ const productsp = async (req, res) => {
     if (!product) return res.status(404).send("Không tìm thấy sản phẩm");
 
     let category_danhmuc = null;
-    if (product.nhomsp_id && product.nhomsp_id.danhmuc_id) {
-      category_danhmuc = await Menu_danhmuc_sanphamModel.findById(product.nhomsp_id.danhmuc_id);
-    }
+if (
+    product.nhomsp_id &&
+    product.nhomsp_id.length > 0 &&
+    product.nhomsp_id[0].danhmuc_id
+) {
+    category_danhmuc = await Menu_danhmuc_sanphamModel.findById(
+        product.nhomsp_id[0].danhmuc_id
+    );
+}
 
     const product_noibat = await Product_sanphamModel.find({ nhap: true }).limit(5).sort({ _id: -1 });
 
