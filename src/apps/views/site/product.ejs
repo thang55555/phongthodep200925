@@ -1,6 +1,8 @@
 <%- include("./layouts/head.ejs")%>
 
-    <title><%= product.title || product.tieudesp %></title>
+    <title>
+        <%= product.title || product.tieudesp %>
+    </title>
     <meta name="description" content="<%=product.metadescription%>">
     <meta name="keywords" content="<%=product.metakeywords%>">
     <meta name="image" content="https://phongthodep.net/static/site/images/update/<%=product.image[0].images%>">
@@ -8,7 +10,7 @@
 
 
         <!-- main -->
-        <div class="container" >
+        <div class="container">
 
             <ul class="breadcrumb">
                 <li><a href="/"><span>Trang chủ</span></a>
@@ -38,33 +40,33 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-9">
-                            <h1 class="names-prds__details product_mobile">
+                            <h2 class="names-prds__details product_mobile">
                                 <%=product.tieudesp%>
-                            </h1>
+                            </h2>
                             <div class="row row_product_img">
                                 <div class="col-lg-6 col-md-6 col-sm-12 col-12">
                                     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                                         <ol class="carousel-indicators">
-                                            <li data-target="#carouselExampleIndicators" data-slide-to="0"
-                                                class="active">
-                                            </li>
-                                            <%for(var i=1; i <=product.image.length; i++){%>
-                                                <li data-target="#carouselExampleIndicators" data-slide-to="<%=i%>">
-                                                </li>
-                                                <%}%>
+                                            <% product.image.sort((a, b)=> a.images.localeCompare(b.images));
+                                                %>
+                                                <% for(let i=0; i < product.image.length; i++){ %>
+                                                    <li data-target="#carouselExampleIndicators"
+                                                        data-slide-to="<%= i %>" class="<%= i === 0 ? 'active' : '' %>">
+                                                    </li>
+                                                    <% } %>
                                         </ol>
                                         <div class="carousel-inner">
-                                            <div class="carousel-item active">
-                                                <img class="d-block w-100"
-                                                    src="./images/update/<%=product.image[0].images%>"
-                                                    alt="First slide">
-                                            </div>
-                                            <% for(ỉtem of product.image){%>
-                                                <div class="carousel-item">
-                                                    <img class="d-block w-100" src="./images/update/<%=ỉtem.images%>"
-                                                        alt="Second slide">
+
+                                            <% for(let i=0; i < product.image.length; i++){ %>
+
+                                                <div class="carousel-item <%= i === 0 ? 'active' : '' %>">
+                                                    <img class="d-block w-100"
+                                                        src="./images/update/<%= product.image[i].images %>"
+                                                        onerror="this.onerror=null;this.src='../../images/<%= product.image[i].images %>';">
                                                 </div>
-                                                <%}%>
+
+                                                <% } %>
+
                                         </div>
                                         <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button"
                                             data-slide="prev">
@@ -208,5 +210,5 @@
         </div>
         <%- include("./layouts/footer.ejs")%>
 
-        <script src="theme/frontend/js/bootstrap.min.js" defer></script>
-<script src="theme/frontend/js/wow.min.js" defer></script> 
+            <script src="theme/frontend/js/bootstrap.min.js" defer></script>
+            <script src="theme/frontend/js/wow.min.js" defer></script>

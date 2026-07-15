@@ -52,10 +52,8 @@
 									<td><div class="antext"><%-item.content%></div></td>
 									<td><%= new Intl.DateTimeFormat('en-US').format(item.createdAt)%></td>
 									<td class="form-group">
-										<a href="/admin/edit-anh-nhom-san-pham/<%=item._id%>" class="btn btn-primary"><i
-												class="glyphicon glyphicon-pencil"></i></a>
-										<a onclick="clickDelete('<%=item._id%>')" class="btn btn-danger"><i
-												class="glyphicon glyphicon-remove"></i></a>
+										<a href="/admin/edit-anh-nhom-san-pham/<%=item._id%>" ><i class="fa-solid fa-pen-to-square"></i></a>
+										<a onclick="clickDelete('<%=item._id%>')"><i class="fa-solid fa-trash" style="color: rgb(48, 165, 255);"></i> </a>
 									</td>
 								</tr>
 					<%}%>

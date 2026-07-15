@@ -24,7 +24,10 @@ const menu_tintucSchema = new mongoose.Schema({
         type: String,
         required: true,
     }, 
-  
+    web: {
+        type: [String],
+        defadef: [],
+    }, 
     
 }, {timestamps:true});
 const Menu_tintucModel = mongoose.model("Menu_tintuc", menu_tintucSchema, "menu_tintuc");

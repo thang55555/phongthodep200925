@@ -167,6 +167,9 @@ router.get("/admin/danh-sach-anh", AuthMiddleware.checkAdmin, ProductController.
 router.get("/admin/danh-sach-anh/tieu-de", AuthMiddleware.checkAdmin, ProductController.dsanhtieude);
 router.get("/admin/danh-sach-anh/content", AuthMiddleware.checkAdmin, ProductController.dsanhconent);
 
+router.get("/list", AuthMiddleware.checkAdmin, ProductController.list);
+
+
 
 
 
@@ -192,10 +195,9 @@ router.get("/success", SiteController.success);
 router.get("/thuoc-lo-ban", SiteController.thuocloban);
 router.get("/tu-van", SiteController.tuvan);
 router.get("/search", SiteController.search);
-router.get("/shoppe", SiteController.shoppe);
-router.post("/add-shoppe", UploadMiddleware.single("images"),SiteController.addshoppe);
-router.post("/gui-lien-he", UploadMiddleware.single("images"), SiteController.guilienhe);
+router.get("/view-san-pham/:slug/:id", SiteController.productsp);
+router.get("/view-dich-vu/:slug/:id", SiteController.productdichvu);
+router.get("/view-tin-tuc/:slug/:id", SiteController.productTinTuc);
  
-
  
 module.exports = router;
