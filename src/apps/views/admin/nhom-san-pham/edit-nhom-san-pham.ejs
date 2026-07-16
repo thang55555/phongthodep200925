@@ -58,39 +58,38 @@
     </select>
 </div>
 
-								                             <div class="form-group">
-                                            <label>Thẻ title<span id="title"></span></label>
-                                            <input required onkeyup="tieudesp2(this.value)"  name="title" type="text" class="form-control"
-                                                placeholder="Title" value="<%=editnhom.title%>">
-                                                <script>
-                                                    function tieudesp2(val1) {
-                                                        document.frm.title.value = val1;
-                                                        document.getElementById("title").innerHTML =": " + val1.length + " từ";
-                                                    }
-                                                </script>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Thẻ meta description<span id="metadescription"></span></label>
-                                            <input required onkeyup="eventHandler(this.value)" name="metadescription" type="text" class="form-control"
-                                                placeholder="Meta description..." value="<%=editnhom.metadescription%>">
-                                                <script>
-                                                    function eventHandler(val) {
-                                                        document.frm.metadescription.value = val;
-                                                        document.getElementById("metadescription").innerHTML =": " + val.length + " từ";
-                                                    }
-                                                </script>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Thẻ meta keywords<span id="metakeywords"></span></label>
-                                            <input required onkeyup="metakeywords2(this.value)" name="metakeywords" type="text" class="form-control"
-                                                placeholder="Meta keywords..." value="<%=editnhom.metakeywords%>">
-                                                <script>
-                                                    function metakeywords2(val3) {
-                                                        document.frm.metakeywords.value = val3;
-                                                        document.getElementById("metakeywords").innerHTML =": " + val3.length + " từ";
-                                                    }
-                                                </script>
-                                        </div>
+
+<div class="form-group">
+    <label>Thẻ title <span id="label_title"></span></label>
+    <input required onkeyup="updateAll(this.value, 'bar_title', 'label_title', 50, 60)" 
+           name="title" type="text" class="form-control" placeholder="Title" value="<%=editnhom.title%>">
+    
+    <div class="progress-container">
+        <div id="bar_title" class="progress-bar"></div>
+    </div>
+</div>
+
+
+<div class="form-group">
+    <label>Thẻ meta description <span id="label_meta"></span></label>
+    <input required onkeyup="updateAll(this.value, 'bar_meta', 'label_meta', 140, 160)" 
+           name="metadescription" type="text" class="form-control" placeholder="Meta description..." value="<%=editnhom.metadescription%>">
+    
+    <div class="progress-container">
+        <div id="bar_meta" class="progress-bar"></div>
+    </div>
+</div>
+
+
+<div class="form-group">
+    <label>Thẻ meta keywords <span id="label_keywords"></span></label>
+    <input required onkeyup="updateAll(this.value, 'bar_keywords', 'label_keywords', 100, 200)" 
+           name="metakeywords" type="text" class="form-control" placeholder="Meta keywords..." value="<%=editnhom.metakeywords%>" >
+    
+    <div class="progress-container">
+        <div id="bar_keywords" class="progress-bar"></div>
+    </div>
+</div>
 
 						</div>
 						<div class="col-md-6">
