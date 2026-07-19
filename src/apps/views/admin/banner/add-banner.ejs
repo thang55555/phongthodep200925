@@ -35,10 +35,54 @@
 
                                 <div class="form-group">
                                     <label>Ảnh banner</label>
-                                    <input name="images" type="file">
+                                    <input name="images" type="file" required>
                                     <br>
                                 </div>
+<div class="form-group">
+    <label>Thẻ title <span id="label_title"></span></label>
+    <input required onkeyup="updateAll(this.value, 'bar_title', 'label_title', 50, 60)" 
+           name="title" type="text" class="form-control" placeholder="Title">
+    
+    <div class="progress-container">
+        <div id="bar_title" class="progress-bar"></div>
+    </div>
+</div>
 
+
+<div class="form-group">
+    <label>Thẻ meta description <span id="label_meta"></span></label>
+    <input required onkeyup="updateAll(this.value, 'bar_meta', 'label_meta', 140, 160)" 
+           name="metadescription" type="text" class="form-control" placeholder="Meta description...">
+    
+    <div class="progress-container">
+        <div id="bar_meta" class="progress-bar"></div>
+    </div>
+</div>
+
+
+<div class="form-group">
+    <label>Thẻ meta keywords <span id="label_keywords"></span></label>
+    <input required onkeyup="updateAll(this.value, 'bar_keywords', 'label_keywords', 100, 200)" 
+           name="metakeywords" type="text" class="form-control" placeholder="Meta keywords...">
+    
+    <div class="progress-container">
+        <div id="bar_keywords" class="progress-bar"></div>
+    </div>
+</div>
+
+                                        <div class="form-group">
+                                            <label>Mô tả banner</label>
+                                            <textarea id="content" required name="content" class="form-control" value=""
+                                                rows="3"></textarea>
+                                            <script>
+                                                CKEDITOR.replace('content', {
+                                                    extraPlugins: 'filebrowser',
+                                                    filebrowserBrowseUrl: '/list',//upload location
+                                                    filebrowserUploadMethod: 'form',
+                                                    filebrowserUploadUrl: '/upload'//route
+                                                })
+                                            </script>
+                                        </div>
 
                             <button name="sbm" type="submit" class="btn btn-success">Thêm mới</button>
                             <button type="reset" class="btn btn-default">Làm mới</button>

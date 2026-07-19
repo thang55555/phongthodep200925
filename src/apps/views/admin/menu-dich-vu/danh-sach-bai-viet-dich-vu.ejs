@@ -49,7 +49,13 @@
 								<tr>
 									<td><%=stt++%></td>
 									<td><div class="antext"><%=item.tieudesp%></div></td>
-									<td><div class="antext"><%=item.menudichvu_id.menudichvu%></div></td>
+<td>
+    <div class="antext">
+        <% item.menudichvu_id.forEach(function(menu){ %>
+            <div><%= menu.menudichvu %></div>
+        <% }) %>
+    </div>
+</td>
 									<td>  
 										<div class="form-check form-switch">
 										<input onclick="clickupdate('<%=item._id%>')"  <%= item.nhap==1 && "checked" %> class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" name="nhap" value="on">

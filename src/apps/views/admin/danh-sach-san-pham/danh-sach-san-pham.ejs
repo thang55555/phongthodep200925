@@ -51,12 +51,19 @@
 								<tr>
 									<td><%=stt++%></td>
 					 				<td><%=item.tieudesp%> </td>
-									<td>
-										        <% if(item.spdv){ %> <strong>DỊCH VỤ</strong> <% } %><br>
-        										<% item.nhomsp_id.forEach(function(nhom){ %>
-         									    <%= nhom.tennhomsanpham %><br>
-      										    <% }) %>
-										 </td>
+<td class="category-cell">
+    <% if(item.spdv){ %>
+        <strong>DỊCH VỤ</strong><br>
+    <% } %>
+
+    <% item.nhomsp_id.slice(0,3).forEach(function(nhom){ %>
+        <div><%= nhom.tennhomsanpham %></div>
+    <% }) %>
+
+    <% if(item.nhomsp_id.length > 3){ %>
+        <span class="text-primary">+ <%= item.nhomsp_id.length - 3 %> danh mục nữa</span>
+    <% } %>
+</td>
 
     								<td>
       									  <% item.menudichvu_id.forEach(function(menu){ %>

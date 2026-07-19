@@ -1485,7 +1485,11 @@ const uploadbanner = async (req, res) => {
     const { file, body } = req;
     const product = {
         name: body.name,
-        content: body.content
+        content: body.content,
+        title: body.title,
+        metadescription: body.metadescription,
+        metakeywords: body.metakeywords,
+        content: body.content,
     }
     if (file) {
         fs.renameSync(file.path, path.resolve("src/public/site/images/update", file.originalname));
@@ -1509,7 +1513,11 @@ const updatebanner = async (req, res) => {
     const { file, body } = req;
     const product = {
         name: body.name,
-        content: body.content
+        content: body.content,
+        title: body.title,
+        metadescription: body.metadescription,
+        metakeywords: body.metakeywords,
+        content: body.content,
     }
     if (file) {
         fs.renameSync(file.path, path.resolve("src/public/site/images/update", file.originalname));
