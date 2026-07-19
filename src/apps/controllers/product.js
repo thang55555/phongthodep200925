@@ -18,6 +18,7 @@ const ChiaseModel = require("../models/chiase");
 const VideoModel = require("../models/video");
 const LobanModel = require("../models/loban");
 const ImagesModel = require("../models/images");
+const BannerModel = require("../models/banner");
 
 
 
@@ -1472,11 +1473,61 @@ const dsanhconent = async (req, res) => {
     });
 };
 
-const check = async (req, res) => {
-
-    res.render("./admin/check",)
+const banner = async (req, res) => {
+    const product = await BannerModel.find().sort({ _id: -1 });
+    const stt = 1;
+    res.render("./admin/banner/danh-sach-banner", { product, stt })
 }
-
+const addbanner = async (req, res) => {
+    res.render("./admin/banner/add-banner")
+}
+const uploadbanner = async (req, res) => {
+    const { file, body } = req;
+    const product = {
+        name: body.name,
+        content: body.content
+    }
+    if (file) {
+        fs.renameSync(file.path, path.resolve("src/public/site/images/update", file.originalname));
+        product["images"] = file.originalname;
+        const add = {
+            images: file.originalname,
+            note: "02"
+        };
+        new ImagesModel(add).save();
+    }
+    new BannerModel(product).save();
+    res.redirect("/admin/banner");
+}
+const editbanner = async (req, res) => {
+    const id = req.params.id;
+    const product = await BannerModel.findById(id);
+    res.render("./admin/banner/edit-banner", { product })
+}
+const updatebanner = async (req, res) => {
+    const id = req.params.id;
+    const { file, body } = req;
+    const product = {
+        name: body.name,
+        content: body.content
+    }
+    if (file) {
+        fs.renameSync(file.path, path.resolve("src/public/site/images/update", file.originalname));
+        product["images"] = file.originalname;
+        const add = {
+            images: file.originalname,
+            note: "02"
+        };
+        new ImagesModel(add).save();
+    }
+    await BannerModel.updateOne({ _id: id }, { $set: product });
+    res.redirect("/admin/banner");
+}
+const deletebanner = async (req, res) => {
+    const id = req.params.id;
+    await BannerModel.deleteOne({ _id: id });
+    res.redirect("/admin/banner")
+}
 
 module.exports = {
 
@@ -1492,5 +1543,6 @@ module.exports = {
     deletebaivietdichvu, yeucautuvan, edityeucautuvan, chiasekhachhang, addchiasekhachhang, uploadchiasekhachhang,
     editchiasekhachhang, updatechiasekhachhang, deletechiasekhachhang, video, addvideo, uploadvideo, editvideo,
     updatevideo, deletevideo, search, uploadsanpham2, updatebaiviettintuc2, updatebaivietdichvu2,
-    thuocloban, editthuocloban, updatethuocloban, dsanh, dsanhtieude, dsanhconent, list, check
+    thuocloban, editthuocloban, updatethuocloban, dsanh, dsanhtieude, dsanhconent, list,
+    banner, addbanner, uploadbanner, editbanner, updatebanner, deletebanner
 }

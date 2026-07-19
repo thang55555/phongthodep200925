@@ -168,10 +168,19 @@ router.get("/admin/danh-sach-anh/tieu-de", AuthMiddleware.checkAdmin, ProductCon
 router.get("/admin/danh-sach-anh/content", AuthMiddleware.checkAdmin, ProductController.dsanhconent);
 
 router.get("/list", AuthMiddleware.checkAdmin, ProductController.list);
-router.get("/admin/check", AuthMiddleware.checkAdmin, ProductController.check);
 
 
+router.get("/admin/banner", AuthMiddleware.checkAdmin, ProductController.banner);
+router.get("/admin/add-banner", AuthMiddleware.checkAdmin, ProductController.addbanner);
+router.post("/admin/upload-banner", AuthMiddleware.checkAdmin,
+    UploadMiddleware.single("images"), 
+    ProductController.uploadbanner);
+router.get("/admin/edit-banner/:id", AuthMiddleware.checkAdmin, ProductController.editbanner);
 
+router.post("/admin/update-banner/:id",  AuthMiddleware.checkAdmin,
+    UploadMiddleware.single("images"), 
+    ProductController.updatebanner);
+router.get("/admin/delete-banner/:id", AuthMiddleware.checkAdmin, ProductController.deletebanner);
 
 
 
