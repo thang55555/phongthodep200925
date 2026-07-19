@@ -1381,62 +1381,96 @@ const updatethuocloban = async (req, res) => {
     res.redirect("/admin/thuoc-lo-ban")
 }
 //danh sách ảnh
+const removeDuplicateImages = async () => {
+    const duplicates = await ImagesModel.aggregate([
+        {
+            $group: {
+                _id: {
+                    note: "$note",
+                    images: "$images"
+                },
+                ids: { $push: "$_id" },
+                count: { $sum: 1 }
+            }
+        },
+        {
+            $match: {
+                count: { $gt: 1 }
+            }
+        }
+    ]);
 
+    for (const item of duplicates) {
+        // Giữ lại document đầu tiên
+        const idsToDelete = item.ids.slice(1);
+
+        if (idsToDelete.length > 0) {
+            await ImagesModel.deleteMany({
+                _id: { $in: idsToDelete }
+            });
+        }
+    }
+};
 
 const dsanh = async (req, res) => {
-   const tieude = await ImagesModel.aggregate([
-    { $match: { note: "02" } },
-    {
-        $group: {
-            _id: "$images",
-            doc: { $first: "$$ROOT" }
-        }
-    },
-    { $replaceRoot: { newRoot: "$doc" } },
-]);
 
-const content = await ImagesModel.aggregate([
-    { $match: { note: "01" } },
-    {
-        $group: {
-            _id: "$images",
-            doc: { $first: "$$ROOT" }
-        }
-    },
-    { $replaceRoot: { newRoot: "$doc" } },
-]);
-    res.render("./admin/danh-sach-anh/menu-danh-sach", { tieude, content })
-}
+    // Xóa document trùng
+    await removeDuplicateImages();
+
+    const tieude = await ImagesModel.find({ note: "02" });
+
+    const content = await ImagesModel.find({ note: "01" });
+
+    res.render("./admin/danh-sach-anh/menu-danh-sach", {
+        tieude,
+        content
+    });
+};
 
 const dsanhtieude = async (req, res) => {
-const image = await ImagesModel.aggregate([
-    { $match: { note: "02" } },
-    {
-        $group: {
-            _id: "$images",
-            doc: { $first: "$$ROOT" }
-        }
-    },
-    { $replaceRoot: { newRoot: "$doc" } },
-    { $sort: { _id: -1 } },
-]);
-    res.render("./admin/danh-sach-anh/danh-sach-anh-tieu-de", { image })
-}
+    const page = parseInt(req.query.page) || 1;
+    const limit = 30;
+    const skip = (page - 1) * limit;
+
+    // Đếm tổng số document
+    const total = await ImagesModel.countDocuments({ note: "02" });
+
+    const totalPages = Math.ceil(total / limit);
+
+    // Lấy dữ liệu theo trang
+    const image = await ImagesModel.find({ note: "02" })
+        .sort({ _id: -1 })
+        .skip(skip)
+        .limit(limit);
+
+    res.render("./admin/danh-sach-anh/danh-sach-anh-tieu-de", {
+        image,
+        page,
+        totalPages
+    });
+};
 const dsanhconent = async (req, res) => {
-const image = await ImagesModel.aggregate([
-    { $match: { note: "01" } },
-    {
-        $group: {
-            _id: "$images",
-            doc: { $first: "$$ROOT" }
-        }
-    },
-    { $replaceRoot: { newRoot: "$doc" } },
-    
-    { $sort: { _id: -1 } },
-]);
-    res.render("./admin/danh-sach-anh/danh-sach-anh-content", { image })
-}
+    const page = parseInt(req.query.page) || 1;
+    const limit = 30;
+    const skip = (page - 1) * limit;
+
+    // Đếm tổng số document
+    const total = await ImagesModel.countDocuments({ note: "01" });
+
+    const totalPages = Math.ceil(total / limit);
+
+    // Lấy dữ liệu theo trang
+    const image = await ImagesModel.find({ note: "01" })
+        .sort({ _id: -1 })
+        .skip(skip)
+        .limit(limit);
+
+    res.render("./admin/danh-sach-anh/danh-sach-anh-content", {
+        image,
+        page,
+        totalPages
+    });
+};
 
 const check = async (req, res) => {
 
