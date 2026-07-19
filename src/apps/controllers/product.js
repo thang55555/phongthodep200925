@@ -585,8 +585,30 @@ const editsanpham = async (req, res) => {
     const danhmuc = await Menu_nhom_sanphamModel.find();
     const product = await Product_sanphamModel.findById(id);
     const dichvu = await Menu_dichvuModel.find();
-    const tieude = await ImagesModel.find({ note: '02' });
-    const content = await ImagesModel.find({ note: '01' });
+const tieude = await ImagesModel.aggregate([
+    { $match: { note: "02" } },
+    {
+        $group: {
+            _id: "$images",
+            doc: { $first: "$$ROOT" }
+        }
+    },
+    { $replaceRoot: { newRoot: "$doc" } },
+    { $sort: { _id: -1 } },
+]);
+
+const content = await ImagesModel.aggregate([
+    { $match: { note: "01" } },
+    {
+        $group: {
+            _id: "$images",
+            doc: { $first: "$$ROOT" }
+        }
+    },
+    { $replaceRoot: { newRoot: "$doc" } },
+    
+    { $sort: { _id: -1 } },
+]);
 
     res.render("./admin/danh-sach-san-pham/edit-san-pham", { danhmuc, product, dichvu, page, tieudeJson: JSON.stringify(tieude), contentJson: JSON.stringify(content) })
 }
@@ -1416,7 +1438,10 @@ const image = await ImagesModel.aggregate([
     res.render("./admin/danh-sach-anh/danh-sach-anh-content", { image })
 }
 
+const check = async (req, res) => {
 
+    res.render("./admin/check",)
+}
 
 
 module.exports = {
@@ -1433,5 +1458,5 @@ module.exports = {
     deletebaivietdichvu, yeucautuvan, edityeucautuvan, chiasekhachhang, addchiasekhachhang, uploadchiasekhachhang,
     editchiasekhachhang, updatechiasekhachhang, deletechiasekhachhang, video, addvideo, uploadvideo, editvideo,
     updatevideo, deletevideo, search, uploadsanpham2, updatebaiviettintuc2, updatebaivietdichvu2,
-    thuocloban, editthuocloban, updatethuocloban, dsanh, dsanhtieude, dsanhconent, list
+    thuocloban, editthuocloban, updatethuocloban, dsanh, dsanhtieude, dsanhconent, list, check
 }

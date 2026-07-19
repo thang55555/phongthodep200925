@@ -42,18 +42,18 @@ router.post("/update-gioi-thieu-trang/:id", AuthMiddleware.checkAdmin,
 router.get("/admin/thong-tin-trang", AuthMiddleware.checkAdmin, ProductController.thongtintrang);
 router.get("/admin/edit-thong-tin-trang/:id", AuthMiddleware.checkAdmin, ProductController.editthongtintrang);
 router.post("/admin/update-thong-tin-trang/:id", AuthMiddleware.checkAdmin,
-    UploadMiddleware.array("images", 20), 
+    UploadMiddleware.array("images", 50), 
     ProductController.updatethongtintrang);
 
 
 router.get("/admin/danh-muc-san-pham", AuthMiddleware.checkAdmin, ProductController.danhmucsanpham);
 router.get("/admin/add-danh-muc-san-pham", AuthMiddleware.checkAdmin, ProductController.adddanhmucsanpham);
 router.post("/admin/add-danh-muc", AuthMiddleware.checkAdmin,
-    UploadMiddleware.array("images", 20), 
+    UploadMiddleware.array("images", 50), 
     ProductController.adddanhmuc);
 router.get("/admin/edit-danh-muc-san-pham/:id", AuthMiddleware.checkAdmin, ProductController.editdanhmucsanpham);
 router.post("/admin/update-danh-muc-san-pham/:id", AuthMiddleware.checkAdmin,
-    UploadMiddleware.array("images", 20), 
+    UploadMiddleware.array("images", 50), 
     ProductController.updatedanhmuc);
 router.get("/admin/delete-danh-muc-san-pham/:id", AuthMiddleware.checkAdmin, ProductController.deletedanhmucsanpham);
 
@@ -82,12 +82,12 @@ router.get("/admin/delete-anh-nhom-san-pham/:id", AuthMiddleware.checkAdmin, Pro
 
 router.get("/admin/danh-sach-san-pham", AuthMiddleware.checkAdmin, ProductController.danhsachsanpham);
 router.post("/admin/add-product", AuthMiddleware.checkAdmin,
-    UploadMiddleware.array("images", 20),
+    UploadMiddleware.array("images", 50),
     ProductController.addproduct);
 router.get("/admin/add-san-pham", AuthMiddleware.checkAdmin, ProductController.addsanpham);
 router.get("/admin/edit-san-pham/:id", AuthMiddleware.checkAdmin, ProductController.editsanpham);
 router.post("/admin/upload-san-pham/:id", AuthMiddleware.checkAdmin,
-    UploadMiddleware.array("images", 20),
+    UploadMiddleware.array("images", 50),
     ProductController.uploadsanpham);
 router.get("/admin/upload-san-pham/:id", AuthMiddleware.checkAdmin, ProductController.uploadsanpham2);
 router.get("/admin/delete-san-pham/:id", AuthMiddleware.checkAdmin, ProductController.deletesanpham);
@@ -103,11 +103,11 @@ router.get("/admin/delete-menu-tin-tuc/:id", AuthMiddleware.checkAdmin, ProductC
 router.get("/admin/danh-sach-bai-viet-tin-tuc", AuthMiddleware.checkAdmin, ProductController.danhsachbaiviettintuc);
 router.get("/admin/add-bai-viet-tin-tuc", AuthMiddleware.checkAdmin, ProductController.addbaiviettintuc);
 router.post("/admin/upload-bai-viet-tin-tuc", AuthMiddleware.checkAdmin, 
-    UploadMiddleware.array("images", 20),
+    UploadMiddleware.array("images", 50),
     ProductController.uploadbaiviettintuc);
 router.get("/admin/edit-bai-viet-tin-tuc/:id", AuthMiddleware.checkAdmin, ProductController.editbaiviettintuc);
 router.post("/admin/update-bai-viet-tin-tuc/:id", AuthMiddleware.checkAdmin,
-    UploadMiddleware.array("images", 20),
+    UploadMiddleware.array("images", 50),
     ProductController.updatebaiviettintuc);
 router.get("/admin/update-bai-viet-tin-tuc/:id", AuthMiddleware.checkAdmin,ProductController.updatebaiviettintuc2);
 router.get("/admin/delete-bai-viet-tin-tuc/:id", AuthMiddleware.checkAdmin, ProductController.deletebaiviettintuc);
@@ -127,11 +127,11 @@ router.get("/admin/delete-menu-dich-vu/:id", AuthMiddleware.checkAdmin, ProductC
 router.get("/admin/bai-viet-dich-vu", AuthMiddleware.checkAdmin, ProductController.baivietdichvu);
 router.get("/admin/add-bai-viet-dich-vu", AuthMiddleware.checkAdmin, ProductController.addbaivietdichvu);
 router.post("/admin/upload-bai-viet-dich-vu", AuthMiddleware.checkAdmin,
-UploadMiddleware.array("images", 20),
+UploadMiddleware.array("images", 50),
 ProductController.uploadbaivietdichvu);
 router.get("/admin/edit-bai-viet-dich-vu/:id", AuthMiddleware.checkAdmin, ProductController.editbaivietdichvu);
 router.post("/admin/update-bai-viet-dich-vu/:id", AuthMiddleware.checkAdmin, 
-UploadMiddleware.array("images", 20),
+UploadMiddleware.array("images", 50),
 ProductController.updatebaivietdichvu);
 router.get("/admin/update-bai-viet-dich-vu/:id", AuthMiddleware.checkAdmin, ProductController.updatebaivietdichvu2);
 router.get("/admin/delete-bai-viet-dich-vu/:id", AuthMiddleware.checkAdmin, ProductController.deletebaivietdichvu);
@@ -168,6 +168,7 @@ router.get("/admin/danh-sach-anh/tieu-de", AuthMiddleware.checkAdmin, ProductCon
 router.get("/admin/danh-sach-anh/content", AuthMiddleware.checkAdmin, ProductController.dsanhconent);
 
 router.get("/list", AuthMiddleware.checkAdmin, ProductController.list);
+router.get("/admin/check", AuthMiddleware.checkAdmin, ProductController.check);
 
 
 
