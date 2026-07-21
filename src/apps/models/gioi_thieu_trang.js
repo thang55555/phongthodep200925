@@ -22,7 +22,11 @@ const gioi_thieu_trangSchema = new mongoose.Schema({
     img_kythuat: {
         type: String,
         required: true,
-    }
+    },
+    web: {
+        type: [String],
+        defadef: [],
+    }, 
     
 }, {
     timestamps: true,

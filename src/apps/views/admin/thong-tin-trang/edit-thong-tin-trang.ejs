@@ -25,6 +25,25 @@
                     <div class="panel-body">
                         <div class="col-md-6">
                             <form role="form" method="post" action="/admin/update-thong-tin-trang/<%=thongtin._id%>" enctype="multipart/form-data">
+
+                                <div class="form-group">
+                                    <label>Website</label>
+                                   <select name="web" class="form-control" multiple>
+        <% 
+        // Lấy mảng web từ database, nếu không có thì mặc định là mảng rỗng
+        const currentWebs = thongtin.web || []; 
+        %>
+        
+        <option value="Phongthodep.net" <%= currentWebs.includes('Phongthodep.net') ? 'selected' : '' %>>
+            Phongthodep.net
+        </option>
+        
+        <option value="Nhagonamthanhphat.com" <%= currentWebs.includes('Nhagonamthanhphat.com') ? 'selected' : '' %>>
+            Nhagonamthanhphat.com
+        </option>
+    </select>
+                                </div>
+                            
                                 <div class="form-group">
                                     <label>Số điện thoại</label>
                                     <input required name="sdt" type="text" class="form-control" value="<%=thongtin.sdt%>"

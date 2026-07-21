@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -5,7 +6,6 @@
 <title>Chọn ảnh</title>
 
 <style>
-
 body{
     margin:0;
     font-family:Arial;
@@ -49,39 +49,37 @@ body{
 }
 
 #album-gallery{
-
     display:grid;
     grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
     gap:15px;
-
     padding:20px;
-
 }
 
 .photo-card{
-
     background:#fff;
     border:1px solid #ddd;
     border-radius:8px;
     overflow:hidden;
     cursor:pointer;
-
 }
 
 .photo-card:hover{
-
     border:2px solid #2196F3;
-
 }
 
 .photo-card img{
-
     width:100%;
     height:160px;
     object-fit:cover;
-
 }
 
+#loading-status {
+    text-align: center;
+    padding: 15px;
+    color: #666;
+    font-style: italic;
+    grid-column: 1 / -1;
+}
 </style>
 
 </head>
@@ -89,98 +87,123 @@ body{
 <body>
 
 <div class="header">
-
     <h2>Thư viện ảnh</h2>
-
 </div>
 
 <div class="album-selection-area">
-
     <div id="tab-tieude"
          class="album-box active"
-         onclick="loadGallery('tieude')">
-
+         onclick="switchAlbum('tieude')">
         <div class="album-name">Album Tiêu đề</div>
-
         <div class="album-count">
             <%= JSON.parse(tieudeJson).length %> ảnh
         </div>
-
     </div>
 
     <div id="tab-content"
          class="album-box"
-         onclick="loadGallery('content')">
-
+         onclick="switchAlbum('content')">
         <div class="album-name">Album Content</div>
-
         <div class="album-count">
             <%= JSON.parse(contentJson).length %> ảnh
         </div>
-
     </div>
-
 </div>
 
 <div id="album-gallery"></div>
 
 <script>
-
 const albumData = {
     tieude: <%- tieudeJson %>,
     content: <%- contentJson %>
 };
 
-const funcNum=new URLSearchParams(location.search)
-.get("CKEditorFuncNum");
+const funcNum = new URLSearchParams(location.search).get("CKEditorFuncNum");
 
-function loadGallery(type){
+let currentType = "tieude";
+let displayedCount = 0;
+const pageSize = 50;
+let isLoading = false;
 
-    document.querySelectorAll(".album-box")
-    .forEach(e=>e.classList.remove("active"));
+function switchAlbum(type) {
+    currentType = type;
+    displayedCount = 0;
+    
+    document.querySelectorAll(".album-box").forEach(e => e.classList.remove("active"));
+    document.getElementById("tab-" + type).classList.add("active");
 
-    document.getElementById("tab-"+type)
-    .classList.add("active");
+    const gallery = document.getElementById("album-gallery");
+    gallery.innerHTML = "";
 
-    const gallery=document.getElementById("album-gallery");
+    loadMorePhotos();
+}
 
-    gallery.innerHTML="";
+function loadMorePhotos() {
+    if (isLoading) return;
+    
+    const currentList = albumData[currentType];
+    if (displayedCount >= currentList.length) return;
 
-    albumData[type].forEach(item=>{
+    isLoading = true;
+    
+    // Xóa thông báo cũ nếu có
+    const oldStatus = document.getElementById("loading-status");
+    if (oldStatus) oldStatus.remove();
 
-        const card=document.createElement("div");
+    const gallery = document.getElementById("album-gallery");
+    const nextLimit = Math.min(displayedCount + pageSize, currentList.length);
+    
+    const path = currentType == "tieude"
+        ? "../../static/site/images/update/"
+        : "/images/";
 
-        card.className="photo-card";
+    for (let i = displayedCount; i < nextLimit; i++) {
+        const item = currentList[i];
+        const card = document.createElement("div");
+        card.className = "photo-card";
 
-        const path=
-            type=="tieude"
-            ? "../../static/site/images/update/"
-            : "/images/";
-
-        card.innerHTML=`
-            <img src="${path+item.images}">
+        card.innerHTML = `
+            <img src="${path + item.images}" loading="lazy">
         `;
 
-        card.onclick=function(){
-
+        card.onclick = function() {
             window.opener.CKEDITOR.tools.callFunction(
                 funcNum,
-                path+item.images
+                path + item.images
             );
-
             window.close();
-
         }
 
         gallery.appendChild(card);
+    }
 
-    });
+    displayedCount = nextLimit;
 
+    // Hiển thị trạng thái nếu còn ảnh để tải thêm
+    if (displayedCount < currentList.length) {
+        const statusDiv = document.createElement("div");
+        statusDiv.id = "loading-status";
+        statusDiv.innerText = `Đang hiển thị ${displayedCount}/${currentList.length} ảnh. Cuộn xuống để xem thêm...`;
+        gallery.appendChild(statusDiv);
+    }
+
+    isLoading = false;
 }
 
-loadGallery("tieude");
+// Bắt sự kiện cuộn trang để tải thêm ảnh tự động
+window.addEventListener("scroll", () => {
+    const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+    
+    // Khi người dùng cuộn cách đáy khoảng 100px thì kích hoạt tải thêm
+    if (scrollTop + clientHeight >= scrollHeight - 100) {
+        loadMorePhotos();
+    }
+});
 
+// Khởi chạy mặc định album đầu tiên
+switchAlbum("tieude");
 </script>
 
 </body>
 </html>
+

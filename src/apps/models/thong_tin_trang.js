@@ -51,7 +51,11 @@ const thong_tin_trangSchema = new mongoose.Schema({
     video:{
         type: String,
         required: true,
-    }
+    },
+    web: {
+        type: [String],
+        defadef: [],
+    }, 
  
     
 }, {timestamps:true});

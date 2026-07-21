@@ -101,7 +101,8 @@ const content = await ImagesModel.aggregate([
 
 const gioithieutrang = async (req, res) => {
     const gioithieu = await Gioi_thieu_trangModel.find();
-    res.render("./admin/thong-tin-trang/gioi-thieu-trang", { gioithieu })
+    const stt = 1;
+    res.render("./admin/thong-tin-trang/gioi-thieu-trang", { gioithieu, stt })
 }
 const editgioithieutrang = async (req, res) => {
     const id = req.params.id;
@@ -121,6 +122,7 @@ const updategioithieu = async (req, res) => {
             content_sumenh: body.content_sumenh,
             content_cotloi: body.content_cotloi,
             content_kythuat: body.content_kythuat,
+            web: body.web
         };
 
         // ========= XỬ LÝ ẢNH TẦM NHÌN =========
@@ -189,7 +191,8 @@ const updategioithieu = async (req, res) => {
 
 const thongtintrang = async (req, res) => {
     const thongtintrang = await Thong_tin_trangModel.find();
-    res.render("./admin/thong-tin-trang/thong-tin-trang", { thongtintrang })
+    const stt = 1;
+    res.render("./admin/thong-tin-trang/thong-tin-trang", { thongtintrang, stt })
 }
 const editthongtintrang = async (req, res) => {
     const id = req.params.id;
@@ -213,6 +216,7 @@ const updatethongtintrang = async (req, res) => {
             diachiMap: body.diachiMap,
             linkMap: body.linkMap,
             gioithieu: body.gioithieu,
+            web: body.web
         };
 
         if (files && files.length > 0) {
