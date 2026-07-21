@@ -157,7 +157,8 @@
                             </div> -->
 
 
-   <div class="form-group">
+
+    <div class="form-group">
     <label>Ảnh sản phẩm</label>
     <div style="display: flex; gap: 10px; align-items: center;">
         <input name="images" type="file" multiple id="fileInput">
@@ -166,37 +167,60 @@
     </div>
     <input type="hidden" name="album_image_ids" id="album_image_ids">
 </div>
+  <script>
+    // hàm bắt buộc tai
+document.getElementById("productForm").addEventListener("submit", function(e) {
+
+    const fileInput = document.getElementById("fileInput");
+    const albumInput = document.getElementById("album_image_ids");
+
+    const hasUpload = fileInput.files.length > 0;
+    const hasAlbum = albumInput.value.trim() !== "";
+
+    if (!hasUpload && !hasAlbum) {
+        e.preventDefault();
+        alert("Vui lòng tải lên ít nhất một ảnh hoặc chọn ảnh từ Album.");
+        return false;
+    }
+
+});
+</script>
+
 <div id="albumModal" class="modal">
     <div class="modal-content">
        <div class="modal-header">
     <div class="modal-title">
-        <i class="fas fa-images"></i> Thư viện ảnh của bạn
+        <i class="fas fa-images"></i> Thư viện ảnh server
     </div>
+    
+    <div class="album-selection-area">
+                <div id="tab-tieude" class="album-box" onclick="switchTab('tieude')">
+                    <div class="album-icon-wrapper"><i class="fas fa-folder-open"></i></div>
+                    <div class="album-name">Album Tiêu đề</div>
+                    <div class="album-count"><%= JSON.parse(tieudeJson).length %> ảnh</div>
+                </div>
+                <div id="tab-content" class="album-box" onclick="switchTab('content')">
+                    <div class="album-icon-wrapper"><i class="fas fa-folder-open"></i></div>
+                    <div class="album-name">Album content</div>
+                    <div class="album-count"><%= JSON.parse(contentJson).length %> ảnh</div>
+                </div>
+                <div id="tab-selected" class="album-box" onclick="switchTab('selected')">
+                    <div class="album-icon-wrapper"><i class="fas fa-check-circle" style="color: #27ae60;"></i></div>
+                    <div class="album-name">Đã chọn</div>
+                    <div id="selected-count-badge" class="album-count">0 ảnh</div>
+                </div>
+    </div>
+
     <div class="header-actions">
         <button type="button" class="btn-back" onclick="closeAlbumModal()">Trở về</button>
         <button type="button" class="btn-confirm" onclick="confirmAlbumSelection()">
             <i class="fas fa-check"></i> Xác nhận
         </button>
     </div>
+
 </div>
-        <div class="modal-body">
-            <div class="album-selection-area">
-                <div id="tab-tieude" class="album-box" onclick="loadGallery('tieude')">
-                    <div class="album-icon-wrapper"><i class="fas fa-folder-open"></i></div>
-                    <div class="album-name">Album Tiêu đề</div>
-                    <div class="album-count"><%= JSON.parse(tieudeJson).length %> ảnh</div>
-                </div>
-                <div id="tab-content" class="album-box" onclick="loadGallery('content')">
-                    <div class="album-icon-wrapper"><i class="fas fa-folder-open"></i></div>
-                    <div class="album-name">Album content</div>
-                    <div class="album-count"><%= JSON.parse(contentJson).length %> ảnh</div>
-                </div>
-                <div id="tab-selected" class="album-box" onclick="loadSelectedView()">
-                    <div class="album-icon-wrapper"><i class="fas fa-check-circle" style="color: #27ae60;"></i></div>
-                    <div class="album-name">Đã chọn</div>
-                    <div id="selected-count-badge" class="album-count">0 ảnh</div>
-                </div>
-            </div>
+        <div class="modal-body" id="modal-body">
+            
             <div id="album-gallery"></div>
         </div>
     </div>
@@ -204,17 +228,26 @@
 
 <script>
     const albumData = { tieude: <%- tieudeJson %>, content: <%- contentJson %> };
-    // Dùng Set để lưu tên file (item.images)
     let selectedImages = new Set();
+    
+    // Biến quản lý phân trang vô hạn (Infinite Scroll)
+    let currentTab = 'tieude';
+    let displayedCount = 0;
+    const pageSize = 50;
 
-    function openAlbumModal() { document.getElementById('albumModal').style.display = "block"; loadGallery('tieude'); }
-    function closeAlbumModal() { document.getElementById('albumModal').style.display = "none"; }
+    function openAlbumModal() { 
+        document.getElementById('albumModal').style.display = "block"; 
+        switchTab('tieude'); 
+    }
+    
+    function closeAlbumModal() { 
+        document.getElementById('albumModal').style.display = "none"; 
+    }
 
     function updateCount() { 
         document.getElementById('selected-count-badge').innerText = selectedImages.size + ' ảnh'; 
     }
 
-    // Toggle dựa trên filename
     function toggleImageSelect(filename, cardElement) {
         if (selectedImages.has(filename)) { 
             selectedImages.delete(filename); 
@@ -226,65 +259,106 @@
         updateCount();
     }
 
-    function loadGallery(type) {
-        const gallery = document.getElementById('album-gallery');
-        const data = albumData[type];
+    // Chuyển tab (reset lại số lượng hiển thị về 0 và load 50 ảnh đầu tiên)
+    function switchTab(type) {
+        currentTab = type;
+        displayedCount = 0;
+        
         document.querySelectorAll('.album-box').forEach(el => el.classList.remove('active'));
         document.getElementById(`tab-${type}`).classList.add('active');
+        
+        const gallery = document.getElementById('album-gallery');
         gallery.innerHTML = '';
         
-        data.forEach(item => {
+        // Cuộn modal-body về đầu khi đổi tab
+        document.getElementById('modal-body').scrollTop = 0;
+
+        loadMoreItems();
+    }
+
+    // Hàm load thêm 50 ảnh tiếp theo
+    function loadMoreItems() {
+        const gallery = document.getElementById('album-gallery');
+        
+        // Xóa thông báo cũ nếu có
+        const oldStatus = document.getElementById("loading-status");
+        if (oldStatus) oldStatus.remove();
+
+        if (currentTab === 'selected') {
+            // Tab "Đã chọn" hiển thị toàn bộ không cần chia trang (hoặc xử lý chung nếu ít)
+            const allSelectedArray = Array.from(selectedImages);
+            if (displayedCount >= allSelectedArray.length) return;
+            
+            const nextLimit = Math.min(displayedCount + pageSize, allSelectedArray.length);
+            for (let i = displayedCount; i < nextLimit; i++) {
+                const filename = allSelectedArray[i];
+                const card = document.createElement('div');
+                card.className = 'photo-card selected';
+                card.onclick = () => { 
+                    toggleImageSelect(filename, card); 
+                    if(currentTab === 'selected') { card.remove(); updateCount(); }
+                };
+                
+                const path = albumData.tieude.some(i => i.images === filename) ? '../site/images/update/' : '/images/';
+                card.innerHTML = `<img src="${path + filename}" loading="lazy"><span class="checkmark">✔</span>`;
+                gallery.appendChild(card);
+            }
+            displayedCount = nextLimit;
+            return;
+        }
+
+        // Xử lý cho tab Tiêu đề hoặc Content
+        const data = albumData[currentTab];
+        if (displayedCount >= data.length) return;
+
+        const nextLimit = Math.min(displayedCount + pageSize, data.length);
+        const path = (currentTab === 'tieude') ? '../site/images/update/' : '/images/';
+
+        for (let i = displayedCount; i < nextLimit; i++) {
+            const item = data[i];
             const card = document.createElement('div');
-            // Kiểm tra theo filename
             card.className = `photo-card ${selectedImages.has(item.images) ? 'selected' : ''}`;
             card.onclick = () => toggleImageSelect(item.images, card);
             
-            const path = (type === 'tieude') ? '../site/images/update/' : '/images/';
             card.innerHTML = `<img src="${path + item.images}" loading="lazy"><span class="checkmark">✔</span>`;
             gallery.appendChild(card);
-        });
+        }
+
+        displayedCount = nextLimit;
+
+        // Thêm dòng trạng thái nếu vẫn còn ảnh chưa load hết
+        if (displayedCount < data.length) {
+            const statusDiv = document.createElement("div");
+            statusDiv.id = "loading-status";
+            statusDiv.innerText = `Đang hiển thị ${displayedCount}/${data.length} ảnh. Cuộn xuống để xem thêm...`;
+            gallery.appendChild(statusDiv);
+        }
     }
 
-    function loadSelectedView() {
-        const gallery = document.getElementById('album-gallery');
-        document.querySelectorAll('.album-box').forEach(el => el.classList.remove('active'));
-        document.getElementById('tab-selected').classList.add('active');
-        gallery.innerHTML = '';
-        
-        selectedImages.forEach(filename => {
-            const card = document.createElement('div');
-            card.className = 'photo-card selected';
-            card.onclick = () => { toggleImageSelect(filename, card); card.remove(); };
-            
-            // Xác định đường dẫn dựa trên việc file nằm ở đâu trong 2 album
-            const path = albumData.tieude.some(i => i.images === filename) ? '../site/images/update/' : '/images/';
-            card.innerHTML = `<img src="${path + filename}" loading="lazy"><span class="checkmark">✔</span>`;
-            gallery.appendChild(card);
-        });
-    }
+    // Bắt sự kiện cuộn chuột trong ô `.modal-body` để tự động load thêm 50 ảnh
+    document.getElementById('modal-body').addEventListener('scroll', function() {
+        const { scrollTop, scrollHeight, clientHeight } = this;
+        // Khi cuộn gần chạm đáy (cách khoảng 50px)
+        if (scrollTop + clientHeight >= scrollHeight - 50) {
+            loadMoreItems();
+        }
+    });
 
-    // HÀM DUY NHẤT ĐỂ XÁC NHẬN
     function confirmAlbumSelection() {
-        // 1. Cập nhật input ẩn (danh sách tên file)
         document.getElementById('album_image_ids').value = Array.from(selectedImages).join(',');
-
-        // 2. Cập nhật thông báo ngoài form chính (thay vì ảnh thumbnail)
         const statusEl = document.getElementById('album-status');
         if (statusEl) {
             statusEl.innerText = selectedImages.size > 0 ? `${selectedImages.size} ảnh từ album` : "";
         }
-
-        // 3. Đóng modal
         closeAlbumModal();
     }
 </script>
 
-
 <style>
         /* CSS Modal & Album */
-        .modal { display: none; position: fixed; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); }
+        .modal { display: none; position: fixed; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9999; }
         .modal-content { background: #f4f7f9; margin: 2% auto; width: 90%; max-width: 1100px; border-radius: 8px; display: flex; flex-direction: column; height: 90vh; }
-        .modal-body { padding: 20px; overflow-y: auto; }
+        .modal-body { padding: 20px; overflow-y: auto; flex: 1; }
         
         .album-selection-area { display: flex; gap: 15px; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 2px solid #ddd; }
         .album-box { background: white; padding: 10px; border-radius: 8px; text-align: center; cursor: pointer; width: 140px; border: 2px solid transparent; transition: 0.2s; }
@@ -297,13 +371,21 @@
         .album-count { color: #6c757d; font-size: 0.8rem; }
 
         #album-gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 15px; }
-        .photo-card { position: relative; border: 2px solid transparent; border-radius: 4px; cursor: pointer; padding: 2px; }
+        .photo-card { position: relative; border: 2px solid transparent; border-radius: 4px; cursor: pointer; padding: 2px; background: #fff; }
         .photo-card img { width: 100%; height: 100px; object-fit: cover; display: block; }
         .photo-card.selected { border-color: #27ae60; }
-        .checkmark { display: none; position: absolute; bottom: 5px; right: 5px; background: #27ae60; color: white; width: 20px; height: 20px; text-align: center; border-radius: 50%; font-size: 12px; }
+        .checkmark { display: none; position: absolute; bottom: 5px; right: 5px; background: #27ae60; color: white; width: 20px; height: 20px; text-align: center; border-radius: 50%; font-size: 12px; line-height: 20px; }
         .photo-card.selected .checkmark { display: block; }
 
-        /* Header Modal xịn hơn */
+        #loading-status {
+            text-align: center;
+            padding: 15px;
+            color: #666;
+            font-style: italic;
+            grid-column: 1 / -1;
+        }
+
+        /* Header Modal */
 .modal-header {
     background: #f8f9fa;
     padding: 15px 25px;
@@ -311,6 +393,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
 }
 
 .modal-title { font-size: 1.2rem; font-weight: 600; color: #333; }
@@ -329,7 +413,7 @@
 
 .btn-confirm { background: #007bff; color: white; box-shadow: 0 2px 5px rgba(0,123,255,0.3); }
 .btn-confirm:hover { background: #0056b3; }
-    </style>
+</style>
 
                             
 

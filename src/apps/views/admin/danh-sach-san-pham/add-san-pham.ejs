@@ -154,6 +154,9 @@
 
 
 
+
+                                    
+
     <div class="form-group">
     <label>Ảnh sản phẩm</label>
     <div style="display: flex; gap: 10px; align-items: center;">
@@ -186,17 +189,10 @@ document.getElementById("productForm").addEventListener("submit", function(e) {
     <div class="modal-content">
        <div class="modal-header">
     <div class="modal-title">
-        <i class="fas fa-images"></i> Thư viện ảnh của bạn
+        <i class="fas fa-images"></i> Thư viện ảnh server
     </div>
-    <div class="header-actions">
-        <button type="button" class="btn-back" onclick="closeAlbumModal()">Trở về</button>
-        <button type="button" class="btn-confirm" onclick="confirmAlbumSelection()">
-            <i class="fas fa-check"></i> Xác nhận
-        </button>
-    </div>
-</div>
-        <div class="modal-body" id="modal-body">
-            <div class="album-selection-area">
+    
+    <div class="album-selection-area">
                 <div id="tab-tieude" class="album-box" onclick="switchTab('tieude')">
                     <div class="album-icon-wrapper"><i class="fas fa-folder-open"></i></div>
                     <div class="album-name">Album Tiêu đề</div>
@@ -212,7 +208,18 @@ document.getElementById("productForm").addEventListener("submit", function(e) {
                     <div class="album-name">Đã chọn</div>
                     <div id="selected-count-badge" class="album-count">0 ảnh</div>
                 </div>
-            </div>
+    </div>
+
+    <div class="header-actions">
+        <button type="button" class="btn-back" onclick="closeAlbumModal()">Trở về</button>
+        <button type="button" class="btn-confirm" onclick="confirmAlbumSelection()">
+            <i class="fas fa-check"></i> Xác nhận
+        </button>
+    </div>
+
+</div>
+        <div class="modal-body" id="modal-body">
+            
             <div id="album-gallery"></div>
         </div>
     </div>
@@ -346,7 +353,6 @@ document.getElementById("productForm").addEventListener("submit", function(e) {
     }
 </script>
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 <style>
         /* CSS Modal & Album */
         .modal { display: none; position: fixed; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9999; }
