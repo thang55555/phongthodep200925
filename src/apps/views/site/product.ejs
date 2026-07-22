@@ -59,15 +59,15 @@
 
                                             <% for(let i=0; i < product.image.length; i++){ %>
 
-
-                <a href="./images/update/<%= product.image[i].images %>" class="glightbox">
-                    <img class="d-block w-100"
-                        src="./images/update/<%= product.image[i].images %>"
-                        onerror="this.onerror=null; this.src='../../images/<%= product.image[i].images %>'; this.closest('a').href='../../images/<%= product.image[i].images %>';"
-                        style="cursor: pointer;">
-                </a>
-                                                        
-                                                </div>
+<div class="carousel-item <%= i === 0 ? 'active' : '' %>">
+    <!-- Thẻ a bọc ngoài dùng chung cơ chế đường dẫn với thẻ img -->
+    <a href="./images/update/<%= product.image[i].images %>" class="glightbox">
+        <img class="d-block w-100"
+            src="./images/update/<%= product.image[i].images %>"
+            onerror="this.onerror=null; this.src='../../images/<%= product.image[i].images %>'; this.closest('a').href='../../images/<%= product.image[i].images %>';"
+            style="cursor: pointer;">
+    </a>
+</div>
 
                                                 <% } %>
 
