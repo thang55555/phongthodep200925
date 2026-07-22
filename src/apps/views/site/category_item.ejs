@@ -35,6 +35,8 @@
 
       <div class="bd-example category_item_img">
         <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
+
+
           <ol class="carousel-indicators">
             <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
             <%for(var i=1; i <=total.length; i++){%>
@@ -50,8 +52,7 @@
             </div>
             <% for(item of total){%>
               <div class="carousel-item ">
-                <a href="./images/update/<%=item.images%>" class="glightbox">
-                <img src="./images/update/<%=item.images%>" class="d-block w-100" alt="<%=item.images%>"></a>
+                <img src="./images/update/<%=item.images%>" class="d-block w-100" alt="<%=item.images%>">
                 <div class="carousel-caption d-none d-md-block category_item_text">
                   <%-item.content%>
                 </div>
@@ -59,6 +60,7 @@
               <%}%>
 
           </div>
+
           <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             <span class="sr-only">Previous</span>
