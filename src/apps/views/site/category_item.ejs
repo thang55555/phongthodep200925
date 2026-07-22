@@ -45,14 +45,16 @@
           </ol>
           <div class="carousel-inner">
             <div class="carousel-item active">
-              <img src="./images/update/<%=imageOne.images%>" class="d-block w-100" alt="<%=imageOne.images%>">
+              <a href="./images/update/<%=imageOne.images%>" class="glightbox">
+              <img src="./images/update/<%=imageOne.images%>" class="d-block w-100" alt="<%=imageOne.images%>"></a>
               <div class="carousel-caption d-none d-md-block category_item_text">
                 <%-imageOne.content%>
               </div>
             </div>
             <% for(item of total){%>
               <div class="carousel-item ">
-                <img src="./images/update/<%=item.images%>" class="d-block w-100" alt="<%=item.images%>">
+                <a href="./images/update/<%=item.images%>" class="glightbox">
+                <img src="./images/update/<%=item.images%>" class="d-block w-100" alt="<%=item.images%>"></a>
                 <div class="carousel-caption d-none d-md-block category_item_text">
                   <%-item.content%>
                 </div>
