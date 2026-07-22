@@ -44,26 +44,19 @@
               <%}%>
           </ol>
           <div class="carousel-inner">
-            <div class="carousel-item active">
-              <a href="./images/update/<%=imageOne.images%>" class="glightbox">
-                    <img class="d-block w-100"
-                        src="./images/update/<%=imageOne.images%>"
-                        onerror="this.onerror=null; this.src='./images/<%=imageOne.images%>'; this.closest('a').href='./images/<%=imageOne.images%>';"
-                        style="cursor: pointer;">
-                </a>
-              <div class="carousel-caption d-none d-md-block category_item_text">
-                <%-imageOne.content%>
-              </div>
-            </div>
-            <% for(item of total){%>
-              <div class="carousel-item ">
-                <a href="./images/update/<%=item.images%>" class="glightbox">
-                <img src="./images/update/<%=item.images%>" class="d-block w-100" alt="<%=item.images%>"></a>
-                <div class="carousel-caption d-none d-md-block category_item_text">
-                  <%-item.content%>
-                </div>
-              </div>
-              <%}%>
+<% image.forEach((item, index) => { %>
+  <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
+    <a href="./images/update/<%= item.images %>" class="glightbox">
+      <img class="d-block w-100"
+           src="./images/update/<%= item.images %>"
+           onerror="this.onerror=null; this.src='./images/<%= item.images %>'; this.closest('a').href='./images/<%= item.images %>';"
+           style="cursor: pointer;" alt="<%= item.images %>">
+    </a>
+    <div class="carousel-caption d-none d-md-block category_item_text">
+      <%- item.content %>
+    </div>
+  </div>
+<% }) %>
 
           </div>
 

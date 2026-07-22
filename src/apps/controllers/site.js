@@ -127,12 +127,10 @@ const categoryitem = async (req, res) => {
       .limit(limit);
 
     const image = await Anh_nhom_san_phamModel.find({ anhnhom_id: id });
-    const imageOne = image[0] || [];
-    const total = image.slice(1); // phù hợp với logic cũ
     const chiase = await ChiaseModel.find();
 
     res.render("./site/category_item", {
-      category, product, image, imageOne, total,
+      category, product, image,
       page,
       totalPages,
       next: page + 1,

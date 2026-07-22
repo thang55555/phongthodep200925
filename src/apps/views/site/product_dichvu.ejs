@@ -52,9 +52,14 @@
                                             <% for(let i=0; i < product.image.length; i++){ %>
 
                                                 <div class="carousel-item <%= i === 0 ? 'active' : '' %>">
-                                                    <img class="d-block w-100"
-                                                        src="./images/update/<%= product.image[i].images %>"
-                                                        onerror="this.onerror=null;this.src='../../images/<%= product.image[i].images %>';">
+
+                <a href="./images/update/<%= product.image[i].images %>" class="glightbox">
+                    <img class="d-block w-100"
+                        src="./images/update/<%= product.image[i].images %>"
+                        onerror="this.onerror=null; this.src='../../images/<%= product.image[i].images %>'; this.closest('a').href='../../images/<%= product.image[i].images %>';"
+                        style="cursor: pointer;">
+                </a>
+
                                                 </div>
 
                                                 <% } %>
