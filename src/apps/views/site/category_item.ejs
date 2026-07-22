@@ -46,7 +46,11 @@
           <div class="carousel-inner">
             <div class="carousel-item active">
               <a href="./images/update/<%=imageOne.images%>" class="glightbox">
-              <img src="./images/update/<%=imageOne.images%>" class="d-block w-100" alt="<%=imageOne.images%>"></a>
+                    <img class="d-block w-100"
+                        src="./images/update/<%=imageOne.images%>"
+                        onerror="this.onerror=null; this.src='./images/<%=imageOne.images%>'; this.closest('a').href='./images/<%=imageOne.images%>';"
+                        style="cursor: pointer;">
+                </a>
               <div class="carousel-caption d-none d-md-block category_item_text">
                 <%-imageOne.content%>
               </div>
