@@ -208,6 +208,7 @@ router.get("/search", SiteController.search);
 router.get("/view-san-pham/:slug/:id", SiteController.productsp);
 router.get("/view-dich-vu/:slug/:id", SiteController.productdichvu);
 router.get("/view-tin-tuc/:slug/:id", SiteController.productTinTuc);
+router.get("/view-category-dich-vu/:slug/:id", SiteController.categorydichvu);
  
  
 module.exports = router;

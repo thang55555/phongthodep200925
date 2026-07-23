@@ -42,6 +42,7 @@
 									<th>Video</th>
 									<th>content video</th>
 									<th>Ngày đăng</th>
+									<th>View</th>
 									<th>Hành động</th>
 								</tr>
 							</thead>
@@ -54,6 +55,9 @@
 									
 									<td><div class="antext" style="font-size: 14px;"><%-item.content%> </div></td>
 									<td><%= new Intl.DateTimeFormat('en-US').format(item.createdAt)%></td>
+									<td><a href="/product-video/<%=item.slug%>/<%=item._id%>" target="_blank">
+										<i class="fa-solid fa-eye"></i> </a>
+									</td>
 									<td class="form-group">
 										<a href="/admin/edit-video/<%=item._id%>" ><i class="fa-solid fa-pen-to-square"></i></a>
 										<a onclick="clickDelete('<%=item._id%>')" ><i class="fa-solid fa-trash" style="color: rgb(48, 165, 255);"></i></a>
