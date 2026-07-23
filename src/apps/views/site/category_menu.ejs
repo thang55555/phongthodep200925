@@ -10,10 +10,10 @@
         <div class="container" >
 
             <ul class="breadcrumb">
-                <li><a href="/"><span itemprop="name">Trang chủ</span></a>
+                <li><a href="/"><span itemprop="name">TRANG CHỦ</span></a>
                     <meta content="1">
                 </li>
-                <li><a><span itemprop="name" style="color: #F5D182;">Sản Phẩm</span></a>
+                <li><a><span itemprop="name" style="color: #F5D182;">SẢN PHẨM</span></a>
                     <meta content="2">
                 </li>
                 <li><a><span itemprop="name" style="color: #F5D182;"><%=menudanhmuc.tendanhmuc%></span></a>
@@ -39,7 +39,7 @@
                             <p>Bộ lọc</p>
                             <ul>
                                 <%for(item of nhomsp){%>
-                                <li ><a href="/category-item/<%=item.slug%>/<%=item._id%>" title="Mẫu nhà đẹp"><%=item.tennhomsanpham%></a></li>
+                                <li ><a href="/category-item/<%=item.slug%>/<%=item._id%>" title="<%=item.tennhomsanpham%>"><%=item.tennhomsanpham%></a></li>
                                     <%}%>
                             
                             </ul>

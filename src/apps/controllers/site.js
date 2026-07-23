@@ -38,7 +38,7 @@ const home = async (req, res) => {
     const tintuc = await BaiviettintucModel.find({ nhap: true }).sort({ _id: -1 }) || [];
     const tintucOne = tintuc.length > 0 ? await BaiviettintucModel.findById(tintuc[0]._id) : null;
 
-    const menudichvu = await Menu_dichvuModel.find({ nhap: true }).limit(2);
+    const menudichvu = await Menu_dichvuModel.find({ nhap: true, web: "Phongthodep.net"  }).limit(2);
     const chiase = await ChiaseModel.find();
 
     res.render("site/index", { gioithieutrang, video, videoOne, tintuc, tintucOne, menudichvu, chiase });
@@ -61,7 +61,7 @@ const categoryDanhmuc = async (req, res) => {
     const menudanhmuc = await Menu_danhmuc_sanphamModel.findById(id);
     if (!menudanhmuc) return res.status(404).send("Không tìm thấy danh mục");
 
-    const nhomsp = await Menu_nhom_sanphamModel.find({ danhmuc_id: id });
+    const nhomsp = await Menu_nhom_sanphamModel.find({ danhmuc_id: id, web: "Phongthodep.net" });
 
     // Lấy danh sách nhomsp ids
     const nhomIds = nhomsp.map(n => n._id);
@@ -154,7 +154,7 @@ const categorydichvu = async (req, res) => {
     const slug = req.params.slug;
 
     const category = await Menu_dichvuModel.findById(id);
-    const categorynhom = await Menu_dichvuModel.find();
+    const categorynhom = await Menu_dichvuModel.find({ web: "Phongthodep.net" });
 
     // bảo vệ nếu category không tồn tại
     if (!category) return res.status(404).send("Không tìm thấy danh mục dịch vụ");
@@ -292,7 +292,7 @@ const categoryitintuc = async (req, res) => {
       .skip(skip)
       .limit(limit);
 
-    const menuproduct = await Menu_danhmuc_sanphamModel.find();
+    const menuproduct = await Menu_danhmuc_sanphamModel.find({web: "Phongthodep.net"});
 
     res.render("./site/category_tintuc", {
       product,

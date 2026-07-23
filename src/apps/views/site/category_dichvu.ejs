@@ -8,10 +8,10 @@
         <div class="container">
 
             <ul class="breadcrumb"  >
-                <li ><a href="/"><span >Trang chủ</span></a>
+                <li ><a href="/"><span >TRANG CHỦ</span></a>
                     <meta  content="1">
                 </li>
-                <li ><a><span style="color: #F5D182;" >Dịch vụ</span></a>
+                <li ><a><span style="color: #F5D182;" >DỊCH VỤ</span></a>
                     <meta  content="2">
                 </li>
                 <li ><a ><span style="color: #F5D182;" ><%=category.menudichvu%></span></a>
@@ -35,7 +35,7 @@
                             <p>Bộ lọc</p>
                             <ul>
                                 <% for(item of categorynhom){%>
-                                <li><a href="/category-dich-vu/<%=item.slug%>/<%=item._id%>" title="Mẫu nhà đẹp" ><%=item.menudichvu%></a>  </li>
+                                <li><a href="/category-dich-vu/<%=item.slug%>/<%=item._id%>" title="<%=item.menudichvu%>" ><%=item.menudichvu%></a>  </li>
                                <%}%>
                             </ul>
                         </div>
