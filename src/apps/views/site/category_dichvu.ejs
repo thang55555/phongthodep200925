@@ -26,6 +26,14 @@
                     <div class="title-cicle__alls">
                         <h2 class="title-in-cicles"><%=category.menudichvu%></h2>
                     </div>
+                    <div class="title-cicle__alls">
+                                        <a href="https://phongthodep.net/static/site/images/update/<%=category.images%>" class="glightbox">
+                  <img class="d-block w-100" alt="<%=category.images%>"
+                    src="https://phongthodep.net/static/site/images/update/<%=category.images%>"
+                    onerror="this.onerror=null; this.src='https://phongthodep.net/images/<%=category.images%>'; this.closest('a').href='https://phongthodep.net/images/<%=category.images%>';"
+                    style="cursor: pointer;">
+                </a>
+                    </div>
                     <div style="margin-bottom: 20px;">
                         <%-category.content%>
                     </div>
