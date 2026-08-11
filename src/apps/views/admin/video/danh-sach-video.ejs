@@ -38,30 +38,66 @@
 							<thead>
 								<tr>
 									<th data-field="id" data-sortable="true">ID</th>
+									<th>Hành động</th>
 									<th>Tiêu đề video</th>
 									<th>Video</th>
 									<th>content video</th>
 									<th>Ngày đăng</th>
-									<th>View</th>
-									<th>Hành động</th>
 								</tr>
 							</thead>
 							<tbody>
 								<% for(item of product){%>
 								<tr>
 									<td><%=stt++%></td>
-									<td><div class="antext"><%=item.tieude%></div> </td>
-									<td><iframe width="250px" height="150px" src="<%=item.linkvideo%>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></td>
-									
-									<td><div class="antext" style="font-size: 14px;"><%-item.content%> </div></td>
-									<td><%= new Intl.DateTimeFormat('en-US').format(item.createdAt)%></td>
-									<td><a href="/product-video/<%=item.slug%>/<%=item._id%>" target="_blank">
-										<i class="fa-solid fa-eye"></i> </a>
-									</td>
 									<td class="form-group">
 										<a href="/admin/edit-video/<%=item._id%>" ><i class="fa-solid fa-pen-to-square"></i></a>
 										<a onclick="clickDelete('<%=item._id%>')" ><i class="fa-solid fa-trash" style="color: rgb(48, 165, 255);"></i></a>
+										<a href="/product-video/<%=item.slug%>/<%=item._id%>" target="_blank">
+										<i class="fa-solid fa-eye"></i> </a>
 									</td>
+									<td><div  style="width: 250px; word-break: break-word;" class="antext"><%=item.tieude%></div> </td>
+									<td><iframe width="250px" height="150px" src="<%=item.linkvideo%>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></td>
+									
+<td>
+    <div style="width: 250px; word-break: break-word;">
+        <div class="antext">
+            <% 
+                let rawContent = item.content ? String(item.content) : '';
+                
+                // 1. Loại bỏ toàn bộ thẻ HTML
+                let textOnly = rawContent.replace(/<[^>]*>/g, '');
+                
+                // 2. Tự động giải mã TẤT CẢ các dạng mã &ký_hiệu; bằng bảng mã hoặc regex thay thế tổng quát
+                let decodedText = textOnly
+                    .replace(/&([a-zA-Z0-9#]+);/g, function(match, entity) {
+                        // Bảng tra cứu các ký tự tiếng Việt phổ biến bị mã hóa
+                        const entities = {
+                            'agrave': 'à', 'aacute': 'á', 'acirc': 'â', 'atilde': 'ã',
+                            'egrave': 'è', 'eacute': 'é', 'ecirc': 'ê',
+                            'igrave': 'ì', 'iacute': 'í',
+                            'ograve': 'ò', 'oacute': 'ó', 'ocirc': 'ô', 'otilde': 'õ',
+                            'ugrave': 'ù', 'uacute': 'ú', 'ucirc': 'û',
+                            'yacute': 'ý', 'Yacute': 'Ý',
+                            'Agrave': 'À', 'Aacute': 'Á', 'Acirc': 'Â', 'Atilde': 'Ã',
+                            'Egrave': 'È', 'Eacute': 'É', 'Ecirc': 'Ê',
+                            'Igrave': 'Ì', 'Iacute': 'Í',
+                            'Ograve': 'Ò', 'Oacute': 'Ó', 'Ocirc': 'Ô', 'Otilde': 'Õ',
+                            'Ugrave': 'Ù', 'Uacute': 'Ú',
+                            'nbsp': ' ', 'ndash': '-', 'mdash': '-', 'amp': '&',
+                            'quot': '"', 'ldquo': '“', 'rdquo': '”', 'lsquo': '‘', 'rsquo': '’'
+                        };
+                        return entities[entity] || match; // Nếu có trong bảng thì đổi, không thì giữ nguyên
+                    });
+
+                // 3. Cắt ngắn khoảng 200 ký tự và thêm dấu ...
+                let shortText = decodedText.length > 200 ? decodedText.substring(0, 200) + '...' : decodedText;
+            %>
+            <%= shortText %>
+        </div>
+    </div>
+</td>
+									<td><%= new Intl.DateTimeFormat('en-US').format(item.createdAt)%></td>
+								
 								</tr>
 								<%}%>
 							</tbody>

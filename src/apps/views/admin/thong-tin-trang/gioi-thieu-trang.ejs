@@ -27,6 +27,7 @@
 							<thead>
 								<tr>
 									<th data-field="id" data-sortable="true">ID</th>
+									<th data-field="price" data-sortable="true">Hành Động</th>
 									<th>Website</th>
 									<th data-field="name" data-sortable="true">Giới thiệu chung</th>
                                     <th>video giới thiệu</th>
@@ -37,13 +38,15 @@
                                     <th>Ảnh Banner Giá trị cốt lõi</th>
                                     <th>Đội ngũ kỹ thuật</th>
                                     <th>Ảnh Banner đội ngũ kỹ thuật</th>
-									<th data-field="price" data-sortable="true">Hành Động</th>
 								</tr>
 							</thead>
 							<tbody>
 								<% for(Gioithieu of gioithieu){%>
 								<tr>
 									<td><%=stt++%></td>
+									 <td class="form-group">
+										<a href="/admin/edit-gioi-thieu-trang/<%=Gioithieu._id%>" ><i class="fa-solid fa-pen-to-square"></i></a>
+									</td>
 									<td><%=Gioithieu.web%></td>
 									<td><div class="antext"><%-Gioithieu.gioithieuchung%></div></td>
 									<td> <iframe height="150px" width="150px" src="<%=Gioithieu.linkvideo%>"
@@ -57,9 +60,7 @@
 									<td><img src="../site/images/update/<%=Gioithieu.img_cotloi%>" style="height: 150px; width: 150px;"/></td>
 									<td><div class="antext"><%-Gioithieu.content_kythuat%></div></td>
 									<td><img src="../site/images/update/<%=Gioithieu.img_kythuat%>" style="height: 150px; width: 150px;"/></td>
-                                    <td class="form-group">
-										<a href="/admin/edit-gioi-thieu-trang/<%=Gioithieu._id%>" ><i class="fa-solid fa-pen-to-square"></i></a>
-									</td>
+                                   
 									
 								</tr>
 								<%}%>

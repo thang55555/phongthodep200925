@@ -33,29 +33,65 @@
 							<thead>
 								<tr>
 									<th data-field="id" data-sortable="true">ID</th>
+									<th>Hành động</th>
 									<th>Tên menu dịch vụ</th>
 									<th>Website hiển thị</th>
 									<th>Content</th>
 									<th>Ảnh tiêu đề</th>
-									<th>View</th>
-									<th>Hành động</th>
 								</tr>
 							</thead>
 							<tbody>
 								<% for(item of category){%>
 								<tr>
-									<td><%=stt++%></td>
-									<td><%=item.menudichvu%></td>
-									<td> <%- item.web.join("<br>") %></td>
-									<td><div class="antext"><%-item.content%></div></td>
-									<td><img height="150px" width="150px" src="../site/images/update/<%=item.images%>" />
-									<td><a href="/view-category-dich-vu/<%=item.slug%>/<%=item._id%>" target="_blank">
-										<i class="fa-solid fa-eye"></i> </a>
-									</td>										
+									<td><%=stt++%></td>										
 									<td class="form-group">
 										<a href="/admin/edit-menu-dich-vu/<%=item._id%>" ><i class="fa-solid fa-pen-to-square"></i></a>
 										<a onclick="clickDelete('<%=item._id%>')" ><i class="fa-solid fa-trash" style="color: rgb(48, 165, 255);"></i>  </a>
+										<a href="/view-category-dich-vu/<%=item.slug%>/<%=item._id%>" target="_blank">
+										<i class="fa-solid fa-eye"></i> </a>
 									</td>
+									<td><%=item.menudichvu%></td>
+									<td> <%- item.web.join("<br>") %></td>
+	<td>
+    <div >
+        <div >
+            <% 
+                let rawContent = item.content ? String(item.content) : '';
+                
+                // 1. Loại bỏ toàn bộ thẻ HTML
+                let textOnly = rawContent.replace(/<[^>]*>/g, '');
+                
+                // 2. Tự động giải mã TẤT CẢ các dạng mã &ký_hiệu; bằng bảng mã hoặc regex thay thế tổng quát
+                let decodedText = textOnly
+                    .replace(/&([a-zA-Z0-9#]+);/g, function(match, entity) {
+                        // Bảng tra cứu các ký tự tiếng Việt phổ biến bị mã hóa
+                        const entities = {
+                            'agrave': 'à', 'aacute': 'á', 'acirc': 'â', 'atilde': 'ã',
+                            'egrave': 'è', 'eacute': 'é', 'ecirc': 'ê',
+                            'igrave': 'ì', 'iacute': 'í',
+                            'ograve': 'ò', 'oacute': 'ó', 'ocirc': 'ô', 'otilde': 'õ',
+                            'ugrave': 'ù', 'uacute': 'ú', 'ucirc': 'û',
+                            'yacute': 'ý', 'Yacute': 'Ý',
+                            'Agrave': 'À', 'Aacute': 'Á', 'Acirc': 'Â', 'Atilde': 'Ã',
+                            'Egrave': 'È', 'Eacute': 'É', 'Ecirc': 'Ê',
+                            'Igrave': 'Ì', 'Iacute': 'Í',
+                            'Ograve': 'Ò', 'Oacute': 'Ó', 'Ocirc': 'Ô', 'Otilde': 'Õ',
+                            'Ugrave': 'Ù', 'Uacute': 'Ú',
+                            'nbsp': ' ', 'ndash': '-', 'mdash': '-', 'amp': '&',
+                            'quot': '"', 'ldquo': '“', 'rdquo': '”', 'lsquo': '‘', 'rsquo': '’'
+                        };
+                        return entities[entity] || match; // Nếu có trong bảng thì đổi, không thì giữ nguyên
+                    });
+
+                // 3. Cắt ngắn khoảng 200 ký tự và thêm dấu ...
+                let shortText = decodedText.length > 200 ? decodedText.substring(0, 200) + '...' : decodedText;
+            %>
+            <%= shortText %>
+        </div>
+    </div>
+</td>
+									<td><img height="150px" width="150px" src="../site/images/update/<%=item.images%>" />
+									
 								</tr>
 								<%}%>
 								

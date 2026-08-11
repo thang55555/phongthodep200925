@@ -64,16 +64,16 @@
                                         </span>
 									</td>
 									<td class="form-group"> 
-										<form action="/admin/edit-yeu-cau-tu-van/<%=item.id%>" role="form" method="post">
+										
+
+											<form action="/admin/edit-yeu-cau-tu-van/<%=item.id%>" role="form" method="post">
 								
-												<select name="trangthai" class="form-control">
+												<select name="trangthai" class="form-control" onchange="this.form.submit()">
 													<option value="<%=item.trangthai%>">Chọn</option>
 													<option value="true">Đã xử lý</option>
 													<option value="flash"> Chưa xử lý</option>
 												
 												</select>
-												
-												<button type="submit" name="sbm" class="btn btn-success"><i class="fa-solid fa-arrows-rotate"></i></button>
 											</form>
 									</td>
 								</tr>
