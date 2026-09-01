@@ -495,6 +495,16 @@ const search = async (req, res) => {
     res.status(500).send("Có lỗi xảy ra");
   }
 };
+const demo = async (req, res) => {
+  try {
+   
+
+    res.render("./site/demo", {});
+  } catch (err) {
+    console.error("❌ Lỗi tại demo:", err);
+    res.status(500).send("Có lỗi xảy ra");
+  }
+};
 
 
 
@@ -518,5 +528,5 @@ module.exports = {
   tuvan,
   productvideo,
   guilienhe,
-  search,
+  search, demo
 };
